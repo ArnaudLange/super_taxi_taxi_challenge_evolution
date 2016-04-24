@@ -1,0 +1,8 @@
+1 . installer intellij
+2 . file -> settings -> plugins -> chercher et installer gitlab projects
+3. redémarrer intellij si besoin
+4. VCS -> checkout from version control
+là vous entrez l'adresse du git et votre API key qui est aussi votre token vous la trouverez ici :
+https://gitlab.univ-nantes.fr/profile/account
+et voilà normalement ça devrait marcher, faut apprendre a se servir de cet IDE.
+(pour push et pull vous avez les deux boutons VCS en haut à droite déjà, c'est pratique)
