@@ -5,5 +5,9 @@ package carte;
  */
 public class Carrefour extends Case{
 
+    public Carrefour(){
+
+    }
+
 
 }

@@ -5,5 +5,7 @@ package carte;
  */
 public class CaseNeutre extends Case{
 
+    public CaseNeutre(){}
+
 
 }
