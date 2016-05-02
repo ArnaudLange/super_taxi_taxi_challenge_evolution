@@ -10,6 +10,8 @@ public class Route extends Case{
 
     public Route(int posx, int posy, boolean objectif, char direction, boolean stop){
         this.posx = posx;
+        this.posy = posy;
+        this.objectif = objectif;
         this.direction = direction;
         this.stop = stop;
     }
