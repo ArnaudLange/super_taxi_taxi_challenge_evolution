@@ -10,17 +10,18 @@ public class Test {
         Joueur jose = new Joueur("Jose");
         communication.inscription(jose);
 
-        System.out.println("Debut de la partie");
+        System.out.println("Debut de la partie.");
 
-
-        for (int i = 0; i < 10; i++) {
+        int i=0;
+        while(i!=1){
             System.out.println("------------------------------------");
             communication.sendInfo();
             System.out.println("Le joueur joue : ");
             jose.joue();
+            System.out.println("Le joueur envoie ses actions au serveur.");
 
-            System.out.println("Le serveur gère les requetes du joueur : ");
-            communication.gererInfo();
+            System.out.println("Le serveur gère les actions du joueur : ");
+            i=communication.gererInfo();
             try {
                 Thread.sleep(1000);                 //1000 milliseconds is one second.
             } catch(InterruptedException ex) {
