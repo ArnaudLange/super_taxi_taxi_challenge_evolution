@@ -8,13 +8,16 @@ import java.util.List;
 public class Route extends Case
 {
     private List<PointCardinal> directions;
-    private boolean stop;
 
-    public Route(int posx, int posy, boolean objectif, List<PointCardinal> directions, boolean stop)
+    public Route(int posx, int posy, List<PointCardinal> directions)
     {
         this.posx = posx;
         this.posy = posy;
         this.directions = directions;
-        this.stop = stop;
+    }
+
+    public List<PointCardinal> getDirections()
+    {
+        return this.directions;
     }
 }

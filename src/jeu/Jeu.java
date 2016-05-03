@@ -12,6 +12,8 @@ public class Jeu
     private List<Joueur> listeJoueurs;
     private Carte carte;
     private Joueur gagnant ;
+    private int posXObjectif;
+    private int posYObjectif;
 
     public Jeu(List<Joueur> listeJoueurs, int largeurCarte, int longueurCarte)
     {
