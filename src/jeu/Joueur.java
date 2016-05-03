@@ -3,7 +3,8 @@ package jeu;
 /**
  * Created by jimmy on 02/05/16.
  */
-public class Joueur {
+public class Joueur
+{
 
     private int id;
     private String nom;
