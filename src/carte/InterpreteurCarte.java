@@ -32,10 +32,21 @@ public class InterpreteurCarte {
 
                     switch(c){
                         case 'r' :
-                            tableau[i][j] = new Route(i,j,false,'N',false);
+                            tableau[j][i] = new Route(j,i,false,'N',false);
+                            //System.out.println((tableau[i][j].getClass().getName()));
+                            break;
+                        case 'n' :
+                            tableau[j][i] = new CaseNeutre();
+                            break;
+                        case 't' :
+                            tableau[j][i] = new RouteEnT();
                             break;
                         case '\n' :
                             j++;
+                            i = -1; // i va s'incrémenter a la sortie du switch
+                            // on le met donc à -1 ici pour arriver à i = 0
+                            // au début de la prochaine ligne
+                            break;
                     }
                     i++;
 
@@ -48,10 +59,28 @@ public class InterpreteurCarte {
             fichier.close();
             cartebuf.close();
 
+
             carte = new Carte(tableau);
+            carte.setLargeur(j+1); // on rajoute 1 pour gérer le cas de départ où le numéro de la ligne
+                                    // est à 0 ( au début)
+            carte.setLongueur(i-1); // on enlève 1 pour gérer le cas de sortie
+                                    // où le nombre de colonnes est incrémenté tout le temps
+
+            System.out.println(carte.getLargeur());
+            System.out.println(carte.getLongueur());
 
 
-            System.out.print(carte.toString());
+
+            // on parcourt la carte et on regarde si elle a bien été initalisée en regardant chaque case
+            for (j = 0; j < carte.getLargeur();j++){
+                for (i = 0; i < carte.getLongueur(); i++){
+                    System.out.println("["+j+"]["+i+"]=");
+                    System.out.println((carte.getTableau()[j][i]).getClass().getName());
+                }
+            }
+
+
+            //System.out.print(carte.toString());
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
