@@ -15,4 +15,9 @@ public class Route extends Case{
         this.direction = direction;
         this.stop = stop;
     }
+
+    @Override
+    public String toString() {
+        return "Route";
+    }
 }
