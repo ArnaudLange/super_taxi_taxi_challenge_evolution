@@ -33,7 +33,6 @@ public class InterpreteurCarte {
                     switch(c){
                         case 'r' :
                             tableau[j][i] = new Route(j,i,false,'N',false);
-                            //System.out.println((tableau[i][j].getClass().getName()));
                             break;
                         case 'n' :
                             tableau[j][i] = new CaseNeutre();
