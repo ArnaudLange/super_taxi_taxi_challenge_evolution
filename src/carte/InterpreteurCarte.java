@@ -61,9 +61,9 @@ public class InterpreteurCarte {
 
             carte = new Carte(tableau);
             carte.setLargeur(j+1); // on rajoute 1 pour gérer le cas de départ où le numéro de la ligne
-                                    // est à 0 ( au début)
+            // est à 0 ( au début)
             carte.setLongueur(i-1); // on enlève 1 pour gérer le cas de sortie
-                                    // où le nombre de colonnes est incrémenté tout le temps
+            // où le nombre de colonnes est incrémenté tout le temps
 
             System.out.println(carte.getLargeur());
             System.out.println(carte.getLongueur());
@@ -88,4 +88,3 @@ public class InterpreteurCarte {
         }
     }
 }
-
