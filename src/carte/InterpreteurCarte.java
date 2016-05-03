@@ -74,8 +74,8 @@ public class InterpreteurCarte {
             // on parcourt la carte et on regarde si elle a bien été initalisée en regardant chaque case
             for (j = 0; j < carte.getLargeur();j++){
                 for (i = 0; i < carte.getLongueur(); i++){
-                    System.out.println("["+j+"]["+i+"]=");
-                    System.out.println((carte.getTableau()[j][i]).getClass().getName());
+                    System.out.print("\n["+j+"]["+i+"]=");
+                    System.out.print((carte.getTableau()[j][i]).getClass().getName());
                 }
             }
 
