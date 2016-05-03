@@ -7,8 +7,6 @@ import java.util.Arrays;
  */
 public class Carte {
 
-
-
     private int longueur; //nb de cases en abcisse
 
     public int getLargeur() {
