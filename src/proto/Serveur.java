@@ -46,7 +46,9 @@ public class Serveur {
         }
         else if(random == 3){
             System.out.println("\tle joueur effectue une action impossible et a un accident.");
-            return 0;
+            System.out.println("Le serveur envoie au joueur qu'il a perdu.");
+            System.out.println("\n---------\nGame Over\n---------");
+            return 1;
         }
         else if(random == 4){
             System.out.println("\tle joueur a un accident avec un autre joueur et perd la partie.");
