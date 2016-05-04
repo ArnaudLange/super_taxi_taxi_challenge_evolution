@@ -34,7 +34,7 @@ public class InterpreteurCarte {
 
                     switch(c) {
                         case 'r':
-                            tableau[i][j] = new Route(i, j, new ArrayList<>());
+                            tableau[i][j] = new Route(i, j, new ArrayList<PointCardinal>());
 
                             if (i > 0)
                                 if (tableau[i - 1][j] instanceof Route) {
