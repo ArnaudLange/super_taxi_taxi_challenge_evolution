@@ -3,12 +3,14 @@ package carte;
 import java.io.*;
 import java.util.ArrayList;
 
+import static javax.print.attribute.standard.ReferenceUriSchemesSupported.FILE;
+
 /**
  * Created by jimmy on 03/05/16.
  */
 public class InterpreteurCarte {
 
-    public static void main(String[] args) {
+    public static Carte Interpreter(File fichierCarte) {
 
         FileInputStream fichier;
         BufferedInputStream cartebuf;
@@ -17,8 +19,8 @@ public class InterpreteurCarte {
 
 
         try {
-            fichier = new FileInputStream(new File("src/carte/carte001.txt"));
-            cartebuf = new BufferedInputStream(new FileInputStream(new File("src/carte/carte001.txt")));
+            fichier = new FileInputStream(new File(String.valueOf(fichierCarte)));
+            cartebuf = new BufferedInputStream(new FileInputStream(new File(String.valueOf(fichierCarte))));
             // avec un buffer : gain de vitesse de lecture conséquent
             tableau = new Case[30][30];
 
@@ -71,9 +73,12 @@ public class InterpreteurCarte {
             carte = new Carte(i+1,j);
             carte.setTableau(tableau);
 
+            return carte;
+
+
+            /*
             System.out.println(carte.getLargeur());
             System.out.println(carte.getLongueur());
-
 
 
             // on parcourt la carte et on regarde si elle a bien été initalisée en regardant chaque case
@@ -159,11 +164,12 @@ public class InterpreteurCarte {
             }
 
             // ─ │   └ ┐ ┘ ┌   ┤ ┴ ┬ ├    ┼
-
+           */
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

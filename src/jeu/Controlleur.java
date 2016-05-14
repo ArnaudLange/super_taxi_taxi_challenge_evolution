@@ -14,10 +14,9 @@ public class Controlleur {
 
     public static void main(String[] args) {
 
-        Carte carte = new Carte(30,30); // on créer la carte vide
         File fichierCarte = new File("src/carte/carte001.txt"); // on initialise le fichier texte de la carte
-        carte = InterpreteurCarte(carte,fichierCarte) {
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
         }
     }
-}
+
