@@ -5,7 +5,7 @@ import java.net.*;
 
 public class Serveur {
 
-    public static void main(String[] args){
+    public static void creerserveur(){
 
         ServerSocket listeningSocket;
         try {
@@ -21,7 +21,7 @@ public class Serveur {
     }
 }
 
-class   Accepter_clients implements Runnable {
+class Accepter_clients implements Runnable {
 
     private ServerSocket listeningSocket;
     private Socket socket;
