@@ -12,7 +12,7 @@ public class Serveur {
             listeningSocket = new ServerSocket(2009);
             Thread t = new Thread(new Accepter_clients(listeningSocket));
             t.start();
-            System.out.println("serveur en ligne");
+            System.out.println("serveur à l'écoute sur le port " + listeningSocket.getLocalPort());
 
         } catch (IOException e) {
 

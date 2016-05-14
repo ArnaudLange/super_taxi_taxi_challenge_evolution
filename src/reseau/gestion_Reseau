@@ -1,0 +1,8 @@
+1 . On lance le controlleur
+2 . le controlleur démarre le serveur
+3 . le serveur est en attente d'un client
+4 . une fois que le premier joueur( ou le deuxième si on veut 2 joueurs mini )
+se connecte, on lance un timeOut, les autres joueurs qui veulent se connecter pour la prochaine partie on donc un certain temps pour se connecter. Au delà le serveur n'acceptera plus d'autre clients
+5 . Quand un joueur se connecte, on lui demande son nom, qui sera son ID par la suite
+6. Une fois que le timeOut est expiré, le serveur annonce aux joueurs que la partie va commencer (autre timeOut)
+7. le controlleur lance la partie.
