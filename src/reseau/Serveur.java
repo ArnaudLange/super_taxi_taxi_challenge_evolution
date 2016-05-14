@@ -21,7 +21,7 @@ public class Serveur {
     }
 }
 
-class Accepter_clients implements Runnable {
+class   Accepter_clients implements Runnable {
 
     private ServerSocket listeningSocket;
     private Socket socket;
