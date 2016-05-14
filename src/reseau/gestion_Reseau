@@ -6,3 +6,9 @@ se connecte, on lance un timeOut, les autres joueurs qui veulent se connecter po
 5 . Quand un joueur se connecte, on lui demande son nom, les ID des joueurs seront gérés automatiquement
 6. Une fois que le timeOut est expiré, le serveur annonce aux joueurs que la partie va commencer (autre timeOut)
 7. le controlleur lance la partie.
+
+
+A chaque début de tour le crontrôleur met à jour la position des joueurs et calcule les éventuelles colisions.
+Une colision entre deux joueurs est effective si les deux joueurs sont sur la même case avec la même direction au début
+du tour.
+On stocke la position du joueur dans la Classe Joueur.
