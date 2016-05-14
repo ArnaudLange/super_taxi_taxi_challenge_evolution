@@ -1,48 +1,37 @@
 package reseau;
 
+import jeu.Joueur;
+
 import java.io.IOException;
 import java.net.*;
+import java.util.List;
 
 public class Serveur {
 
-    public static void creerserveur(){
+    public static void creerServeur(List listeJoueur)
+    {
 
         ServerSocket listeningSocket;
-        try {
+        try
+        {
+            // Création du socket d'écoute
             listeningSocket = new ServerSocket(2009);
-            Thread t = new Thread(new Accepter_clients(listeningSocket));
-            t.start();
-            System.out.println("serveur à l'écoute sur le port " + listeningSocket.getLocalPort());
 
-        } catch (IOException e) {
+            while (true)
+            {
+                Joueur joueur = new Joueur("", 10, 0, true, null);
+                listeJoueur.add(joueur);
 
-            e.printStackTrace();
-        }
-    }
-}
 
-class Accepter_clients implements Runnable {
-
-    private ServerSocket listeningSocket;
-    private Socket socket;
-    private int nbrclient = 1;
-    public Accepter_clients(ServerSocket s){
-        listeningSocket = s;
-    }
-
-    public void run() {
-
-        try {
-            while(true){
-                socket = listeningSocket.accept(); // Un client se connecte on l'accepte
-                System.out.println("Le client numéro "+nbrclient+ " est connecté !");
-                nbrclient++;
-                socket.close();
+                Thread t = new Thread(new ConnexionClient(listeningSocket, joueur));
+                t.start();
+                System.out.println("Serveur à l'écoute sur le port " + listeningSocket.getLocalPort());
             }
 
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
+
             e.printStackTrace();
         }
     }
-
 }

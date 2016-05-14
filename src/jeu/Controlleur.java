@@ -13,12 +13,13 @@ public class Controlleur {
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
 
         File fichierCarte = new File("src/carte/carte001.txt"); // on initialise le fichier texte de la carte
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        Serveur.creerserveur();
+        Serveur.creerServeur();
 
 
 

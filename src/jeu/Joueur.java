@@ -1,5 +1,7 @@
 package jeu;
 
+import carte.PointCardinal;
+
 /**
  * Created by jimmy on 02/05/16.
  */
@@ -9,18 +11,16 @@ public class Joueur
     private static int next_id=1;
     private int id;
     private String nom;
-    private int nbPointsPermis;
     private int nbPoints;
     private int vitesse;
     private boolean etatMarche;
-    private char direction; // N S E W pour représenter chaque point cardinal
+    private PointCardinal direction; // N S E W pour représenter chaque point cardinal
 
-    public Joueur(String nom,int nbPoints,int nbPointsPermis, int vitesse, boolean etatMarche, char direction)
+    public Joueur(String nom,int nbPoints, int vitesse, boolean etatMarche, PointCardinal direction)
     {
         this.id = next_id++;
         this.nom = nom;
-        this.nbPoints = nbPoints;
-        this.nbPointsPermis = nbPointsPermis;
+        this.nbPoints = nbPoints;;
         this.etatMarche = etatMarche;
         this.vitesse = vitesse;
         this.direction = direction;
