@@ -10,6 +10,15 @@ public class Joueur
 
     private static int next_id=1;
     private int id;
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
     private String nom;
     private int nbPoints;
     private int vitesse;
