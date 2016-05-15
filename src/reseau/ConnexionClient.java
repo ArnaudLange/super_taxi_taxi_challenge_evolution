@@ -25,7 +25,8 @@ public class ConnexionClient implements Runnable
 
     public ConnexionClient(ServerSocket s, Joueur joueur)
     {
-        listeningSocket = s;
+        this.listeningSocket = s;
+        this.joueur = joueur;
     }
 
     public void run()
@@ -44,6 +45,8 @@ public class ConnexionClient implements Runnable
                 out.println("entrez votre nom :  ");
                 out.flush();
                 joueur.setNom(in.readLine());
+
+                System.out.println("Nom joueur (côté serveur) : " + joueur.getNom());
 
                 socket.close();
             }
