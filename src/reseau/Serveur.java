@@ -17,16 +17,15 @@ public class Serveur {
             // Création du socket d'écoute
             listeningSocket = new ServerSocket(2009);
 
-            while (true)
-            {
-                Joueur joueur = new Joueur("", 10, 0, true, null);
-                listeJoueur.add(joueur);
+
+            Joueur joueur = new Joueur("", 10, 0, true, null);
+            listeJoueur.add(joueur);
 
 
-                Thread t = new Thread(new ConnexionClient(listeningSocket, joueur));
-                t.start();
-                System.out.println("Serveur à l'écoute sur le port " + listeningSocket.getLocalPort());
-            }
+            Thread t = new Thread(new ConnexionClient(listeningSocket, joueur));
+            t.start();
+            System.out.println("Serveur à l'écoute sur le port " + listeningSocket.getLocalPort());
+
 
         } catch (IOException e)
         {
