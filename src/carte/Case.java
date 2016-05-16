@@ -5,6 +5,7 @@ package carte;
  */
 public abstract class Case {
 
+
     protected int posx ; //position sur l'axe des abcisses
     protected int posy; //position sur l'axe des ordonnées
     protected boolean objectif;

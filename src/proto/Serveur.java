@@ -7,6 +7,8 @@ import static jeu.Utils.randInt;
  */
 public class Serveur {
 
+
+    /*
     private int port;
     private Carte carte;
 
@@ -62,4 +64,5 @@ public class Serveur {
         }
         return 0;
     }
+    */
 }

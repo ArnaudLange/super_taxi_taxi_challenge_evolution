@@ -13,14 +13,13 @@ public class Joueur {
     private boolean etatMarche;
     private char direction; // N S E W pour représenter chaque point cardinal
 
-    public Joueur(int id, String nom,int nbPoints,int nbPointsPermis, int vitesse, boolean etatMarche, char direction){
-        this.id = id;
+    public Joueur(String nom){
+
         this.nom = nom;
-        this.nbPoints = nbPoints;
-        this.nbPointsPermis = nbPointsPermis;
-        this.etatMarche = etatMarche;
-        this.vitesse = vitesse;
-        this.direction = direction;
+    }
+
+    public void joue(){
+        System.out.println("test");
     }
 
 
