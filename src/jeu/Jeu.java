@@ -2,11 +2,14 @@ package jeu;
 
 import carte.Carte;
 
+import java.util.List;
+
 /**
  * Created by Cokral on 16/05/2016.
  */
 public class Jeu {
 
+    private List<Joueur> listeJoueurs;
     private Carte carte;
     private Joueur gagnant;
     private int posXObj;
@@ -23,5 +26,7 @@ public class Jeu {
         this.posXObj=15;
         this.posYObj=15;
 
+        System.out.println("\tListe de joueurs (vide pour le moment)...");
+        this.listeJoueurs=new List<Joueur>();
     }
 }

@@ -1,4 +1,4 @@
-package serveur;
+package réseau;
 
 import static jeu.Utils.randInt;
 
