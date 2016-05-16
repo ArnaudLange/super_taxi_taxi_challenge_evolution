@@ -10,9 +10,11 @@ public class Controleur {
 
     public static void main(String[] args) {
 
-        System.out.println("Test");
-
-        Carte carte = new InterpreteurCarte("file.txt");
+        Carte carte = InterpreteurCarte.Interpreter("fileCarte.txt");
         Jeu jeu = new Jeu(carte);
+
+        System.out.println("Creation de joueurs pour le test, fait manuellement par ces derniers normalement.");
+
+        Joueur j1 = new Joueur("Jose");
     }
 }

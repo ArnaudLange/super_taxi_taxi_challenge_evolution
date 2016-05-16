@@ -1,4 +1,4 @@
-package proto;
+package serveur;
 
 import static jeu.Utils.randInt;
 
@@ -7,6 +7,11 @@ import static jeu.Utils.randInt;
  */
 public class Serveur {
 
+    public Serveur() {
+        System.out.println("Creation socket.");
+        System.out.println("Serveur à l'ecoute sur le port : 50000.");
+        System.out.println("Serveur en attente de connexions.");
+    }
 
     /*
     private int port;

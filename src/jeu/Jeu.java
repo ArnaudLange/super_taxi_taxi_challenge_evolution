@@ -16,10 +16,10 @@ public class Jeu {
 
         System.out.println("Creation de la partie.");
         System.out.println("Initialisation de toutes les données.");
-        System.out.println("Carte...");
+        System.out.println("\tCarte...");
         this.carte=carte;
 
-        System.out.println("Position de l'objectif...");
+        System.out.println("\tPosition de l'objectif...");
         this.posXObj=15;
         this.posYObj=15;
 

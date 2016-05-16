@@ -8,7 +8,7 @@ import java.util.List;
 public class InterpreteurCarte {
 
     public static Carte Interpreter(String fichierCarte) {
-        System.out.println("Ouverture fichier.");
+        System.out.println("Ouverture fichier texte contenant la carte.");
         System.out.println("Creation de la carte case à case.");
         return new Carte();
 
