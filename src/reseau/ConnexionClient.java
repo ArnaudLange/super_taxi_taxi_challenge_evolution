@@ -28,7 +28,8 @@ public class ConnexionClient implements Runnable
         this.out = new PrintWriter(this.socket.getOutputStream());
     }
 
-    public void envoyerMessage(String s){
+    public void envoyerMessage(String s)
+    {
         out.println(s);
     }
 
@@ -36,8 +37,6 @@ public class ConnexionClient implements Runnable
     {
         try
         {
-            if (socket == null)
-                System.out.println("socket null");
             System.out.println("Le client numéro " + joueur.getId() + " est connecté !");
 
 
