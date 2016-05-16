@@ -1,5 +1,9 @@
 package réseau;
 
+import jeu.Joueur;
+
+import java.util.ArrayList;
+
 import static jeu.Utils.randInt;
 
 /**
@@ -8,66 +12,24 @@ import static jeu.Utils.randInt;
 public class Serveur {
 
     public Serveur() {
-        System.out.println("Creation socket.");
-        System.out.println("Serveur à l'ecoute sur le port : 50000.");
-        System.out.println("Serveur en attente de connexions.");
+        System.out.println("-------------------");
+        System.out.println("Creation du serveur.");
+        System.out.println("\tCreation socket.");
+        System.out.println("\tServeur à l'ecoute sur le port : 50000.");
+        System.out.println("\tServeur en attente de connexions.");
     }
 
-    /*
-    private int port;
-    private Carte carte;
-
-    public Serveur(int port) {
-
-        this.carte=new Carte();
-        System.out.println("Chargement de la carte.");
-
-        this.port = port;
-        System.out.println("Connection du serveur sur le port " + port);
-
+    public void getJoueurs(Joueur j, ArrayList<Joueur> listJoueur){
+        System.out.println("Le serveur capte la tentative de connexion d'un client.");
+        System.out.println("Il récupère donc le joueur en question : " + j.getNom());
+        System.out.println("Le serveur envoie une requête d'initialisation du joueur.");
+        j.initialisation();
+        System.out.println("Ajout du joueur dans la liste des joueurs.");
+        listJoueur.add(j);
     }
 
-    public void inscription(Joueur j){
-        System.out.println("Inscription du joueur "+j);
+    public void gererActionJoueur(Joueur j, String a){
+        System.out.println("Réception de l'action \"" + a + "\" du joueur \"" + j.getNom() + "\" par le serveur.");
     }
 
-    public void sendInfo(){
-        System.out.println("Le serveur envoie les informations nécessaires au joueur.");
-    }
-
-    public void getInfo(){
-        System.out.println("Le serveur envoie une requête au joueur pour obtenir les informations d'action.");
-    }
-
-    public int gererInfo(){
-        int random = randInt(5);
-        if(random == 1){
-            System.out.println("\tle joueur a atteint l'objectif.");
-            System.out.println("Le serveur envoie au joueur qu'il a gagné.");
-            System.out.println("\n-------\nYou Win\n-------");
-            return 1;
-        }
-        else if(random == 2){
-            System.out.println("\tle joueur se deplace de x case dans la direction souhaitee.");
-            return 0;
-        }
-        else if(random == 3){
-            System.out.println("\tle joueur effectue une action impossible et a un accident.");
-            System.out.println("Le serveur envoie au joueur qu'il a perdu.");
-            System.out.println("\n---------\nGame Over\n---------");
-            return 1;
-        }
-        else if(random == 4){
-            System.out.println("\tle joueur a un accident avec un autre joueur et perd la partie.");
-            System.out.println("Le serveur envoie au joueur qu'il a perdu.");
-            System.out.println("\n---------\nGame Over\n---------");
-            return 1;
-        }
-        else if(random == 5){
-            System.out.println("\tle joueur roule trop vite et perd x points.");
-            return 0;
-        }
-        return 0;
-    }
-    */
 }

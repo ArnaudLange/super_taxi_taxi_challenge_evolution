@@ -18,6 +18,8 @@ public class Jeu {
 
     public Jeu(Carte carte) {
 
+        System.out.println("-------------------");
+        System.out.println("Initialisation du jeu.");
         System.out.println("Creation de la partie.");
         System.out.println("Initialisation de toutes les données.");
         System.out.println("\tCarte...");
@@ -29,5 +31,9 @@ public class Jeu {
 
         System.out.println("\tListe de joueurs (vide pour le moment)...");
         this.listeJoueurs=new ArrayList<Joueur>();
+    }
+
+    public List<Joueur> getListeJoueurs() {
+        return listeJoueurs;
     }
 }
