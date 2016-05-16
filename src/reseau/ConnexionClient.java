@@ -16,40 +16,34 @@ import java.net.Socket;
 public class ConnexionClient implements Runnable
 {
 
-    private ServerSocket listeningSocket;
-    private Joueur joueur;
     private Socket socket;
+    private Joueur joueur;
     private PrintWriter out = null;
     private BufferedReader in = null;
-    private int nbrclient = 1;
 
-    public ConnexionClient(ServerSocket s, Joueur joueur)
+    public ConnexionClient(Socket s, Joueur joueur)
     {
-        this.listeningSocket = s;
+        this.socket = s;
         this.joueur = joueur;
     }
 
     public void run()
     {
+        try
+        {
+            System.out.println("Le client numéro " + joueur.getId() + " est connecté !");
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream());
 
-        try {
+            // Traitement
+            out.println("entrez votre nom :  ");
+            out.flush();
 
-            while(true)
-            {
-                socket = listeningSocket.accept(); // Un client se connecte on l'accepte
-                System.out.println("Le client numéro "+nbrclient+ " est connecté !");
-                nbrclient++;
-                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                out = new PrintWriter(socket.getOutputStream());
+            joueur.setNom(in.readLine());
 
-                out.println("entrez votre nom :  ");
-                out.flush();
-                joueur.setNom(in.readLine());
+            System.out.println("Nom joueur (côté serveur) : " + joueur.getNom());
 
-                System.out.println("Nom joueur (côté serveur) : " + joueur.getNom());
-
-                socket.close();
-            }
+            socket.close();
 
         } catch (IOException e)
         {

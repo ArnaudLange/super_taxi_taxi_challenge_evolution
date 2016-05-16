@@ -16,20 +16,24 @@ public class Serveur {
         {
             // Création du socket d'écoute
             listeningSocket = new ServerSocket(2009);
-
-
-            Joueur joueur = new Joueur("", 10, 0, true, null);
-            listeJoueur.add(joueur);
-
-
-            Thread t = new Thread(new ConnexionClient(listeningSocket, joueur));
-            t.start();
             System.out.println("Serveur à l'écoute sur le port " + listeningSocket.getLocalPort());
 
+            while(true)
+            {
+                // Création du prochain joueur relié au client qui se connectera
+                Joueur joueur = new Joueur();
+                listeJoueur.add(joueur);
 
-        } catch (IOException e)
+                // Attente de la connexion à un client
+                Socket socketClient = listeningSocket.accept();
+
+                // Lancement du thread qui gèrera le client avec l'objet Joueur en paramètre
+                Thread t = new Thread(new ConnexionClient(socketClient, joueur));
+                t.start();
+            }
+        }
+        catch (IOException e)
         {
-
             e.printStackTrace();
         }
     }

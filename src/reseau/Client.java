@@ -31,7 +31,7 @@ public class Client {
             out.println(nom);
             out.flush();
 
-            socket.close();
+            //socket.close();
         } catch (IOException e) {
 
             e.printStackTrace();

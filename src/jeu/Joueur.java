@@ -10,30 +10,74 @@ public class Joueur
 
     private static int next_id=1;
     private int id;
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
     private String nom;
     private int nbPoints;
     private int vitesse;
     private boolean etatMarche;
     private PointCardinal direction; // N S E W pour représenter chaque point cardinal
 
-    public Joueur(String nom,int nbPoints, int vitesse, boolean etatMarche, PointCardinal direction)
+    public Joueur()
     {
         this.id = next_id++;
-        this.nom = nom;
-        this.nbPoints = nbPoints;;
-        this.etatMarche = etatMarche;
-        this.vitesse = vitesse;
+        this.nom = "";
+        this.nbPoints = 10;
+        this.etatMarche = true;
+        this.vitesse = 0;
+        this.direction = null;
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public PointCardinal getDirection()
+    {
+        return direction;
+    }
+
+    public void setDirection(PointCardinal direction)
+    {
         this.direction = direction;
     }
 
+    public boolean isEtatMarche()
+    {
+        return etatMarche;
+    }
 
+    public void setEtatMarche(boolean etatMarche)
+    {
+        this.etatMarche = etatMarche;
+    }
+
+    public int getNbPoints()
+    {
+        return nbPoints;
+    }
+
+    public void setNbPoints(int nbPoints)
+    {
+        this.nbPoints = nbPoints;
+    }
+
+    public String getNom()
+    {
+        return nom;
+    }
+
+    public void setNom(String nom)
+    {
+        this.nom = nom;
+    }
+
+    public int getVitesse()
+    {
+        return vitesse;
+    }
+
+    public void setVitesse(int vitesse)
+    {
+        this.vitesse = vitesse;
+    }
 }
