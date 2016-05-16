@@ -27,8 +27,20 @@ public class Serveur {
         listJoueur.add(j);
     }
 
-    public void gererActionJoueur(Joueur j, String a){
+    public String gererActionJoueur(Joueur j, String a){
         System.out.println("Réception de l'action \"" + a + "\" du joueur \"" + j.getNom() + "\" par le serveur.");
+        return a;
+    }
+
+    public String envoieRequeteJoueur(Joueur j){
+        System.out.println("-------------------");
+        System.out.println("Requête d'action du joueur : \"" + j.getNom() + "\".");
+        return j.joue();
+    }
+
+    public void envoieInfoJoueurs(Joueur j, int nbPoints, int vitesse, boolean etat, int posX, int posY){
+        System.out.println("Envoie des informations relative au joueur.");
+        j.reinitialiseInfo(nbPoints, vitesse, etat, posX, posY);
     }
 
 }

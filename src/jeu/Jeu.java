@@ -33,6 +33,10 @@ public class Jeu {
         this.listeJoueurs=new ArrayList<Joueur>();
     }
 
+    public Carte getCarte() {
+        return carte;
+    }
+
     public List<Joueur> getListeJoueurs() {
         return listeJoueurs;
     }

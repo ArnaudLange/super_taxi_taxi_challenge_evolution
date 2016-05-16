@@ -5,7 +5,5 @@ package carte;
  */
 public class Virage extends Case{
 
-    private char arrive; //indique le pt cardinal d'arrivée
-
 
 }
