@@ -4,7 +4,6 @@ import jeu.Joueur;
 
 import java.util.ArrayList;
 
-import static jeu.Utils.randInt;
 
 /**
  * Created by Cokral on 03/05/2016.
