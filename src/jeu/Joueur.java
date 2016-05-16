@@ -13,6 +13,7 @@ public class Joueur {
     private char direction; // N S E W pour représenter chaque point cardinal
 
     public Joueur(String nom){
+        System.out.println("Creation du joueur : " + nom);
         this.nom = nom;
     }
 

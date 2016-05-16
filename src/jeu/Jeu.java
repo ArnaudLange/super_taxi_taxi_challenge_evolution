@@ -2,6 +2,7 @@ package jeu;
 
 import carte.Carte;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +28,6 @@ public class Jeu {
         this.posYObj=15;
 
         System.out.println("\tListe de joueurs (vide pour le moment)...");
-        this.listeJoueurs=new List<Joueur>();
+        this.listeJoueurs=new ArrayList<Joueur>();
     }
 }
