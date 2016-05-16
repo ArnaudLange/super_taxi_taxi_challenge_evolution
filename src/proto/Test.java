@@ -1,5 +1,8 @@
 package proto;
 
+import jeu.*;
+import carte.*;
+
 /**
  * Created by Cokral on 03/05/2016.
  */
