@@ -7,10 +7,7 @@ import java.util.List;
  */
 public class Carte {
 
-    private List<Case> listeCases;
-
-
-    public Carte(String nomFichierCarte){
+    public Carte(){
         System.out.println("Carte créée");
     }
 }

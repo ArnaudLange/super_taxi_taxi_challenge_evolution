@@ -7,8 +7,10 @@ import java.util.List;
  */
 public class InterpreteurCarte {
 
-    public InterpreteurCarte(String nomFichier) {
+    public static Carte Interpreter(String fichierCarte) {
         System.out.println("Ouverture fichier.");
         System.out.println("Creation de la carte case à case.");
+        return new Carte();
+
     }
 }
