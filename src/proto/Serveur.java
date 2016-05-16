@@ -1,6 +1,6 @@
 package proto;
 
-import static proto.Utils.randInt;
+import static jeu.Utils.randInt;
 
 /**
  * Created by Cokral on 03/05/2016.

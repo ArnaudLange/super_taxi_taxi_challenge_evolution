@@ -1,7 +1,8 @@
-package proto;
+package jeu;
 
 import jeu.*;
 import carte.*;
+import proto.Serveur;
 
 /**
  * Created by Cokral on 03/05/2016.
