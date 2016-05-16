@@ -31,6 +31,7 @@ public class ConnexionClient implements Runnable
     public void envoyerMessage(String s)
     {
         out.println(s);
+        out.flush();
     }
 
     public void run()
