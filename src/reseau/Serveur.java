@@ -34,7 +34,7 @@ public class Serveur {
                     timeout = true;
                     System.out.println(" On a 2 joueurs ! ");
                     System.out.println(" On rentre dans le timer");
-                    listeningSocket.setSoTimeout(2000);
+                    listeningSocket.setSoTimeout(10000);
                 }
 
                 // Création du prochain joueur relié au client qui se connectera
