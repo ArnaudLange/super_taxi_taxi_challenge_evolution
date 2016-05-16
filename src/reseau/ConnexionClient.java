@@ -31,6 +31,8 @@ public class ConnexionClient implements Runnable
     {
         try
         {
+            if (socket == null)
+                System.out.println("socket null");
             System.out.println("Le client numéro " + joueur.getId() + " est connecté !");
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream());
