@@ -1,10 +1,10 @@
 1 . On lance le controlleur // done
 2 . Le controlleur charge la carte // done
 2 . le controlleur démarre le serveur // done 
-3 . le serveur est en attente d'un client
-4 . une fois que le premier joueur( ou le deuxième si on veut 2 joueurs mini )
+3 . le serveur est en attente d'un client //done
+4 . une fois que le premier joueur( ou le deuxième si on veut 2 joueurs mini ) //done
 se connecte, on lance un timeOut, les autres joueurs qui veulent se connecter pour la prochaine partie on donc un certain temps pour se connecter. Au delà le serveur n'acceptera plus d'autre clients
-5 . Quand un joueur se connecte, on lui demande son nom, les ID des joueurs seront gérés automatiquement
+5 . Quand un joueur se connecte, on lui demande son nom, les ID des joueurs seront gérés automatiquement //done
 6 . Une fois que le timeOut est expiré, le serveur annonce aux joueurs que la partie va commencer (autre timeOut)
 7 . Le controleur prépare la partie ( position des joueurs ... )
 8 . le controlleur lance la partie et lance le timer de tour

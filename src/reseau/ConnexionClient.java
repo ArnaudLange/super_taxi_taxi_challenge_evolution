@@ -21,10 +21,15 @@ public class ConnexionClient implements Runnable
     private PrintWriter out = null;
     private BufferedReader in = null;
 
-    public ConnexionClient(Socket s, Joueur joueur)
-    {
+    public ConnexionClient(Socket s, Joueur joueur) throws IOException {
         this.socket = s;
         this.joueur = joueur;
+        this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+        this.out = new PrintWriter(this.socket.getOutputStream());
+    }
+
+    public void envoyerMessage(String s){
+        out.println(s);
     }
 
     public void run()
@@ -34,8 +39,7 @@ public class ConnexionClient implements Runnable
             if (socket == null)
                 System.out.println("socket null");
             System.out.println("Le client numéro " + joueur.getId() + " est connecté !");
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream());
+
 
             // Traitement
             out.println("entrez votre nom :  ");

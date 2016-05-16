@@ -33,8 +33,8 @@ public class Serveur {
                 {
                     timeout = true;
                     System.out.println(" On a 2 joueurs ! ");
-                    System.out.println(" On rentre dans le timer");
-                    listeningSocket.setSoTimeout(10000);
+                    System.out.println(" On déclenche le timer");
+                    listeningSocket.setSoTimeout(10000); // débloque le accept du socket
                 }
 
                 // Création du prochain joueur relié au client qui se connectera
@@ -52,11 +52,9 @@ public class Serveur {
                 }
                 catch (SocketTimeoutException e)
                 {
-                    System.out.print("Temps écoulé pour d'éventuels nouveaux joueurs. Début de la partie imminent");
+                    System.out.println("Temps écoulé pour d'éventuels nouveaux joueurs. Début de la partie imminent");
                 }
             }
-
-            System.out.println("On sort du timer, la partie va commencer");
         }
         catch (IOException e)
         {
