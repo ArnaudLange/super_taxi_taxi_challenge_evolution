@@ -20,9 +20,11 @@ public class Controleur
         File fichierCarte = new File("src/carte/carte001.txt"); // on initialise le fichier texte de la carte
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
         Jeu jeu = new Jeu(new ArrayList<Joueur>(), carte);
-        List listeConnexionClient = new ArrayList();
+        List<ConnexionClient> listeConnexionClient = new ArrayList();
 
         Serveur.creerServeur(jeu.getListeJoueurs(), listeConnexionClient);
+        listeConnexionClient.get(1).envoyerMessage("bonjour");
+
 
     }
 }
