@@ -14,11 +14,13 @@ public class Client {
     private Scanner sc = null;
     private String nom;
 
-    public void run(){
+    public void run()
+    {
 
         Socket socket;
-        try {
 
+        try
+        {
 
             socket = new Socket("localhost",2009);
             out = new PrintWriter(socket.getOutputStream()); //
@@ -31,9 +33,8 @@ public class Client {
             out.println(nom);
             out.flush();
 
-            //socket.close();
-        } catch (IOException e) {
-
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
     }
