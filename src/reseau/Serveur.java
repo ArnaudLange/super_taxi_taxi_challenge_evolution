@@ -27,14 +27,16 @@ public class Serveur {
 
             boolean timeout = false;
 
-            while(!timeout)
+            while(true)
             {
                 if (listeJoueur.size() >= 2)
                 {
+                    if (!timeout){
+                        listeningSocket.setSoTimeout(10000); // débloque le accept du socket
+                    }
                     timeout = true;
                     System.out.println(" On a 2 joueurs ! ");
                     System.out.println(" On déclenche le timer");
-                    listeningSocket.setSoTimeout(10000); // débloque le accept du socket
                 }
 
                 // Création du prochain joueur relié au client qui se connectera
