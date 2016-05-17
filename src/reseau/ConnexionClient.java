@@ -57,4 +57,8 @@ public class ConnexionClient implements Runnable
         }
     }
 
+    public Joueur getJoueur()
+    {
+        return joueur;
+    }
 }
