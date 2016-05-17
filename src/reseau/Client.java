@@ -16,6 +16,7 @@ public class Client {
     private Scanner sc = null;
     private String nom;
     private Action action;
+    private boolean gameOver = false;
 
     public void run()
     {
@@ -36,15 +37,30 @@ public class Client {
             out.println(nom);
             out.flush();
 
-        } catch (IOException e)
+            while(!gameOver){
+                String messageEntrant = in.readLine();
+                if (messageEntrant == "game over"){
+                    System.out.println("Vous avez perdu");
+                    gameOver = true;
+                }
+                if (messageEntrant == "action"){
+                    System.out.println("Prochaine action ? ");
+                    action = Action.getAction(sc.nextLine());
+                    out.println(action);
+                    out.flush();
+                    }
+                }
+                socket.close();
+
+    }
+        catch (UnknownHostException e1) {
+            e1.printStackTrace();
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
         }
-    }
-    public void envoyerAction(){
-        System.out.println("Prochaine action ? ");
-        action = Action.getAction(sc.nextLine());
-        out.println(action);
-        out.flush();
-    }
+
 }
+}
+
