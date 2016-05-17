@@ -7,21 +7,19 @@ import static prototypeRoute.Direction.*;
  */
 public class Route extends Case{
 
-    public Route(int posX, int posY, Direction d) {
-        super(posX, posY, d);
+    public Route(int posX, int posY) {
+        super(posX, posY);
     }
 
     @Override
-    public boolean checkAction(Direction d) {
-
-        if ((d == North || d == South) && (this.getD()==North || this.getD()==South)){
-            return true;
-        }
-        else if ((d == West || d == East) && (this.getD()==West || this.getD()==East)){
-            return true;
+    public boolean checkAction(Joueur j) {
+        if (j.getVitesse() <= this.getVitesseAutorisee()){
+            return this.getListeDirection().contains(j.getDirection());
         }
         else{
-            return false;
+            j.setNbPoints(j.getNbPoints()-3);
+            return this.getListeDirection().contains(j.getDirection());
         }
+
     }
 }

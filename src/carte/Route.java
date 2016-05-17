@@ -1,22 +1,33 @@
 package carte;
 
+import static jeu.Utils.randInt;
+
 /**
  * Created by jimmy on 02/05/16.
  */
 public class Route extends Case{
 
-    private char direction; // N S E W point cardinal
-    private boolean stop;
-
-    public Route() {
+    public Route(){
+        super(0,0,Direction.North);
     }
 
-    public Route(int posx, int posy, boolean objectif, char direction, boolean stop){
-        this.posx = posx;
-        this.posy = posy;
-        this.objectif = objectif;
-        this.direction = direction;
-        this.stop = stop;
+    public Route(int posx, int posy, Direction d) {
+        super(posx, posy, d);
+    }
+
+    @Override
+    public boolean checkAction() {
+        System.out.println("La case vérifie si le déplacement dans la direction donnée est possible.");
+        int rand = randInt(2);
+        if(rand == 1){
+            System.out.println("Action possible.");
+            return true;
+        }
+        else if (rand == 2){
+            System.out.println("Action impossible.");
+            return false;
+        }
+        return false;
     }
 }
 

@@ -1,0 +1,15 @@
+A faire sur le prototype :
+
+    - Tour de boucle :
+        - Le serveur envoie les infos au client
+        - Accusé réception & update du client
+        - Le serveur envoie requête demande action au client
+        - Le client envoie sa requête
+        - Le controleur gère cette requête :
+            - applique l'action
+            - test si ça marche
+                - dans case
+                - si collision
+        - ça boucle
+
+
