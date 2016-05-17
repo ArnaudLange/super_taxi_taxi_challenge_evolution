@@ -1,5 +1,7 @@
 package reseau;
 
+import jeu.Action;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,6 +15,7 @@ public class Client {
     private BufferedReader in = null;
     private Scanner sc = null;
     private String nom;
+    private Action action;
 
     public void run()
     {
@@ -37,5 +40,11 @@ public class Client {
         {
             e.printStackTrace();
         }
+    }
+    public void envoyerAction(){
+        System.out.println("Prochaine action ? ");
+        action = Action.getAction(sc.nextLine());
+        out.println(action);
+        out.flush();
     }
 }
