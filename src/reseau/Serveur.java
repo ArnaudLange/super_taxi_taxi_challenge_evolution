@@ -29,7 +29,7 @@ public class Serveur
 
 
 
-            while(!timeout || (startTimeOut + TIMEOUT) < System.currentTimeMillis())
+            while(!timeout )//|| (startTimeOut + TIMEOUT) < System.currentTimeMillis())
             {
                 if (listeJoueur.size() >= 2)
                 {
