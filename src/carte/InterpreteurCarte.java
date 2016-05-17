@@ -1,5 +1,7 @@
 package carte;
 
+import jeu.Joueur;
+
 import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -200,5 +202,17 @@ public class InterpreteurCarte {
         positionDepart.remove(indiceAuHasard); // on l'enlève de la liste pour éviter
         // que 2 joueurs se retrouvent au même endroit
         return position;
+    }
+    public static void positionnerJoueur(List<Joueur> listJoueurs, Vector positionDepart){
+        for (Joueur joueur : listJoueurs)
+        {
+            int[] position = InterpreteurCarte.choisirPositionDepart(positionDepart);
+            int posX = position[0];
+            int posY = position[1];
+            System.out.println("La position en X du joueur est " + posX);
+            System.out.println("La position en Y du joueur est " + posY);
+            joueur.setPosX(posX);
+            joueur.setPosY(posY);
+        }
     }
 }
