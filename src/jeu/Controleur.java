@@ -52,18 +52,18 @@ public class Controleur
             {
                 System.out.println("Tour " + nbTour++);
 
-                for (Joueur j : listJoueurs)
+                for (ConnexionClient c : listeConnexionClient)
                 {
-                    if (j.getNbPoints() == 0)
+                    if (c.getJoueur().getNbPoints() == 0)
                     {
                         nbJoueurOut++;
                         continue;
                     }
 
                     // Un joueur a gagné
-                    if (((j.getPosX() == jeu.getPosXObjectif()) && (j.getPosY() == jeu.getPosYObjectif())))
+                    if (((c.getJoueur().getPosX() == jeu.getPosXObjectif()) && (c.getJoueur().getPosY() == jeu.getPosYObjectif())))
                     {
-                        jeu.setGagnant(j);
+                        jeu.setGagnant(c.getJoueur());
                         jeuFini = true;
                         break;
                     }
@@ -76,12 +76,12 @@ public class Controleur
                     }
 
                     for (Joueur k : listJoueurs)
-                        if(j.getPosX() == k.getPosX() && j.getPosY() == k.getPosY())
-                            j.setNbPoints(0); // TODO envoyer aux clients colisions
+                        if(c.getJoueur().getPosX() == k.getPosX() && c.getJoueur().getPosY() == k.getPosY())
+                            c.getJoueur().setNbPoints(0); // TODO envoyer aux clients colisions
 
                     nbJoueurOut = 0;
+                    c.envoyerMessage("action");
                 }
-
 
                 // On relance un tour
                 tempsDebutTour = System.currentTimeMillis();
