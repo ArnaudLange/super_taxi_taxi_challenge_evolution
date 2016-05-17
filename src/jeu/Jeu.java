@@ -26,8 +26,14 @@ public class Jeu
         return carte;
     }
 
-    public Joueur getGagnant() {
+    public Joueur getGagnant()
+    {
         return gagnant;
+    }
+
+    public void setGagnant(Joueur gagnant)
+    {
+        this.gagnant = gagnant;
     }
 
     public List<Joueur> getListeJoueurs() {

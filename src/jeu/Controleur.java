@@ -38,6 +38,57 @@ public class Controleur
             joueur.setPosY(posY);
         }
 
+        int nbTour=1;
+        int nbJoueurOut = 0;
+        boolean jeuFini = false;
+        int tempsTour = 5000;
+        long tempsDebutTour = System.currentTimeMillis();
+        long tempsFinTour = tempsDebutTour + tempsTour;
+
+        while(!jeuFini)
+        {
+            // Temps du tour atteint
+            if (System.currentTimeMillis() >= tempsFinTour)
+            {
+                System.out.println("Tour " + nbTour++);
+
+                for (Joueur j : listJoueurs)
+                {
+                    if (j.getNbPoints() == 0)
+                    {
+                        nbJoueurOut++;
+                        continue;
+                    }
+
+                    // Un joueur a gagné
+                    if (((j.getPosX() == jeu.getPosXObjectif()) && (j.getPosY() == jeu.getPosYObjectif())))
+                    {
+                        jeu.setGagnant(j);
+                        jeuFini = true;
+                        break;
+                    }
+
+                    // Tous les joueurs sont éliminés
+                    if(nbJoueurOut == listJoueurs.size())
+                    {
+                        jeuFini = true;
+                        break;
+                    }
+
+                    for (Joueur k : listJoueurs)
+                        if(j.getPosX() == k.getPosX() && j.getPosY() == k.getPosY())
+                            j.setNbPoints(0); // TODO envoyer aux clients colisions
+
+                    nbJoueurOut = 0;
+                }
+
+
+                // On relance un tour
+                tempsDebutTour = System.currentTimeMillis();
+                tempsFinTour = tempsDebutTour + tempsTour;
+            }
+        }
     }
 }
 
+<
