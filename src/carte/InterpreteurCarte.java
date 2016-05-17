@@ -175,7 +175,8 @@ public class InterpreteurCarte {
         }
         return null;
     }
-    public static Vector trouverPositionDepart(Carte carte){
+    public static Vector trouverPositionDepart(Carte carte)
+    {
         Carte carteDepart = new Carte();
         //int[] posX = new int[30];
         //int[] posY = new int[30];

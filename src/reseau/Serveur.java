@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Serveur
 {
-    public static int TIMEOUT = 5000;
+    public static int TIMEOUT = 10000;
 
     public static void creerServeur(List listeJoueur, List listeConnexionClient)
     {
@@ -27,10 +27,13 @@ public class Serveur
 
             boolean timeout = false;
 
-            while(!timeout && (startTimeOut + TIMEOUT) < System.currentTimeMillis())
+
+
+            while(!timeout || (startTimeOut + TIMEOUT) < System.currentTimeMillis())
             {
                 if (listeJoueur.size() >= 2)
                 {
+
                     if (!timeout)
                         startTimeOut = System.currentTimeMillis();
 
@@ -38,6 +41,10 @@ public class Serveur
                     timeout = true;
                     System.out.println(" On a 2 joueurs ! ");
                     System.out.println(" On déclenche le timer");
+
+                    System.out.println("Current time : " + System.currentTimeMillis());
+                    System.out.print("Timeout : " + (startTimeOut + TIMEOUT));
+
                 }
 
                 // Création du prochain joueur relié au client qui se connectera
@@ -53,7 +60,6 @@ public class Serveur
                     connexionClient = new ConnexionClient(socketClient, joueur);
                     Thread t = new Thread(connexionClient);
                     t.start();
-                    connexionClient.envoyerMessage("hey");
                     listeConnexionClient.add(connexionClient);
                 }
                 catch (SocketTimeoutException e)

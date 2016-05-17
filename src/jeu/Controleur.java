@@ -27,8 +27,8 @@ public class Controleur
         Serveur.creerServeur(jeu.getListeJoueurs(), listeConnexionClient);
         Vector positionDepart = InterpreteurCarte.trouverPositionDepart(carte);
 
-        for (Joueur joueur : listJoueurs){
-
+        for (Joueur joueur : listJoueurs)
+        {
             int[] position = InterpreteurCarte.choisirPositionDepart(positionDepart);
             int posX = position[0];
             int posY = position[0];
@@ -36,7 +36,6 @@ public class Controleur
             System.out.println("La position en Y du joueur est " + posY);
             joueur.setPosX(posX);
             joueur.setPosY(posY);
-
         }
 
     }
