@@ -5,8 +5,10 @@ package jeu;
  */
 public enum  Action {
     RIEN,
-    GAUCHE,
-    DROITE,
+    NORD,
+    SUD,
+    EST,
+    OUEST,
     ACCELERER,
     RALENTIR;
 
@@ -15,10 +17,14 @@ public static Action getAction(String s){
     switch(s.toLowerCase()) {
         case "rien":
             return RIEN;
-        case "gauche":
-            return GAUCHE;
-        case "droite":
-            return DROITE;
+        case "nord":
+            return NORD;
+        case "sud":
+            return SUD;
+        case "est" :
+            return EST;
+        case "ouest" :
+            return OUEST;
         case "accelerer":
             return ACCELERER;
         case "ralentir":

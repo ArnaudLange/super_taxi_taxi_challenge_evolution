@@ -14,6 +14,20 @@ public class Joueur
     private int nbPoints;
     private int vitesse;
     private boolean etatMarche;
+    private int posX ;
+    private int posY;
+    private PointCardinal direction; // N S E W pour représenter chaque point cardinal
+
+
+    public Joueur()
+    {
+        this.id = next_id++;
+        this.nom = "";
+        this.nbPoints = 10;
+        this.etatMarche = true;
+        this.vitesse = 0;
+        this.direction = null;
+    }
 
     public int getPosX() {
         return posX;
@@ -31,18 +45,19 @@ public class Joueur
         this.posY = posY;
     }
 
-    private int posX ;
-    private int posY;
-    private PointCardinal direction; // N S E W pour représenter chaque point cardinal
 
-    public Joueur()
-    {
-        this.id = next_id++;
-        this.nom = "";
-        this.nbPoints = 10;
-        this.etatMarche = true;
-        this.vitesse = 0;
-        this.direction = null;
+
+    public void accelerer(){
+        if (vitesse < 3)
+        {
+            this.vitesse += 1;
+        }
+    }
+    public void ralentir(){
+        if (vitesse >0)
+        {
+            this.vitesse -= 1;
+        }
     }
 
     public int getId()
