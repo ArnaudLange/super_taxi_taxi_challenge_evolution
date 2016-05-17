@@ -175,16 +175,19 @@ public class InterpreteurCarte {
         }
         return null;
     }
-    public static Vector trouverPositionDepart(Carte carte)
+    public static Vector trouverPositionDepart(Carte carte) //TODO (pas toutes les positions dans le vector)
     {
         //Carte carteDepart = new Carte();
         //int[] posX = new int[30];
         //int[] posY = new int[30];
         Vector positionDepart = new Vector(); // contient les couples de positions possible
+
         for (int i = 0; i<carte.getLongueur()-1;i++){
-            for (int j = 0; j<carte.getLargeur()-1;i++){
+            for (int j = 0; j<carte.getLargeur()-1;j++){
                 if (carte.getTableau()[i][j] instanceof Route){
                     int[] position = new int[2];
+                    position[0] = i;
+                    position[1] = j;
                     positionDepart.addElement(position); //on replit la liste des positions possibles
                 }
             }
@@ -192,8 +195,7 @@ public class InterpreteurCarte {
         return positionDepart;
     }
     public static int[] choisirPositionDepart(Vector positionDepart){
-        int indiceAuHasard = (int) ((positionDepart.size() - 1) % Math.random());
-        System.out.print(indiceAuHasard);
+        int indiceAuHasard =(int) (Math.random() * (positionDepart.size() - 1)) ;
         int[] position = (int[]) positionDepart.get(indiceAuHasard);
         positionDepart.remove(indiceAuHasard); // on l'enlève de la liste pour éviter
         // que 2 joueurs se retrouvent au même endroit
