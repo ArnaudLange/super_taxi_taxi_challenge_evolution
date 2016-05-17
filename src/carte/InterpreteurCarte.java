@@ -1,7 +1,10 @@
 package carte;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 import static javax.print.attribute.standard.ReferenceUriSchemesSupported.FILE;
 
@@ -171,5 +174,27 @@ public class InterpreteurCarte {
             e.printStackTrace();
         }
         return null;
+    }
+    public static Vector trouverPositionDepart(Carte carte){
+        Carte carteDepart = new Carte();
+        //int[] posX = new int[30];
+        //int[] posY = new int[30];
+        Vector positionDepart = new Vector(); // contient les couples de positions possible
+        for (int i = 0; i<carte.getLongueur()-1;i++){
+            for (int j = 0; j<carte.getLargeur()-1;i++){
+                if (carte.getTableau()[i][j] instanceof Route){
+                    int[] position = new int[2];
+                    positionDepart.addElement(position); //on replit la liste des positions possibles
+                }
+            }
+        }
+        return positionDepart;
+    }
+    public static int[] choisirPositionDepart(Vector positionDepart){
+        int indiceAuHasard = (int) (Math.random() * (positionDepart.size() - 1));
+        int[] position = (int[]) positionDepart.get(indiceAuHasard);
+        positionDepart.remove(indiceAuHasard); // on l'enlève de la liste pour éviter
+        // que 2 joueurs se retrouvent au même endroit
+        return position;
     }
 }

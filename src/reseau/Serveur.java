@@ -64,9 +64,6 @@ public class Serveur
                 System.out.println("Début de partie");
             }
         }
-
-
-
         catch (IOException e)
         {
             e.printStackTrace();

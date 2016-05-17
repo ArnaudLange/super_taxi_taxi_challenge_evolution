@@ -17,6 +17,11 @@ public class Carte
         this.longueur = longueur;
         this.tableau = new Case[this.largeur][this.longueur];
     }
+    public Carte (){
+        this.largeur = 0;
+        this.longueur = 0;
+        this.tableau = null;
+    }
 
     public int getLargeur()
     {
