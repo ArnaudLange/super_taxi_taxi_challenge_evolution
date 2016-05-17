@@ -31,7 +31,7 @@ public class Controleur
         {
             int[] position = InterpreteurCarte.choisirPositionDepart(positionDepart);
             int posX = position[0];
-            int posY = position[0];
+            int posY = position[1];
             System.out.println("La position en X du joueur est " + posX);
             System.out.println("La position en Y du joueur est " + posY);
             joueur.setPosX(posX);

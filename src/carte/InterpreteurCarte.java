@@ -177,7 +177,7 @@ public class InterpreteurCarte {
     }
     public static Vector trouverPositionDepart(Carte carte)
     {
-        Carte carteDepart = new Carte();
+        //Carte carteDepart = new Carte();
         //int[] posX = new int[30];
         //int[] posY = new int[30];
         Vector positionDepart = new Vector(); // contient les couples de positions possible
@@ -192,7 +192,8 @@ public class InterpreteurCarte {
         return positionDepart;
     }
     public static int[] choisirPositionDepart(Vector positionDepart){
-        int indiceAuHasard = (int) (Math.random() * (positionDepart.size() - 1));
+        int indiceAuHasard = (int) ((positionDepart.size() - 1) % Math.random());
+        System.out.print(indiceAuHasard);
         int[] position = (int[]) positionDepart.get(indiceAuHasard);
         positionDepart.remove(indiceAuHasard); // on l'enlève de la liste pour éviter
         // que 2 joueurs se retrouvent au même endroit

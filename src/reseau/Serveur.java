@@ -37,7 +37,7 @@ public class Serveur
                     if (!timeout)
                         startTimeOut = System.currentTimeMillis();
 
-                    listeningSocket.setSoTimeout((int)(startTimeOut + TIMEOUT - System.currentTimeMillis())); // débloque le accept du socket
+                    listeningSocket.setSoTimeout(TIMEOUT);//(int)(startTimeOut + TIMEOUT - System.currentTimeMillis())); // débloque le accept du socket
                     timeout = true;
                     System.out.println(" On a 2 joueurs ! ");
                     System.out.println(" On déclenche le timer");
