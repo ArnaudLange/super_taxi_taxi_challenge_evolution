@@ -11,15 +11,21 @@ public class Route extends Case{
         super(posX, posY);
     }
 
+
+    //
     @Override
     public boolean checkAction(Joueur j) {
         if (j.getVitesse() <= this.getVitesseAutorisee()){
             return this.getListeDirection().contains(j.getDirection());
         }
         else{
-            j.setNbPoints(j.getNbPoints()-3);
-            return this.getListeDirection().contains(j.getDirection());
+            if (this.getListeDirection().contains(j.getDirection())){
+                j.setNbPoints(j.getNbPoints()-3);
+                return true;
+            }
+            else {
+                return false;
+            }
         }
-
     }
 }
