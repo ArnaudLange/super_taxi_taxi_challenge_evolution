@@ -10,7 +10,7 @@ public class Route extends Case{
     public Route(){
         super(0,0,Direction.North);
     }
-
+accelere
     public Route(int posx, int posy, Direction d) {
         super(posx, posy, d);
     }

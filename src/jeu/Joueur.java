@@ -63,11 +63,11 @@ public class Joueur {
         }
         else if (rand == 4){
             System.out.println("Le joueur choisit de tourner à droite.");
-            action = "virageD";
+            action = "droite";
         }
         else if (rand == 5){
             System.out.println("Le joueur choisit de tourner à gauche.");
-            action = "virageG";
+            action = "gauche";
         }
         return action;
     }
