@@ -22,8 +22,8 @@ public class Controleur
         File fichierCarte = new File("src/carte/carte001.txt"); // on initialise le fichier texte de la carte
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        carte.gestionDeplacements(3,0,1, PointCardinal.EAST);
-
+        List<Integer> posFinale = carte.gestionDeplacements(1,4,5, PointCardinal.EAST);
+        System.out.println("Position finale : "+posFinale);
 
         /*
         List<Joueur> listJoueurs = new ArrayList<>();

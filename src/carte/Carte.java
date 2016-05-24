@@ -63,6 +63,7 @@ public class Carte
         List<PointCardinal> directionCases = new ArrayList<>();
 
         for (int i = 0; i < vitesse ; i++) {
+            System.out.println("Position : "+posX+", "+posY);
             if (tableau[posX][posY] instanceof Route){
                 directionCases = ((List<PointCardinal>)((Route)tableau[posX][posY]).getDirections());
             }
@@ -72,6 +73,7 @@ public class Carte
             }
             if (Direction.equals(PointCardinal.SOUTH)) {
                 if (directionCases.contains(PointCardinal.SOUTH)){
+                    System.out.println("Déplacement vers le sud effectué.");
                     posY--;
                     if (directionCases.contains(PointCardinal.WEST)){
                         System.out.println("Priorite a droite, il faut ping le controleur.");
@@ -83,6 +85,7 @@ public class Carte
             }
             else if (Direction.equals(PointCardinal.NORTH)){
                 if (directionCases.contains(PointCardinal.NORTH)){
+                    System.out.println("Déplacement vers le nord effectué.");
                     posY++;
                     if (directionCases.contains(PointCardinal.EAST)){
                         System.out.println("Priorite a droite, il faut ping le controleur.");
@@ -94,6 +97,7 @@ public class Carte
             }
             else if (Direction.equals(PointCardinal.EAST)){
                 if (directionCases.contains(PointCardinal.EAST)){
+                    System.out.println("Déplacement vers l'est effectué.");
                     posX++;
                     if (directionCases.contains(PointCardinal.SOUTH)){
                         System.out.println("Priorite a droite, il faut ping le controleur.");
@@ -105,6 +109,7 @@ public class Carte
             }
             else if (Direction.equals(PointCardinal.WEST)){
                 if (directionCases.contains(PointCardinal.WEST)){
+                    System.out.println("Déplacement vers l'ouest effectué.");
                     posX--;
                     if (directionCases.contains(PointCardinal.NORTH)){
                         System.out.println("Priorite a droite, il faut ping le controleur.");
@@ -115,6 +120,8 @@ public class Carte
                 }
             }
         }
+        positionFinale.add(posX);
+        positionFinale.add(posY);
         return positionFinale;
     }
 }
