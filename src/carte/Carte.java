@@ -1,6 +1,8 @@
 package carte;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by jimmy on 02/05/16.
@@ -54,5 +56,65 @@ public class Carte
     public Carte(Case [][] tableau)
     {
         this.tableau = tableau;
+    }
+
+    public List<Integer> gestionDeplacements(int vitesse, int posX, int posY, PointCardinal Direction){
+        List<Integer> positionFinale = new ArrayList<>();
+        List<PointCardinal> directionCases = new ArrayList<>();
+
+        for (int i = 0; i < vitesse ; i++) {
+            if (tableau[posX][posY] instanceof Route){
+                directionCases = (List<PointCardinal>) tableau[posX][posY];
+            }
+            else {
+                System.out.println("Not a Route case.");
+                return null;
+            }
+            if (Direction.equals(PointCardinal.SOUTH)) {
+                if (directionCases.contains(PointCardinal.SOUTH)){
+                    posY--;
+                    if (directionCases.contains(PointCardinal.WEST)){
+                        System.out.println("Priorite a droite, il faut ping le controleur.");
+                    }
+                } else {
+                    System.out.println("Can't go this way, sir.");
+                    return null;
+                }
+            }
+            else if (Direction.equals(PointCardinal.NORTH)){
+                if (directionCases.contains(PointCardinal.NORTH)){
+                    posY++;
+                    if (directionCases.contains(PointCardinal.EAST)){
+                        System.out.println("Priorite a droite, il faut ping le controleur.");
+                    }
+                } else {
+                    System.out.println("Can't go this way, sir.");
+                    return null;
+                }
+            }
+            else if (Direction.equals(PointCardinal.EAST)){
+                if (directionCases.contains(PointCardinal.EAST)){
+                    posX++;
+                    if (directionCases.contains(PointCardinal.SOUTH)){
+                        System.out.println("Priorite a droite, il faut ping le controleur.");
+                    }
+                } else {
+                    System.out.println("Can't go this way, sir.");
+                    return null;
+                }
+            }
+            else if (Direction.equals(PointCardinal.WEST)){
+                if (directionCases.contains(PointCardinal.WEST)){
+                    posX--;
+                    if (directionCases.contains(PointCardinal.NORTH)){
+                        System.out.println("Priorite a droite, il faut ping le controleur.");
+                    }
+                } else {
+                    System.out.println("Can't go this way, sir.");
+                    return null;
+                }
+            }
+        }
+        return positionFinale;
     }
 }
