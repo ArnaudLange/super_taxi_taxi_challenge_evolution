@@ -64,7 +64,7 @@ public class Carte
 
         for (int i = 0; i < vitesse ; i++) {
             if (tableau[posX][posY] instanceof Route){
-                directionCases = (List<PointCardinal>) tableau[posX][posY];
+                directionCases = ((List<PointCardinal>)((Route)tableau[posX][posY]).getDirections());
             }
             else {
                 System.out.println("Not a Route case.");

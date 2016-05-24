@@ -2,6 +2,7 @@ package jeu;
 
 import carte.Carte;
 import carte.InterpreteurCarte;
+import carte.PointCardinal;
 import reseau.ConnexionClient;
 import reseau.Serveur;
 
@@ -21,6 +22,10 @@ public class Controleur
         File fichierCarte = new File("src/carte/carte001.txt"); // on initialise le fichier texte de la carte
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
+        carte.gestionDeplacements(3,0,1, PointCardinal.EAST);
+
+
+        /*
         List<Joueur> listJoueurs = new ArrayList<>();
         Jeu jeu = new Jeu(listJoueurs, carte);
         List<ConnexionClient> listeConnexionClient = new ArrayList();
@@ -88,5 +93,6 @@ public class Controleur
                 tempsFinTour = tempsDebutTour + tempsTour;
             }
         }
+        */
     }
 }
