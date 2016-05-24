@@ -25,41 +25,31 @@ public class Serveur
             listeningSocket = new ServerSocket(2009);
             System.out.println("Serveur à l'écoute sur le port " + listeningSocket.getLocalPort());
 
-            long startTimeOut = 0;//temps de depart
+            long startTimeOut = System.currentTimeMillis();//temps de depart
 
             boolean timeout = false;
 
 
-            while(!timeout )//|| (startTimeOut + TIMEOUT) < System.currentTimeMillis())
+            while(!timeout || (System.currentTimeMillis() - startTimeOut < TIMEOUT))
             {
                 int taille = listJoueurs.size();
 
-                /*Pour éviter que le timer ne débute alors que les noms des joueurs
-                 ne sont pas encore été définis par les ConnexionClient, on met le code suivant
-                qui va attendre troi seconde afin d'être sur que le nom a bien été initialisé */
+                //Pour éviter que le timer ne débute alors que les noms des joueurs
+                //ne sont pas encore été définis par les ConnexionClient, on met le code suivant
+                //qui va attendre trois secondes afin d'être sur que le nom a bien été initialisé
 
-                if (taille > 0){
-                    if (listJoueurs.get(taille-1).getNom() == null){
-                        sleep(3000);
-                    }
-                }
+                /*if (taille > 0)
+                    if (listJoueurs.isEmpty())
+                        sleep(3000);*/
+
                 if (taille >= 2)
                 {
-                    System.out.println("le nom  est : "+ listJoueurs.get(0).getNom());
-                    //System.out.println(listJoueurs.get(1).getNom() == null);
-                    System.out.println(" le nom  est : "+ listJoueurs.get(1).getNom());
-
                     if (!timeout)
                         startTimeOut = System.currentTimeMillis();
 
-                    listeningSocket.setSoTimeout(TIMEOUT);//(int)(startTimeOut + TIMEOUT - System.currentTimeMillis())); // débloque le accept du socket
+                    // débloque le accept du socket
+                    listeningSocket.setSoTimeout(TIMEOUT - (int)(System.currentTimeMillis() - startTimeOut));
                     timeout = true;
-                    System.out.println(" On a 2 joueurs ! ");
-                    System.out.println(" On déclenche le timer");
-
-                    //System.out.println("Current time : " + System.currentTimeMillis());
-                    //System.out.print("Timeout : " + (startTimeOut + TIMEOUT));
-
                 }
 
                 // Création du prochain joueur relié au client qui se connectera
@@ -81,14 +71,10 @@ public class Serveur
                 {
                     System.out.println("Temps écoulé pour d'éventuels nouveaux joueurs. Début de partie imminent");
                 }
-
-
             }
         }
         catch (IOException e)
         {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

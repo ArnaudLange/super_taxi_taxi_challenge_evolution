@@ -46,14 +46,13 @@ public class Controleur
         int nbTour=1;
         int nbJoueurOut = 0;
         boolean jeuFini = false;
-        int tempsTour = 5000;
+        long tempsTour = 5000;
         long tempsDebutTour = System.currentTimeMillis();
-        long tempsFinTour = tempsDebutTour + tempsTour;
 
         while(!jeuFini)
         {
             // Temps du tour atteint
-            if (System.currentTimeMillis() >= tempsFinTour)
+            if (System.currentTimeMillis() - tempsDebutTour > tempsTour)
             {
                 System.out.println("Tour " + nbTour++);
 
@@ -90,7 +89,6 @@ public class Controleur
 
                 // On relance un tour
                 tempsDebutTour = System.currentTimeMillis();
-                tempsFinTour = tempsDebutTour + tempsTour;
             }
         }
     }

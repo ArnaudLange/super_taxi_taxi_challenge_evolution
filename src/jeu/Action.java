@@ -4,19 +4,32 @@ package jeu;
  * Created by jimmy on 17/05/16.
  */
 public enum  Action {
-    RIEN,
-    NORD,
-    SUD,
-    EST,
-    OUEST,
-    ACCELERER,
-    RALENTIR;
+    RIEN("rien"),
+    NEXT_ACTION("action"),
+    NORD("nord"),
+    SUD("sud"),
+    EST("est"),
+    OUEST("ouest"),
+    ACCELERER("accelerer"),
+    RALENTIR("ralentir"),
+    GAMEOVER("gameover");
 
-public static Action getAction(String s){
+    private final String text;
+
+    Action(final String text)
+    {
+        this.text = text;
+    }
+
+    public String toString() {
+        return text;
+    }
+
+    public static Action getAction(String s){
 
     switch(s.toLowerCase()) {
-        case "rien":
-            return RIEN;
+        case "action":
+            return NEXT_ACTION;
         case "nord":
             return NORD;
         case "sud":
@@ -29,8 +42,10 @@ public static Action getAction(String s){
             return ACCELERER;
         case "ralentir":
             return RALENTIR;
+        case "gameover":
+            return GAMEOVER;
         default:
-            return null;
+            return RIEN;
         }
     }
 }

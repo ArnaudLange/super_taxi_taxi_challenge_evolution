@@ -11,57 +11,76 @@ import java.util.Scanner;
 
 public class Client {
 
-    private PrintWriter out = null;
-    private BufferedReader in = null;
-    private Scanner sc = null;
+    private BufferedReader br;
     private String nom;
     private Action action;
-    private boolean gameOver = false;
+    private boolean gameOver;
+    private Socket socket;
+    private int nbTour;
+    private ClientEnvoie cE;
+
+    public Client()
+    {
+        gameOver = false;
+        nbTour = 1;
+        try {
+            socket = new Socket("localhost", 2009);
+            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            cE = new ClientEnvoie(new PrintWriter(socket.getOutputStream()), System.out);
+            cE.run();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            quit();
+        }
+
+    }
 
     public void run()
     {
-
-        Socket socket;
-
         try
         {
+            cE.print("Nom ?");
 
-            socket = new Socket("localhost",2009);
-            out = new PrintWriter(socket.getOutputStream()); //
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            sc = new Scanner(System.in);
-
-            System.out.println(in.readLine());
-            nom = sc.nextLine();
-
-            out.println(nom);
-            out.flush();
+            String messageEntrant = br.readLine(); // init buffer
 
             while(!gameOver){
-                String messageEntrant = (in.readLine());
-                if (messageEntrant.equals("game over")){
-                    System.out.println("Vous avez perdu");
+                messageEntrant = br.readLine();
+
+
+                cE.print("Tour n°" + nbTour++);
+
+                if (messageEntrant.equals(Action.GAMEOVER.toString()))
+                {
+                    cE.print("Vous avez perdu");
                     gameOver = true;
                 }
-                if (messageEntrant.equals("action")){
-                    System.out.println("Prochaine action ? ");
-                    action = Action.getAction(sc.nextLine());
-                    out.println(action); //nécessaire ? normalement on a pas besoin de l'envoyer
-                    // ailleurs que dans action
-                    out.flush();
-                    }
+                if (messageEntrant.equals(Action.NEXT_ACTION.toString()))
+                {
+                    cE.print("Prochaine action ? ");
+                }
             }
-                socket.close();
 
     }
-        catch (UnknownHostException e1) {
-            e1.printStackTrace();
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        quit();
+    }
+
+    private void quit()
+    {
+        cE.quit();
+        try {
+            socket.close();
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
-
-}
+        Thread.currentThread().interrupt();
+    }
 }
 

@@ -1,5 +1,7 @@
 package reseau;
 
+import carte.PointCardinal;
+import jeu.Action;
 import jeu.Joueur;
 
 import java.io.BufferedReader;
@@ -32,8 +34,20 @@ public class ConnexionClient implements Runnable
     {
         out.println(s);
         out.flush();
-    }
 
+        // Si le client a perdu on ferme la connexion et on stop le thread
+        if (s.equals(Action.GAMEOVER.toString()))
+        {
+            try
+            {
+            socket.close();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            Thread.currentThread().interrupt();
+        }
+    }
 
     public void run()
     {
@@ -46,12 +60,34 @@ public class ConnexionClient implements Runnable
             out.flush();
 
             joueur.setNom(in.readLine());
-
             System.out.println("Nom joueur (côté serveur) : " + joueur.getNom());
 
-            //socket.close();
+            while(true)
+            {
+                Thread.sleep(200);
+                switch (Action.getAction(in.readLine()))
+                {
+                    case NORD:
+                        this.joueur.setDirection(PointCardinal.NORTH);
+                    case SUD:
+                        this.joueur.setDirection(PointCardinal.SOUTH);
+                    case EST:
+                        this.joueur.setDirection(PointCardinal.EAST);
+                    case OUEST:
+                        this.joueur.setDirection(PointCardinal.WEST);
+                    case ACCELERER:
+                        this.joueur.accelerer();
+                    case RALENTIR:
+                        this.joueur.ralentir();
+                    default:
+                }
+            }
 
         } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (InterruptedException e)
         {
             e.printStackTrace();
         }
