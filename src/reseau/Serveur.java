@@ -45,9 +45,9 @@ public class Serveur
                 }
                 if (taille >= 2)
                 {
-                    System.out.println("ZZZZZ le nom  est : "+ listJoueurs.get(0).getNom());
+                    System.out.println("le nom  est : "+ listJoueurs.get(0).getNom());
                     //System.out.println(listJoueurs.get(1).getNom() == null);
-                    System.out.println("ZZZZZ le nom  est : "+ listJoueurs.get(1).getNom());
+                    System.out.println(" le nom  est : "+ listJoueurs.get(1).getNom());
 
                     if (!timeout)
                         startTimeOut = System.currentTimeMillis();
@@ -91,6 +91,5 @@ public class Serveur
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("Début de partie");
     }
 }

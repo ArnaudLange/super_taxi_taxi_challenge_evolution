@@ -49,7 +49,7 @@ public class ConnexionClient implements Runnable
 
             System.out.println("Nom joueur (côté serveur) : " + joueur.getNom());
 
-            socket.close();
+            //socket.close();
 
         } catch (IOException e)
         {

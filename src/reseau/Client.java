@@ -38,18 +38,19 @@ public class Client {
             out.flush();
 
             while(!gameOver){
-                String messageEntrant = in.readLine();
-                if (messageEntrant == "game over"){
+                String messageEntrant = (in.readLine());
+                if (messageEntrant.equals("game over")){
                     System.out.println("Vous avez perdu");
                     gameOver = true;
                 }
-                if (messageEntrant == "action"){
+                if (messageEntrant.equals("action")){
                     System.out.println("Prochaine action ? ");
                     action = Action.getAction(sc.nextLine());
-                    out.println(action);
+                    out.println(action); //nécessaire ? normalement on a pas besoin de l'envoyer
+                    // ailleurs que dans action
                     out.flush();
                     }
-                }
+            }
                 socket.close();
 
     }

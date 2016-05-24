@@ -80,12 +80,12 @@ public class Controleur
                         break;
                     }
 
-                    for (Joueur k : listJoueurs)
+                    /*for (Joueur k : listJoueurs)
                         if(c.getJoueur().getPosX() == k.getPosX() && c.getJoueur().getPosY() == k.getPosY())
                             c.getJoueur().setNbPoints(0); // TODO envoyer aux clients colisions
-
+                    */
                     nbJoueurOut = 0;
-                    c.envoyerMessage("action");
+                    c.envoyerMessage("action");//TODO Gérer les actions a chaque tour
                 }
 
                 // On relance un tour
