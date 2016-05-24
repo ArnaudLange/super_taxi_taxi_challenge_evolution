@@ -22,7 +22,7 @@ public class Joueur
     public Joueur()
     {
         this.id = next_id++;
-        this.nom = "";
+        this.nom = null;
         this.nbPoints = 10;
         this.etatMarche = true;
         this.vitesse = 0;

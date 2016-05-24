@@ -27,15 +27,20 @@ public class Controleur
         Serveur.creerServeur(jeu.getListeJoueurs(), listeConnexionClient);
         Vector positionDepart = InterpreteurCarte.trouverPositionDepart(carte);
 
+        //System.out.println("Nom joueur 1 : "+ listJoueurs.get(0).getNom());
+        //System.out.println("Nom joueur 2 : "+ listJoueurs.get(1).getNom());
+
+        int i = 1;
         for (Joueur joueur : listJoueurs)
         {
             int[] position = InterpreteurCarte.choisirPositionDepart(positionDepart);
             int posX = position[0];
             int posY = position[1];
-            System.out.println("La position en X du joueur est " + posX);
-            System.out.println("La position en Y du joueur est " + posY);
+            System.out.println("La position en X du joueur "+ i + " est " + posX);
+            System.out.println("La position en Y du joueur "+ i + " est " + posY);
             joueur.setPosX(posX);
             joueur.setPosY(posY);
+            i++;
         }
 
         int nbTour=1;
