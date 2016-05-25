@@ -54,6 +54,7 @@ public class Controleur
             // Temps du tour atteint
             if (System.currentTimeMillis() - tempsDebutTour > tempsTour)
             {
+                tempsDebutTour = System.currentTimeMillis();
                 System.out.println("Tour " + nbTour++);
 
                 for (ConnexionClient c : listeConnexionClient)
@@ -86,9 +87,6 @@ public class Controleur
                     nbJoueurOut = 0;
                     c.envoyerMessage("action");//TODO Gérer les actions a chaque tour
                 }
-
-                // On relance un tour
-                tempsDebutTour = System.currentTimeMillis();
             }
         }
     }

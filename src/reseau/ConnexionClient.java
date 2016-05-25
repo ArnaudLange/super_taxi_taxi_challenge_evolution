@@ -69,6 +69,7 @@ public class ConnexionClient implements Runnable
                 {
                     case NORD:
                         this.joueur.setDirection(PointCardinal.NORTH);
+                        System.out.println("il va au nord");
                     case SUD:
                         this.joueur.setDirection(PointCardinal.SOUTH);
                     case EST:
