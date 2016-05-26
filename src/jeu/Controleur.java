@@ -7,20 +7,21 @@ import reseau.ConnexionClient;
 import reseau.Serveur;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Created by jimmy on 14/05/16.
  */
-public class Controleur
-{
+public class Controleur implements Observer {
 
-    public static void main(String[] args)
+
+    public Controleur()
     {
+        System.out.println("test");
         File fichierCarte = new File("src/carte/carte001.txt"); // on initialise le fichier texte de la carte
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+        carte.addObserver(this);
 
         List<Integer> posFinale = carte.gestionDeplacements(5,0,4, PointCardinal.EAST);
         System.out.println("Position finale : "+posFinale);
@@ -94,5 +95,10 @@ public class Controleur
             }
         }
         */
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        System.out.println("J'ai vu qu'il y avait une priorité.");
     }
 }
