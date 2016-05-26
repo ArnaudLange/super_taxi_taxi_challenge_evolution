@@ -3,7 +3,8 @@ package jeu;
 /**
  * Created by jimmy on 17/05/16.
  */
-public enum Commande {
+public enum Commande
+{
     AUCUNE_ACTION(""),
     ERREUR_ACTION("erreuraction"),
     NOM("nom"),
@@ -28,7 +29,7 @@ public enum Commande {
         return text;
     }
 
-    public static Commande getAction(String s)
+    public static Commande getCommande(String s)
     {
         switch(s.toLowerCase())
         {

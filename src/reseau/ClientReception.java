@@ -30,7 +30,7 @@ public class ClientReception extends Thread
             {
                 messageEntrant = br.readLine();
 
-                switch (Commande.getAction(messageEntrant))
+                switch (Commande.getCommande(messageEntrant))
                 {
                     case NOM:
                         System.out.println("Entrez votre nom :");
@@ -44,7 +44,7 @@ public class ClientReception extends Thread
                         gameOver = true;
                         break;
                     case NEXT_ACTION:
-                        System.out.println("Tour n°" + ++nbTour + "\nProchaine action ? ");
+                        System.out.println("Tour n°" + ++nbTour + "\nProchaine action ?");
                         break;
                     case ERREUR_ACTION:
                         System.out.println("Mauvaise commande");
