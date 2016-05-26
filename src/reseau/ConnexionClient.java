@@ -1,7 +1,7 @@
 package reseau;
 
 import carte.PointCardinal;
-import jeu.Action;
+import jeu.Commande;
 import jeu.Joueur;
 
 import java.io.BufferedReader;
@@ -35,14 +35,14 @@ public class ConnexionClient implements Runnable
     public void envoyerMessage(String s)
     {
         // Début de tour
-        if (s.equals(Action.NEXT_ACTION.toString()))
+        if (s.equals(Commande.NEXT_ACTION.toString()))
             this.changementVitesse = false;
 
         out.println(s);
         out.flush();
 
         // Si le client a perdu on ferme la connexion et on stop le thread
-        if (s.equals(Action.GAMEOVER.toString()))
+        if (s.equals(Commande.GAMEOVER.toString()))
         {
             try
             {
@@ -74,7 +74,7 @@ public class ConnexionClient implements Runnable
             // dès que le client envoie une action, le tour suivant s'affiche chez lui
             {
                 Thread.sleep(200);
-                switch (Action.getAction(in.readLine()))
+                switch (Commande.getAction(in.readLine()))
                 {
                     case NORD:
                         this.joueur.setDirection(PointCardinal.NORTH);
@@ -105,7 +105,10 @@ public class ConnexionClient implements Runnable
                             this.joueur.setDirection(null);
                         }
                         break;
+                    case AUCUNE_ACTION:
+                        break;
                     default:
+                        envoyerMessage(Commande.ERREUR_ACTION.toString());
                 }
             }
 

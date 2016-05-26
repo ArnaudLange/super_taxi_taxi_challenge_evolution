@@ -1,6 +1,6 @@
 package reseau;
 
-import jeu.Action;
+import jeu.Commande;
 
 import java.io.*;
 
@@ -19,7 +19,7 @@ public class ClientReception extends Thread
     {
         this.br = new BufferedReader(new InputStreamReader(in));
         gameOver = false;
-        nbTour = -1;
+        nbTour = 0;
     }
 
     public void run()
@@ -30,21 +30,20 @@ public class ClientReception extends Thread
             {
                 messageEntrant = br.readLine();
 
-                if (nbTour++ > -1)
-                    System.out.println("Tour n°" + nbTour);
-
-                if (messageEntrant.equals(Action.GAMEOVER.toString()))
+                switch (Commande.getAction(messageEntrant))
                 {
-                    System.out.println("Vous avez perdu");
-                    gameOver = true;
-                }
-                else if (messageEntrant.equals(Action.NEXT_ACTION.toString()))
-                {
-                    System.out.println("Prochaine action ? ");
-                }
-                else
-                {
-                    System.out.println(messageEntrant);
+                    case GAMEOVER:
+                        System.out.println("Vous avez perdu");
+                        gameOver = true;
+                        break;
+                    case NEXT_ACTION:
+                        System.out.println("Tour n°" + ++nbTour + "\nProchaine action ? ");
+                        break;
+                    case ERREUR_ACTION:
+                        System.out.println("Mauvaise commande");
+                        break;
+                    default:
+                        System.out.println(messageEntrant);
                 }
             }
 

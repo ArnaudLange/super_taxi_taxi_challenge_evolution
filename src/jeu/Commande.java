@@ -3,8 +3,9 @@ package jeu;
 /**
  * Created by jimmy on 17/05/16.
  */
-public enum  Action {
-    RIEN("rien"),
+public enum Commande {
+    AUCUNE_ACTION("rien"),
+    ERREUR_ACTION("erreuraction"),
     NEXT_ACTION("action"),
     NORD("nord"),
     SUD("sud"),
@@ -16,7 +17,7 @@ public enum  Action {
 
     private final String text;
 
-    Action(final String text)
+    Commande(final String text)
     {
         this.text = text;
     }
@@ -25,7 +26,7 @@ public enum  Action {
         return text;
     }
 
-    public static Action getAction(String s){
+    public static Commande getAction(String s){
 
     switch(s.toLowerCase()) {
         case "action":
@@ -44,8 +45,10 @@ public enum  Action {
             return RALENTIR;
         case "gameover":
             return GAMEOVER;
+        case "":
+            return AUCUNE_ACTION;
         default:
-            return RIEN;
+            return ERREUR_ACTION;
         }
     }
 }

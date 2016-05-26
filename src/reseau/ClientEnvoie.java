@@ -1,6 +1,6 @@
 package reseau;
 
-import jeu.Action;
+import jeu.Commande;
 import java.io.*;
 import java.util.Scanner;
 
@@ -13,7 +13,7 @@ public class ClientEnvoie extends Thread
     private Scanner in;
     private PrintWriter out;
     private int nbTour;
-    private Action action;
+    private Commande action;
 
     public ClientEnvoie(OutputStream out)
     {
@@ -31,7 +31,7 @@ public class ClientEnvoie extends Thread
         // sois faire en sorte qu'il ne prenne en compte que la dernière action
         // ( sinon il pourrait accelerer plusieurs fois par exemple )
         {
-                action = Action.getAction(in.nextLine());
+                action = Commande.getAction(in.nextLine());
                 out.println(action);
                 out.flush();
         }
