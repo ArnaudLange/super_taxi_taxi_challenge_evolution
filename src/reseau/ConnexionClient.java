@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -20,18 +19,25 @@ public class ConnexionClient implements Runnable
 
     private Socket socket;
     private Joueur joueur;
-    private PrintWriter out = null;
-    private BufferedReader in = null;
+    private PrintWriter out;
+    private BufferedReader in;
+    private boolean changementVitesse;
 
-    public ConnexionClient(Socket s, Joueur joueur) throws IOException {
+    public ConnexionClient(Socket s, Joueur joueur) throws IOException
+    {
         this.socket = s;
         this.joueur = joueur;
         this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         this.out = new PrintWriter(this.socket.getOutputStream());
+        this.changementVitesse = false;
     }
 
     public void envoyerMessage(String s)
     {
+        // Début de tour
+        if (s.equals(Action.NEXT_ACTION.toString()))
+            this.changementVitesse = false;
+
         out.println(s);
         out.flush();
 
@@ -79,10 +85,21 @@ public class ConnexionClient implements Runnable
                         this.joueur.setDirection(PointCardinal.EAST);
                     case OUEST:
                         this.joueur.setDirection(PointCardinal.WEST);
+
                     case ACCELERER:
-                        this.joueur.accelerer();
+                        if (!this.changementVitesse)
+                        {
+                            this.changementVitesse = true;
+                            this.joueur.accelerer();
+                            this.joueur.setDirection(null);
+                        }
                     case RALENTIR:
-                        this.joueur.ralentir();
+                        if (!this.changementVitesse)
+                        {
+                            this.changementVitesse = true;
+                            this.joueur.ralentir();
+                            this.joueur.setDirection(null);
+                        }
                     default:
                 }
             }
