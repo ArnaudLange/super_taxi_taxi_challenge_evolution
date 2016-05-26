@@ -58,19 +58,32 @@ public class Carte
         this.tableau = tableau;
     }
 
+    // Prend en paramètre : la vitesse du joueur (pour savoir sur combien de case appliquer la direction,
+    // la position en X et en Y du joueur
+    // la direction du joueur
     public List<Integer> gestionDeplacements(int vitesse, int posX, int posY, PointCardinal Direction){
+
+        //Initialisation de la position finale du joueur après application et de la liste des points cardinaux de la case observée
+        //On renverra null si le joueur a fait une action impossible
         List<Integer> positionFinale = new ArrayList<>();
         List<PointCardinal> directionCases = new ArrayList<>();
 
+        //on va effectuer l'algorithme x fois avec x la vitesse
         for (int i = 0; i < vitesse ; i++) {
             System.out.println("Position : "+posX+", "+posY);
-            if (tableau[posX][posY] instanceof Route){
-                directionCases = ((List<PointCardinal>)((Route)tableau[posX][posY]).getDirections());
+
+            // La carte est codée de façon : tableau[ligne][colonne] donc on inverse posX et posY
+            if (tableau[posY][posX] instanceof Route){
+                //Si c'est une case route on récupère les points cardinaux
+                directionCases = ((List<PointCardinal>)((Route)tableau[posY][posX]).getDirections());
             }
             else {
+                //Sinon ce n'est pas une route, on a un accident, retourne null
                 System.out.println("Not a Route case.");
                 return null;
             }
+
+            //Ensuite on effectue les tests pour chaque direction du joueur.
             if (Direction.equals(PointCardinal.SOUTH)) {
                 if (directionCases.contains(PointCardinal.SOUTH)){
                     System.out.println("Déplacement vers le sud effectué.");
