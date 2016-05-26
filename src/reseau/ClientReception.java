@@ -32,6 +32,9 @@ public class ClientReception extends Thread
 
                 switch (Commande.getAction(messageEntrant))
                 {
+                    case NOM:
+                        System.out.println("Entrez votre nom :");
+                        break;
                     case GAMEOVER:
                         System.out.println("Vous avez perdu");
                         gameOver = true;

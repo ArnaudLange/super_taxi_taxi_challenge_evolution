@@ -62,7 +62,7 @@ public class ConnexionClient implements Runnable
             System.out.println("Le client numéro " + joueur.getId() + " est connecté !");
 
             // Traitement
-            out.println("entrez votre nom :  ");
+            out.println(Commande.NOM.toString());
             out.flush();
 
             joueur.setNom(in.readLine());
