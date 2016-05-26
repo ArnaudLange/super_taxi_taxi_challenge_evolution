@@ -49,7 +49,7 @@ public enum Commande {
             case "gameover":
                 return GAMEOVER;
             case "gamewin":
-                return GAMEOVER;
+                return GAMEWIN;
             case "nom":
                 return NOM;
             case "":
