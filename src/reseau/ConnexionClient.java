@@ -79,13 +79,16 @@ public class ConnexionClient implements Runnable
                     case NORD:
                         this.joueur.setDirection(PointCardinal.NORTH);
                         System.out.println("il va au nord");
+                        break;
                     case SUD:
                         this.joueur.setDirection(PointCardinal.SOUTH);
+                        break;
                     case EST:
                         this.joueur.setDirection(PointCardinal.EAST);
+                        break;
                     case OUEST:
                         this.joueur.setDirection(PointCardinal.WEST);
-
+                        break;
                     case ACCELERER:
                         if (!this.changementVitesse)
                         {
@@ -93,6 +96,7 @@ public class ConnexionClient implements Runnable
                             this.joueur.accelerer();
                             this.joueur.setDirection(null);
                         }
+                        break;
                     case RALENTIR:
                         if (!this.changementVitesse)
                         {
@@ -100,6 +104,7 @@ public class ConnexionClient implements Runnable
                             this.joueur.ralentir();
                             this.joueur.setDirection(null);
                         }
+                        break;
                     default:
                 }
             }
