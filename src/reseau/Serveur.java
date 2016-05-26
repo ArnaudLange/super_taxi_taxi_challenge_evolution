@@ -75,6 +75,7 @@ public class Serveur
         }
         catch (IOException e)
         {
+            System.out.println("caca");
             e.printStackTrace();
         }
     }

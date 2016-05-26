@@ -31,7 +31,7 @@ public enum Commande
 
     public static Commande getCommande(String s)
     {
-        switch(s.toLowerCase())
+        switch(((s == null)?"":s).toLowerCase())
         {
             case "action":
                 return NEXT_ACTION;

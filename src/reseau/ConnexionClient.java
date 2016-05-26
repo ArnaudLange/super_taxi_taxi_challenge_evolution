@@ -22,6 +22,7 @@ public class ConnexionClient implements Runnable
     private PrintWriter out;
     private BufferedReader in;
     private boolean changementVitesse;
+    private String readLine;
 
     public ConnexionClient(Socket s, Joueur joueur) throws IOException
     {
@@ -41,17 +42,26 @@ public class ConnexionClient implements Runnable
         out.println(s);
         out.flush();
 
-        // Si le client a perdu on ferme la connexion et on stop le thread
+        // Si le client a perdu on stop le thread
         if (s.equals(Commande.GAMEOVER.toString()))
-        {
-            try
-            {
-            socket.close();
-            } catch (IOException e)
-            {
-                e.printStackTrace();
-            }
             Thread.currentThread().interrupt();
+    }
+
+    /**
+     * Check si la connexion au client a été perdue en lisant la ligne
+     * Interromp le thread si c'est le cas
+     */
+    public void lireLigneBuffer()
+    {
+        try
+        {
+            if ((readLine = in.readLine()) == null)
+                Thread.currentThread().interrupt();
+        }
+        catch (IOException e)
+        {
+            Thread.currentThread().interrupt();
+            e.printStackTrace();
         }
     }
 
@@ -65,13 +75,15 @@ public class ConnexionClient implements Runnable
             out.println(Commande.NOM.toString());
             out.flush();
 
-            joueur.setNom(in.readLine());
+            lireLigneBuffer();
+            joueur.setNom(readLine);
             System.out.println("Nom joueur (côté serveur) : " + joueur.getNom());
 
-            while(true)
+            while(!Thread.currentThread().isInterrupted())
             {
+                lireLigneBuffer();
                 Thread.sleep(200);
-                switch (Commande.getCommande(in.readLine()))
+                switch (Commande.getCommande(readLine))
                 {
                     case NORD:
                         this.joueur.setDirection(PointCardinal.NORTH);
@@ -109,11 +121,17 @@ public class ConnexionClient implements Runnable
                 }
             }
 
-        } catch (IOException e)
+        }
+        catch (InterruptedException e)
         {
             e.printStackTrace();
         }
-        catch (InterruptedException e)
+
+        // On ferme le socket à la fin de la connexion
+        try
+        {
+            socket.close();
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
