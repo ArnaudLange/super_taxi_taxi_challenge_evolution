@@ -39,6 +39,10 @@ public class ClientReception extends Thread
                         System.out.println("Vous avez perdu");
                         gameOver = true;
                         break;
+                    case GAMEWIN:
+                        System.out.println("Vous avez gagné");
+                        gameOver = true;
+                        break;
                     case NEXT_ACTION:
                         System.out.println("Tour n°" + ++nbTour + "\nProchaine action ? ");
                         break;

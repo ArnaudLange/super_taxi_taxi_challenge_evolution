@@ -14,7 +14,8 @@ public enum Commande {
     OUEST("ouest"),
     ACCELERER("accelerer"),
     RALENTIR("ralentir"),
-    GAMEOVER("gameover");
+    GAMEOVER("gameover"),
+    GAMEWIN("gamewin");
 
     private final String text;
 
@@ -46,6 +47,8 @@ public enum Commande {
             case "ralentir":
                 return RALENTIR;
             case "gameover":
+                return GAMEOVER;
+            case "gamewin":
                 return GAMEOVER;
             case "nom":
                 return NOM;
