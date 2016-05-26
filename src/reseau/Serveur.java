@@ -42,7 +42,7 @@ public class Serveur
                     if (listJoueurs.isEmpty())
                         sleep(3000);*/
 
-                if (taille >= 2)
+                if (taille >= 2) //TODO Gérer le cas ou le client 2 disconnect avant le début de la partie
                 {
                     if (!timeout)
                         startTimeOut = System.currentTimeMillis();

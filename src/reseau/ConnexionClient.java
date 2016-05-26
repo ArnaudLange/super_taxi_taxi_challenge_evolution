@@ -62,7 +62,10 @@ public class ConnexionClient implements Runnable
             joueur.setNom(in.readLine());
             System.out.println("Nom joueur (côté serveur) : " + joueur.getNom());
 
-            while(true)
+            while(true) //TODO Impossible d'envoyer un message au client avec out.println ?!?§
+            // Il faut verouiller l'envoi du message si la personne a envoyer une action
+            // et lui envoyer un message "mauvaise commande" si il tape une mauvaise commande
+            // dès que le client envoie une action, le tour suivant s'affiche chez lui
             {
                 Thread.sleep(200);
                 switch (Action.getAction(in.readLine()))
