@@ -3,12 +3,13 @@ package carte;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Created by jimmy on 02/05/16.
  */
-public class Carte
-{
+public class Carte extends Observable  {
+
     private int longueur; //nb de cases en abcisse
     private int largeur; // nb de cases en ordonnée
     private Case[][] tableau;
@@ -90,6 +91,11 @@ public class Carte
                     posY--;
                     if (directionCases.contains(PointCardinal.WEST)){
                         System.out.println("Priorite a droite, il faut ping le controleur.");
+
+                        //On indique qu'il y a une priorité à droite.
+                        setChanged();
+                        notifyObservers();
+
                     }
                 } else {
                     System.out.println("Can't go this way, sir.");
@@ -102,6 +108,10 @@ public class Carte
                     posY++;
                     if (directionCases.contains(PointCardinal.EAST)){
                         System.out.println("Priorite a droite, il faut ping le controleur.");
+
+                        //On indique qu'il y a une priorité à droite.
+                        setChanged();
+                        notifyObservers();
                     }
                 } else {
                     System.out.println("Can't go this way, sir.");
@@ -114,6 +124,10 @@ public class Carte
                     posX++;
                     if (directionCases.contains(PointCardinal.SOUTH)){
                         System.out.println("Priorite a droite, il faut ping le controleur.");
+
+                        //On indique qu'il y a une priorité à droite.
+                        setChanged();
+                        notifyObservers();
                     }
                 } else {
                     System.out.println("Can't go this way, sir.");
@@ -126,6 +140,10 @@ public class Carte
                     posX--;
                     if (directionCases.contains(PointCardinal.NORTH)){
                         System.out.println("Priorite a droite, il faut ping le controleur.");
+
+                        //On indique qu'il y a une priorité à droite.
+                        setChanged();
+                        notifyObservers();
                     }
                 } else {
                     System.out.println("Can't go this way, sir.");
