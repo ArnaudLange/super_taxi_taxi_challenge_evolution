@@ -13,34 +13,38 @@ public class ClientReception extends Thread
     private BufferedReader br;
     private boolean gameOver;
     private int nbTour;
+    private String messageEntrant;
 
     public ClientReception(InputStream in)
     {
         this.br = new BufferedReader(new InputStreamReader(in));
         gameOver = false;
-        nbTour = 1;
+        nbTour = -1;
     }
 
     public void run()
     {
         try
         {
-            String messageEntrant = br.readLine(); // init buffer
-
-            while(!gameOver){
+            while(!gameOver)
+            {
                 messageEntrant = br.readLine();
 
-
-                System.out.println("Tour n°" + nbTour++);
+                if (nbTour++ > -1)
+                    System.out.println("Tour n°" + nbTour);
 
                 if (messageEntrant.equals(Action.GAMEOVER.toString()))
                 {
                     System.out.println("Vous avez perdu");
                     gameOver = true;
                 }
-                if (messageEntrant.equals(Action.NEXT_ACTION.toString()))
+                else if (messageEntrant.equals(Action.NEXT_ACTION.toString()))
                 {
                     System.out.println("Prochaine action ? ");
+                }
+                else
+                {
+                    System.out.println(messageEntrant);
                 }
             }
 

@@ -30,7 +30,6 @@ public class ClientEnvoie extends Thread
         while(!Thread.currentThread().isInterrupted())//TODO sois empêcher le client d'envoyer plus d'une action,
         // sois faire en sorte qu'il ne prenne en compte que la dernière action
         // ( sinon il pourrait accelerer plusieurs fois par exemple )
-
         {
                 action = Action.getAction(in.nextLine());
                 out.println(action);
