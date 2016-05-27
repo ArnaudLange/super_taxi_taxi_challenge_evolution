@@ -1,6 +1,7 @@
 package jeu;
 
 import carte.Carte;
+import carte.Infraction;
 import carte.InterpreteurCarte;
 import carte.PointCardinal;
 import reseau.ConnexionClient;
@@ -14,10 +15,13 @@ import java.util.*;
  */
 public class Controleur implements Observer {
 
+    private Jeu jeu;
 
     public Controleur() {
         File fichierCarte = new File("src/carte/carte001.txt"); // on initialise le fichier texte de la carte
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+
 
         carte.addObserver(this);
 
@@ -27,7 +31,12 @@ public class Controleur implements Observer {
         j.setVitesse(4);
         j.setDirection(PointCardinal.EAST);
 
-        carte.gestionDeplacements(j);
+        List<Joueur> listos = new ArrayList<Joueur>();
+        listos.add(j);
+
+        jeu = new Jeu(listos, carte);
+
+        jeu.getCarte().gestionDeplacements(j);
 
 
         /*
@@ -103,16 +112,29 @@ public class Controleur implements Observer {
 
     @Override
     public void update(Observable obv, Object obj) {
+
         if(obj instanceof Joueur){
-            if(((Joueur) obj).getVitesse()>=2){
+            Infraction infra = jeu.getCarte().getInfraction(((Joueur) obj).getPosX(),((Joueur) obj).getPosY(), ((Joueur) obj).getDirection());
+            if(infra.equals(Infraction.COURBE)&&((Joueur) obj).getVitesse()>2){
+                System.out.println("Amis1");
+                System.out.println("Joueur mort.");
+                ((Joueur) obj).setEtatMarche(false);
+            }
+            else if(infra.equals(Infraction.PRIORITE)){
+                System.out.println("Amis2");
+                //Si vitesse du joueur est de 3, perte de majorinf points
                 if(((Joueur) obj).getVitesse()>2){
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
                 }
-                else{
+                //Si vitesse du joueur égale à 2, perte de minorinf points
+                else if(((Joueur) obj).getVitesse()==2){
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MINORINF);
                 }
             }
+            else{
+                System.out.println("c'était null négro");
+            }
+
         }
-        System.out.println("J'ai vu qu'il y avait une priorité.");
     }
 }
