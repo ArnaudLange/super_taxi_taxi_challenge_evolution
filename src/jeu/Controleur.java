@@ -21,10 +21,14 @@ public class Controleur implements Observer {
 
         carte.addObserver(this);
 
-        List<Integer> posFinale = carte.gestionDeplacements(2,0,0, PointCardinal.EAST);
-        posFinale = carte.gestionDeplacements(2, posFinale.get(0), posFinale.get(1), PointCardinal.SOUTH);
-        posFinale = carte.gestionDeplacements(2, posFinale.get(0), posFinale.get(1), PointCardinal.EAST);
-        System.out.println("Position finale : "+posFinale);
+        Joueur j = new Joueur();
+        j.setPosX(0);
+        j.setPosY(0);
+        j.setVitesse(4);
+        j.setDirection(PointCardinal.EAST);
+
+        carte.gestionDeplacements(j);
+
 
         /*
         List<Joueur> listJoueurs = new ArrayList<>();
@@ -98,7 +102,17 @@ public class Controleur implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable obv, Object obj) {
+        if(obj instanceof Joueur){
+            if(((Joueur) obj).getVitesse()>=2){
+                if(((Joueur) obj).getVitesse()>2){
+                    ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
+                }
+                else{
+                    ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MINORINF);
+                }
+            }
+        }
         System.out.println("J'ai vu qu'il y avait une priorité.");
     }
 }

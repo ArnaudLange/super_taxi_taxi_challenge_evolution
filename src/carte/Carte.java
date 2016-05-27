@@ -1,5 +1,7 @@
 package carte;
 
+import jeu.Joueur;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -62,97 +64,122 @@ public class Carte extends Observable  {
     // Prend en paramètre : la vitesse du joueur (pour savoir sur combien de case appliquer la direction,
     // la position en X et en Y du joueur
     // la direction du joueur
-    public List<Integer> gestionDeplacements(int vitesse, int posX, int posY, PointCardinal Direction){
-
-        //Initialisation de la position finale du joueur après application et de la liste des points cardinaux de la case observée
-        //On renverra null si le joueur a fait une action impossible
-        List<Integer> positionFinale = new ArrayList<>();
+    public void gestionDeplacements(Joueur j){
+        boolean prioPossible;
         List<PointCardinal> directionCases = new ArrayList<>();
 
         //on va effectuer l'algorithme x fois avec x la vitesse
-        for (int i = 0; i < vitesse ; i++) {
-            System.out.println("Position : "+posX+", "+posY);
-
+        for (int i = 0; i < j.getVitesse() ; i++) {
+            prioPossible=false;
             // La carte est codée de façon : tableau[ligne][colonne] donc on inverse posX et posY
-            if (tableau[posY][posX] instanceof Route){
+            if (tableau[j.getPosY()][j.getPosX()] instanceof Route){
                 //Si c'est une case route on récupère les points cardinaux
-                directionCases = ((List<PointCardinal>)((Route)tableau[posY][posX]).getDirections());
+                directionCases = ((List<PointCardinal>)((Route)tableau[j.getPosY()][j.getPosX()]).getDirections());
             }
             else {
                 //Sinon ce n'est pas une route, on a un accident, retourne null
                 System.out.println("Not a Route case.");
-                return null;
+                return;
+            }
+
+            if(directionCases.size()==2){
+                if(!directionCases.contains(j.getDirection())){
+                    for (PointCardinal dir:directionCases) {
+                        if(j.getDirection().equals(PointCardinal.EAST)){
+                            if (dir!=PointCardinal.WEST){
+                                j.setDirection(dir);
+                            }
+                        }
+                        else if(j.getDirection().equals(PointCardinal.NORTH)){
+                            if (dir!=PointCardinal.SOUTH){
+                                j.setDirection(dir);
+                            }
+                        }
+                        if(j.getDirection().equals(PointCardinal.SOUTH)){
+                            if (dir!=PointCardinal.NORTH){
+                                j.setDirection(dir);
+                            }
+                        }
+                        if(j.getDirection().equals(PointCardinal.WEST)){
+                            if (dir!=PointCardinal.EAST){
+                                j.setDirection(dir);
+                            }
+                        }
+                    }
+                }
+            }
+            else if (directionCases.size()>2){
+                prioPossible=true;
             }
 
             //Ensuite on effectue les tests pour chaque direction du joueur.
-            if (Direction.equals(PointCardinal.SOUTH)) {
+            if (j.getDirection().equals(PointCardinal.SOUTH)) {
                 if (directionCases.contains(PointCardinal.SOUTH)){
                     System.out.println("Déplacement vers le sud effectué.");
-                    posY++;
-                    if (directionCases.contains(PointCardinal.WEST)){
+                    j.setPosY(j.getPosY()+1);
+                    if (directionCases.contains(PointCardinal.WEST) && prioPossible){
                         System.out.println("Priorite a droite, il faut ping le controleur.");
 
                         //On indique qu'il y a une priorité à droite.
                         setChanged();
-                        notifyObservers();
+                        notifyObservers(j);
 
                     }
                 } else {
                     System.out.println("Can't go this way, sir.");
-                    return null;
+                    return;
                 }
             }
-            else if (Direction.equals(PointCardinal.NORTH)){
+            else if (j.getDirection().equals(PointCardinal.NORTH)){
                 if (directionCases.contains(PointCardinal.NORTH)){
                     System.out.println("Déplacement vers le nord effectué.");
-                    posY--;
-                    if (directionCases.contains(PointCardinal.EAST)){
+                    j.setPosY(j.getPosY()-1);
+                    if (directionCases.contains(PointCardinal.EAST)&& prioPossible){
                         System.out.println("Priorite a droite, il faut ping le controleur.");
 
                         //On indique qu'il y a une priorité à droite.
                         setChanged();
-                        notifyObservers();
+                        notifyObservers(j);
                     }
                 } else {
                     System.out.println("Can't go this way, sir.");
-                    return null;
+                    return;
                 }
             }
-            else if (Direction.equals(PointCardinal.EAST)){
+            else if (j.getDirection().equals(PointCardinal.EAST)){
                 if (directionCases.contains(PointCardinal.EAST)){
                     System.out.println("Déplacement vers l'est effectué.");
-                    posX++;
-                    if (directionCases.contains(PointCardinal.SOUTH)){
+                    j.setPosX(j.getPosX()+1);
+                    if (directionCases.contains(PointCardinal.SOUTH)&& prioPossible){
                         System.out.println("Priorite a droite, il faut ping le controleur.");
 
                         //On indique qu'il y a une priorité à droite.
                         setChanged();
-                        notifyObservers();
+                        notifyObservers(j);
                     }
                 } else {
                     System.out.println("Can't go this way, sir.");
-                    return null;
+                    return;
                 }
             }
-            else if (Direction.equals(PointCardinal.WEST)){
+            else if (j.getDirection().equals(PointCardinal.WEST)){
                 if (directionCases.contains(PointCardinal.WEST)){
                     System.out.println("Déplacement vers l'ouest effectué.");
-                    posX--;
-                    if (directionCases.contains(PointCardinal.NORTH)){
+                    j.setPosX(j.getPosX()-1);
+                    if (directionCases.contains(PointCardinal.NORTH)&& prioPossible){
                         System.out.println("Priorite a droite, il faut ping le controleur.");
 
                         //On indique qu'il y a une priorité à droite.
                         setChanged();
-                        notifyObservers();
+                        notifyObservers(j);
                     }
                 } else {
                     System.out.println("Can't go this way, sir.");
-                    return null;
+                    return;
                 }
             }
+            System.out.println("Position : "+j.getPosX()+","+j.getPosY());
         }
-        positionFinale.add(posX);
-        positionFinale.add(posY);
-        return positionFinale;
+
     }
 }
