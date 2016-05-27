@@ -66,18 +66,22 @@ public class Controleur
                 // les connexion clients se coupent
                 for (ConnexionClient c : listeConnexionClient) {
                     if (c.getJoueur().getNbPoints() == 0) {
-                        //System.out.println("Le joueur "+c.getJoueur().getNom()+ " a "+ c.getJoueur().getNbPoints() + " points");
                         nbJoueurOut++;
-                        continue;
+                        listJoueurs.remove(c.getJoueur());
+                        listeConnexionClient.remove(c);
+
+                        //continue;
                     }
 
                     // Un joueur a gagné
+                    /*
                     if (((c.getJoueur().getPosX() == jeu.getPosXObjectif()) && (c.getJoueur().getPosY() == jeu.getPosYObjectif()))) {
                         jeu.setGagnant(c.getJoueur());
-                        System.out.println("oui la voix");
                         jeuFini = true;
                         break;
                     }
+                    */
+
                     /*for (Joueur k : listJoueurs)
                         if(c.getJoueur().getPosX() == k.getPosX() && c.getJoueur().getPosY() == k.getPosY())
                             c.getJoueur().setNbPoints(0); // TODO envoyer aux clients colisions
