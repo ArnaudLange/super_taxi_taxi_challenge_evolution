@@ -22,48 +22,53 @@ public class ClientReception extends Thread
         nbTour = 0;
     }
 
-    public void run()
+    public void lireMessageEntrantBuffer()
     {
         try
         {
-            while(!gameOver)
-            {
-                messageEntrant = br.readLine();
-
-                switch (Commande.getCommande(messageEntrant))
-                {
-                    case NOM:
-                        System.out.println("Entrez votre nom :");
-                        break;
-                    case GAMEOVER:
-                        System.out.println("Vous avez perdu");
-                        gameOver = true;
-                        break;
-                    case GAMEWIN:
-                        System.out.println("Vous avez gagné");
-                        gameOver = true;
-                        break;
-                    case NEXT_ACTION:
-                        System.out.println("Tour n°" + ++nbTour + "\nProchaine action ?");
-                        break;
-                    case ERREUR_ACTION:
-                        System.out.println("Mauvaise commande");
-                        break;
-                    default:
-                        System.out.println(messageEntrant);
-                }
-            }
-
+            if ((messageEntrant = br.readLine()) == null)
+                Thread.currentThread().interrupt();
         }
         catch (IOException e)
         {
+            Thread.currentThread().interrupt();
             e.printStackTrace();
         }
-        quit();
     }
 
-    private void quit()
+    public void run()
     {
+        while((!gameOver) && !Thread.currentThread().isInterrupted())
+        {
+            lireMessageEntrantBuffer();
+
+            switch (Commande.getCommande(messageEntrant))
+            {
+                case NOM:
+                    System.out.println("Entrez votre nom :");
+                    break;
+                case GAMEOVER:
+                    System.out.println("Vous avez perdu");
+                    gameOver = true;
+                    break;
+                case GAMEWIN:
+                    System.out.println("Vous avez gagné");
+                    gameOver = true;
+                    break;
+                case NEXT_ACTION:
+                    System.out.println("Tour n°" + ++nbTour + "\nProchaine action ?");
+                    break;
+                case ERREUR_ACTION:
+                    System.out.println("Mauvaise commande");
+                    break;
+                default:
+                    if (messageEntrant == null)
+                        System.out.println("Erreur de connexion avec le serveur");
+                    else
+                        System.out.println(messageEntrant);
+            }
+        }
+        System.out.println("CR ="+Thread.currentThread().isInterrupted());
         Thread.currentThread().interrupt();
     }
 }

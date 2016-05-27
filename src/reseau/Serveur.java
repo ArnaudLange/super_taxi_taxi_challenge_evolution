@@ -62,8 +62,7 @@ public class Serveur
 
                     // Lancement du thread qui gèrera le client avec l'objet Joueur en paramètre
                     connexionClient = new ConnexionClient(socketClient, joueur);
-                    Thread t = new Thread(connexionClient);
-                    t.start();
+                    connexionClient.start();
                     listJoueurs.add(joueur);
                     listeConnexionClient.add(connexionClient);
                 }
@@ -75,7 +74,6 @@ public class Serveur
         }
         catch (IOException e)
         {
-            System.out.println("caca");
             e.printStackTrace();
         }
     }

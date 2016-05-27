@@ -24,6 +24,7 @@ public class Controleur
         List<Joueur> listJoueurs = new ArrayList<>();
         Jeu jeu = new Jeu(listJoueurs, carte);
         List<ConnexionClient> listeConnexionClient = new ArrayList();
+        List<ConnexionClient> listeConnexionClientPerdu = new ArrayList();
         Serveur.creerServeur(jeu.getListeJoueurs(), listeConnexionClient);
         Vector positionDepart = InterpreteurCarte.trouverPositionDepart(carte);
 
@@ -57,38 +58,47 @@ public class Controleur
                 jeuFini = true;
                 break;
             }
-            else{
-            // Temps du tour atteint
-            if (System.currentTimeMillis() - tempsDebutTour > tempsTour)
+            else
             {
-                tempsDebutTour = System.currentTimeMillis();
-                System.out.println("Tour " + nbTour++);
-                // les connexion clients se coupent
-                for (ConnexionClient c : listeConnexionClient) {
-                    if (c.getJoueur().getNbPoints() == 0) {
-                        nbJoueurOut++;
-                        listJoueurs.remove(c.getJoueur());
+                // Temps du tour atteint
+                if (System.currentTimeMillis() - tempsDebutTour > tempsTour)
+                {
+                    tempsDebutTour = System.currentTimeMillis();
+                    System.out.println("Tour " + nbTour++);
+                    // les connexion clients se coupent
+                    for (ConnexionClient c : listeConnexionClient)
+                    {
+                        if (c.isInterrupted())
+                        {
+                            listJoueurs.remove(c.getJoueur());
+                            nbJoueurOut++;
+                            listeConnexionClientPerdu.add(c);
+                        }
+                        else
+                        {
+                            // Un joueur a gagné
+
+                            if (((c.getJoueur().getPosX() == jeu.getPosXObjectif()) && (c.getJoueur().getPosY() == jeu.getPosYObjectif()))) {
+                                jeu.setGagnant(c.getJoueur());
+                                jeuFini = true;
+                                break;
+                            }
+
+
+                            for (Joueur k : listJoueurs)
+                                if(c.getJoueur().getPosX() == k.getPosX() && c.getJoueur().getPosY() == k.getPosY())
+                                    c.getJoueur().setNbPoints(0); // TODO envoyer aux clients colisions
+
+                                nbJoueurOut = 0;
+                                c.envoyerMessage("action");//TODO Gérer les actions a chaque tour
+                        }
+                    }
+
+                    // Suppression des clients déconnectés
+                    for (ConnexionClient c : listeConnexionClientPerdu)
                         listeConnexionClient.remove(c);
 
-                        //continue;
-                    }
-
-                    // Un joueur a gagné
-                    /*
-                    if (((c.getJoueur().getPosX() == jeu.getPosXObjectif()) && (c.getJoueur().getPosY() == jeu.getPosYObjectif()))) {
-                        jeu.setGagnant(c.getJoueur());
-                        jeuFini = true;
-                        break;
-                    }
-                    */
-
-                    /*for (Joueur k : listJoueurs)
-                        if(c.getJoueur().getPosX() == k.getPosX() && c.getJoueur().getPosY() == k.getPosY())
-                            c.getJoueur().setNbPoints(0); // TODO envoyer aux clients colisions
-                    */
-                    nbJoueurOut = 0;
-                    c.envoyerMessage("action");//TODO Gérer les actions a chaque tour
-                }
+                    listeConnexionClientPerdu.clear();
                 }
             }
         }

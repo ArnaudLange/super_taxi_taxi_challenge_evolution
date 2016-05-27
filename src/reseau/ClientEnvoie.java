@@ -33,12 +33,6 @@ public class ClientEnvoie extends Thread
                 out.println(action);
                 out.flush();
         }
-        quit();
-    }
-
-    public void quit()
-    {
-        Thread.currentThread().interrupt();
     }
 }
 

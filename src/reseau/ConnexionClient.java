@@ -14,7 +14,7 @@ import java.net.Socket;
  * Created by swag on 14/05/16.
  */
 
-public class ConnexionClient implements Runnable
+public class ConnexionClient extends Thread
 {
 
     private Socket socket;
@@ -55,10 +55,8 @@ public class ConnexionClient implements Runnable
     {
         try
         {
-            if ((readLine = in.readLine()) == null) {
-                joueur.setNbPoints(0);
+            if ((readLine = in.readLine()) == null)
                 Thread.currentThread().interrupt();
-            }
         }
         catch (IOException e)
         {
@@ -83,8 +81,8 @@ public class ConnexionClient implements Runnable
 
             while(!Thread.currentThread().isInterrupted())
             {
-                lireLigneBuffer();
                 Thread.sleep(200);
+                lireLigneBuffer();
                 switch (Commande.getCommande(readLine))
                 {
                     case NORD:

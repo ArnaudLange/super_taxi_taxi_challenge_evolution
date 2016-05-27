@@ -5,5 +5,5 @@ package carte;
  */
 public enum PointCardinal
 {
-    NORTH, SOUTH, EAST, WEST;
+    NORTH, SOUTH, EAST, WEST
 }
