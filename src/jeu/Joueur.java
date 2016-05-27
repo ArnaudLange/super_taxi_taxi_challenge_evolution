@@ -2,6 +2,8 @@ package jeu;
 
 import carte.PointCardinal;
 
+import java.util.List;
+
 /**
  * Created by jimmy on 02/05/16.
  */
@@ -113,5 +115,11 @@ public class Joueur
     public void setVitesse(int vitesse)
     {
         this.vitesse = vitesse;
+    }
+
+    public void updatePos(List<Integer> position){
+        this.setPosX(position.get(0));
+        this.setPosY(position.get(1));
+        System.out.println("Position du joueur : " + this.nom + "updatée à : "+posX+","+posY);
     }
 }
