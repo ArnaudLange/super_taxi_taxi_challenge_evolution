@@ -15,15 +15,15 @@ import java.util.*;
 public class Controleur implements Observer {
 
 
-    public Controleur()
-    {
-        System.out.println("test");
+    public Controleur() {
         File fichierCarte = new File("src/carte/carte001.txt"); // on initialise le fichier texte de la carte
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
         carte.addObserver(this);
 
-        List<Integer> posFinale = carte.gestionDeplacements(5,0,4, PointCardinal.EAST);
+        List<Integer> posFinale = carte.gestionDeplacements(2,0,0, PointCardinal.EAST);
+        posFinale = carte.gestionDeplacements(2, posFinale.get(0), posFinale.get(1), PointCardinal.SOUTH);
+        posFinale = carte.gestionDeplacements(2, posFinale.get(0), posFinale.get(1), PointCardinal.EAST);
         System.out.println("Position finale : "+posFinale);
 
         /*

@@ -88,7 +88,7 @@ public class Carte extends Observable  {
             if (Direction.equals(PointCardinal.SOUTH)) {
                 if (directionCases.contains(PointCardinal.SOUTH)){
                     System.out.println("Déplacement vers le sud effectué.");
-                    posY--;
+                    posY++;
                     if (directionCases.contains(PointCardinal.WEST)){
                         System.out.println("Priorite a droite, il faut ping le controleur.");
 
@@ -105,7 +105,7 @@ public class Carte extends Observable  {
             else if (Direction.equals(PointCardinal.NORTH)){
                 if (directionCases.contains(PointCardinal.NORTH)){
                     System.out.println("Déplacement vers le nord effectué.");
-                    posY++;
+                    posY--;
                     if (directionCases.contains(PointCardinal.EAST)){
                         System.out.println("Priorite a droite, il faut ping le controleur.");
 
