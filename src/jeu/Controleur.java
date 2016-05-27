@@ -51,35 +51,33 @@ public class Controleur
 
         while(!jeuFini)
         {
+            // Tous les joueurs sont éliminés
+            if(nbJoueurOut == listJoueurs.size())
+            {
+                jeuFini = true;
+                break;
+            }
+            else{
             // Temps du tour atteint
             if (System.currentTimeMillis() - tempsDebutTour > tempsTour)
             {
                 tempsDebutTour = System.currentTimeMillis();
                 System.out.println("Tour " + nbTour++);
-
-                for (ConnexionClient c : listeConnexionClient)
-                {
-                    if (c.getJoueur().getNbPoints() == 0)
-                    {
+                // les connexion clients se coupent
+                for (ConnexionClient c : listeConnexionClient) {
+                    if (c.getJoueur().getNbPoints() == 0) {
+                        //System.out.println("Le joueur "+c.getJoueur().getNom()+ " a "+ c.getJoueur().getNbPoints() + " points");
                         nbJoueurOut++;
                         continue;
                     }
 
                     // Un joueur a gagné
-                    if (((c.getJoueur().getPosX() == jeu.getPosXObjectif()) && (c.getJoueur().getPosY() == jeu.getPosYObjectif())))
-                    {
+                    if (((c.getJoueur().getPosX() == jeu.getPosXObjectif()) && (c.getJoueur().getPosY() == jeu.getPosYObjectif()))) {
                         jeu.setGagnant(c.getJoueur());
+                        System.out.println("oui la voix");
                         jeuFini = true;
                         break;
                     }
-
-                    // Tous les joueurs sont éliminés
-                    if(nbJoueurOut == listJoueurs.size())
-                    {
-                        jeuFini = true;
-                        break;
-                    }
-
                     /*for (Joueur k : listJoueurs)
                         if(c.getJoueur().getPosX() == k.getPosX() && c.getJoueur().getPosY() == k.getPosY())
                             c.getJoueur().setNbPoints(0); // TODO envoyer aux clients colisions
@@ -87,7 +85,9 @@ public class Controleur
                     nbJoueurOut = 0;
                     c.envoyerMessage("action");//TODO Gérer les actions a chaque tour
                 }
+                }
             }
         }
+        System.out.println("OUI LA VOIX");
     }
 }

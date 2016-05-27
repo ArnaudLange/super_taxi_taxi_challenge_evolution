@@ -55,8 +55,10 @@ public class ConnexionClient implements Runnable
     {
         try
         {
-            if ((readLine = in.readLine()) == null)
+            if ((readLine = in.readLine()) == null) {
+                joueur.setNbPoints(0);
                 Thread.currentThread().interrupt();
+            }
         }
         catch (IOException e)
         {
