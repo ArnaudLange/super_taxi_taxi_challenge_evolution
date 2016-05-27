@@ -29,9 +29,9 @@ public class ClientEnvoie extends Thread
 
         while(!Thread.currentThread().isInterrupted())
         {
-                action = Commande.getCommande(in.nextLine());
-                out.println(action);
-                out.flush();
+            action = Commande.getCommande(in.nextLine());
+            out.println(action);
+            out.flush();
         }
     }
 }

@@ -9,7 +9,6 @@ import java.io.*;
  */
 public class ClientReception extends Thread
 {
-
     private BufferedReader br;
     private boolean gameOver;
     private int nbTour;
@@ -68,7 +67,6 @@ public class ClientReception extends Thread
                         System.out.println(messageEntrant);
             }
         }
-        System.out.println("CR ="+Thread.currentThread().isInterrupted());
         Thread.currentThread().interrupt();
     }
 }

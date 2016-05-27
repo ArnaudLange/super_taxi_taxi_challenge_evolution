@@ -49,11 +49,12 @@ public class Controleur
         boolean jeuFini = false;
         long tempsTour = 5000;
         long tempsDebutTour = System.currentTimeMillis();
+        Joueur joueurActuel;
 
         while(!jeuFini)
         {
             // Tous les joueurs sont éliminés
-            if(nbJoueurOut == listJoueurs.size())
+            if(listJoueurs.size() <= 1)
             {
                 jeuFini = true;
                 break;
@@ -68,29 +69,45 @@ public class Controleur
                     // les connexion clients se coupent
                     for (ConnexionClient c : listeConnexionClient)
                     {
-                        if (c.isInterrupted())
+                        joueurActuel = c.getJoueur();
+                        // Gestion colision joueur
+                        for (Joueur k : listJoueurs)
                         {
-                            listJoueurs.remove(c.getJoueur());
+                            if (k == joueurActuel)
+                                continue;
+                            if (joueurActuel.getPosX() == k.getPosX() && joueurActuel.getPosY() == k.getPosY())
+                            {
+                                joueurActuel.setNbPoints(0);
+                                c.envoyerMessage(Commande.GAMEOVER.toString());
+                            }
+                        }
+
+                        // Gestion déconnexion et joueur perdu
+                        if (!c.isAlive())
+                        {
+                            if (c.isGameOver())
+                                System.out.println("Le joueur " + joueurActuel.getId() + " a perdu.");
+                            else
+                                System.out.println("Le joueur " + joueurActuel.getId() + " s'est déconnecté.");
+
+                            listJoueurs.remove(joueurActuel);
                             nbJoueurOut++;
                             listeConnexionClientPerdu.add(c);
+                            continue;
                         }
-                        else
+
+                        // Un joueur a gagné
+                        if ((((c.getJoueur().getPosX() == jeu.getPosXObjectif()) && (joueurActuel.getPosY() == jeu.getPosYObjectif()))) || (listJoueurs.size() == 1))
                         {
-                            // Un joueur a gagné
+                            jeu.setGagnant(joueurActuel);
+                            jeuFini = true;
+                            break;
+                        }
 
-                            if (((c.getJoueur().getPosX() == jeu.getPosXObjectif()) && (c.getJoueur().getPosY() == jeu.getPosYObjectif()))) {
-                                jeu.setGagnant(c.getJoueur());
-                                jeuFini = true;
-                                break;
-                            }
-
-
-                            for (Joueur k : listJoueurs)
-                                if(c.getJoueur().getPosX() == k.getPosX() && c.getJoueur().getPosY() == k.getPosY())
-                                    c.getJoueur().setNbPoints(0); // TODO envoyer aux clients colisions
-
-                                nbJoueurOut = 0;
-                                c.envoyerMessage("action");//TODO Gérer les actions a chaque tour
+                        // Envoie message joueur
+                        if (joueurActuel.getNbPoints() != 0)
+                        {
+                            c.envoyerMessage("action");
                         }
                     }
 
@@ -102,6 +119,5 @@ public class Controleur
                 }
             }
         }
-        System.out.println("OUI LA VOIX");
     }
 }

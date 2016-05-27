@@ -23,6 +23,7 @@ public class ConnexionClient extends Thread
     private BufferedReader in;
     private boolean changementVitesse;
     private String readLine;
+    private boolean gameOver;
 
     public ConnexionClient(Socket s, Joueur joueur) throws IOException
     {
@@ -31,6 +32,12 @@ public class ConnexionClient extends Thread
         this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         this.out = new PrintWriter(this.socket.getOutputStream());
         this.changementVitesse = false;
+        this.gameOver = false;
+    }
+
+    public boolean isGameOver()
+    {
+        return gameOver;
     }
 
     public void envoyerMessage(String s)
@@ -44,7 +51,7 @@ public class ConnexionClient extends Thread
 
         // Si le client a perdu on stop le thread
         if (s.equals(Commande.GAMEOVER.toString()))
-            Thread.currentThread().interrupt();
+            gameOver = true;
     }
 
     /**
@@ -79,7 +86,7 @@ public class ConnexionClient extends Thread
             joueur.setNom(readLine);
             System.out.println("Nom joueur (côté serveur) : " + joueur.getNom());
 
-            while(!Thread.currentThread().isInterrupted())
+            while(!gameOver && !Thread.currentThread().isInterrupted())
             {
                 Thread.sleep(200);
                 lireLigneBuffer();

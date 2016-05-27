@@ -14,23 +14,16 @@ public class Client
         try
         {
             Socket socket = new Socket("localhost", 2009);
+
             clientReception = new ClientReception(socket.getInputStream());
             clientReception.start();
             clientEnvoie = new ClientEnvoie(socket.getOutputStream());
             clientEnvoie.start();
-            System.out.println("2");
-            while(!clientReception.isInterrupted())
-            {
+
+            while(clientReception.isAlive())
                 sleep(200);
-                System.out.println(clientReception.isInterrupted());
-            }
-            System.out.println("1");
+
             clientEnvoie.interrupt();
-            System.out.println("3");
-            clientReception.stop();
-            System.out.println("4");
-            clientEnvoie.stop();
-            System.out.println("5");
         }
         catch (IOException e)
         {
@@ -39,10 +32,6 @@ public class Client
         {
             e.printStackTrace();
         }
-        System.out.println("caca");
-
-
-
     }
 }
 
