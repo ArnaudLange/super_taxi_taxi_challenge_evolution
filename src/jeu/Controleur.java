@@ -157,7 +157,7 @@ public class Controleur implements Observer {
                     System.out.println("Joueur a gagné.");
                     jeu.setGagnant(((Joueur)obj));
                 } else{
-
+                    //TODO
                 }
 
             }
