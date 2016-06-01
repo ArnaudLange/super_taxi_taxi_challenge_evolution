@@ -77,7 +77,7 @@ public class Controleur implements Observer {
                 {
                     joueurActuel = c.getJoueur();
 
-                    // Gestion déconnexion et joueur perdu
+                    // Gestion déconnexion
                     if (!c.isAlive())
                     {
                         System.out.println("Le joueur " + joueurActuel.getId() + " s'est déconnecté.");
