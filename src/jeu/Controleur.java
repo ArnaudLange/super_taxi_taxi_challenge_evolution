@@ -22,9 +22,6 @@ public class Controleur implements Observer {
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
 
-
-
-        carte.addObserver(this);
         carte.addObserver(this);
 
         Joueur j = new Joueur();
@@ -179,10 +176,9 @@ public class Controleur implements Observer {
 
             if(infra.contains(Evenement.OBJECTIF)){
                 ((Joueur)obj).setNbPoints( ((Joueur)obj).getNbPoints() + Constante.OBJPOINTS );
-
                 if(((Joueur)obj).getNbPoints() >= Constante.MAXPOINTS){
-                    System.out.println("Joueur a gagné.");
-                    jeu.setGagnant(((Joueur)obj));
+                    System.out.println("Joueur a récupéré l'objectif.");
+                    ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()+Constante.OBJPOINTS);
                 } else{
                     Vector positionDispo = InterpreteurCarte.trouverPositionDepart(jeu.getCarte());
                     int[] newPositionObj = InterpreteurCarte.choisirPositionDepart(positionDispo);

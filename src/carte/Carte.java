@@ -1,11 +1,12 @@
 package carte;
 
+import jeu.Constante;
 import jeu.Joueur;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import javax.swing.*;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
-import java.util.Observable;
 
 /**
  * Created by cokral on 02/05/16.
@@ -174,7 +175,8 @@ public class Carte extends Observable  {
                     j.setPosY(j.getPosY()+1);
 
                 } else {
-                    System.out.println("Can't go this way, sir.");
+                    System.out.println("Impossible d'aller dans cette direction.");
+                    j.setNbPoints(0);
                     return;
                 }
             }
@@ -184,7 +186,8 @@ public class Carte extends Observable  {
                     j.setPosY(j.getPosY()-1);
 
                 } else {
-                    System.out.println("Can't go this way, sir.");
+                    System.out.println("Impossible d'aller dans cette direction.");
+                    j.setNbPoints(0);
                     return;
                 }
             }
@@ -194,7 +197,8 @@ public class Carte extends Observable  {
                     j.setPosX(j.getPosX()+1);
 
                 } else {
-                    System.out.println("Can't go this way, sir.");
+                    System.out.println("Impossible d'aller dans cette direction.");
+                    j.setNbPoints(0);
                     return;
                 }
             }
@@ -204,7 +208,8 @@ public class Carte extends Observable  {
                     j.setPosX(j.getPosX()-1);
 
                 } else {
-                    System.out.println("Can't go this way, sir.");
+                    System.out.println("Impossible d'aller dans cette direction.");
+                    j.setNbPoints(0);
                     return;
                 }
             }
