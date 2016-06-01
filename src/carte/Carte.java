@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Observable;
 
 /**
- * Created by jimmy on 02/05/16.
+ * Created by cokral on 02/05/16.
  */
 public class Carte extends Observable  {
 
@@ -61,45 +61,48 @@ public class Carte extends Observable  {
         this.tableau = tableau;
     }
 
-    public Evenement getEvenement(int posX, int posY, PointCardinal direction, int posXObjectif, int posYObjectif){
+    public List<Evenement> getEvenement(int posX, int posY, PointCardinal direction, int posXObjectif, int posYObjectif){
         List<PointCardinal> directionCase = new ArrayList<>();
+        List<Evenement> evenements = new ArrayList<>();
         directionCase = ((List<PointCardinal>)((Route)tableau[posY][posX]).getDirections());
-        System.out.println(direction);
-        System.out.println(directionCase);
+
+        //System.out.println(direction);
+        //System.out.println(directionCase);
+
 
         if(posXObjectif == posX && posY == posYObjectif){
-            return Evenement.OBJECTIF;
+            evenements.add(Evenement.OBJECTIF);
         }
 
         if (directionCase.size()==2 && !directionCase.contains(direction)){
-            return Evenement.COURBE;
+            evenements.add(Evenement.COURBE);
         }
 
         if (directionCase.size()>2) {
             switch (direction){
                 case NORTH:
                     if(directionCase.contains(PointCardinal.EAST)){
-                        return Evenement.PRIORITE;
+                        evenements.add(Evenement.PRIORITE);
                     }
                     break;
                 case EAST:
                     if(directionCase.contains(PointCardinal.SOUTH)){
-                        return Evenement.PRIORITE;
+                        evenements.add(Evenement.PRIORITE);
                     }
                     break;
                 case SOUTH:
                     if(directionCase.contains(PointCardinal.WEST)){
-                        return Evenement.PRIORITE;
+                        evenements.add(Evenement.PRIORITE);
                     }
                     break;
                 case WEST:
                     if(directionCase.contains(PointCardinal.NORTH)){
-                        return Evenement.PRIORITE;
+                        evenements.add(Evenement.PRIORITE);
                     }
                     break;
             }
         }
-        return null;
+        return evenements;
     }
 
     // Prend en paramètre : la vitesse du joueur (pour savoir sur combien de case appliquer la direction,
@@ -123,11 +126,9 @@ public class Carte extends Observable  {
                 return;
             }
 
-            //On vérifie si le joueur est sur l'objectif ou non
-            if(j.getPosX()==posXObjectif && j.getPosY()==posYObjectif){
-                setChanged();
-                notifyObservers(j);
-            }
+            //On appelle le controleur qui va vérifier la présence ou non d'événements sur cette case et agir en conséquence.
+            setChanged();
+            notifyObservers(j);
 
             //Si la route n'a que deux points cardinaux
             if(directionCases.size()==2){
@@ -173,14 +174,6 @@ public class Carte extends Observable  {
             //Ensuite on effectue les tests pour chaque direction du joueur.
             if (j.getDirection().equals(PointCardinal.SOUTH)) {
                 if (directionCases.contains(PointCardinal.SOUTH)){
-                    if (directionCases.contains(PointCardinal.WEST) && prioPossible){
-                        System.out.println("Priorite a droite, il faut ping le controleur.");
-
-                        //On indique qu'il y a une priorité à droite.
-                        setChanged();
-                        notifyObservers(j);
-
-                    }
                     System.out.println("Déplacement vers le sud effectué.");
                     j.setPosY(j.getPosY()+1);
 
@@ -191,13 +184,6 @@ public class Carte extends Observable  {
             }
             else if (j.getDirection().equals(PointCardinal.NORTH)){
                 if (directionCases.contains(PointCardinal.NORTH)){
-                    if (directionCases.contains(PointCardinal.EAST)&& prioPossible){
-                        System.out.println("Priorite a droite, il faut ping le controleur.");
-
-                        //On indique qu'il y a une priorité à droite.
-                        setChanged();
-                        notifyObservers(j);
-                    }
                     System.out.println("Déplacement vers le nord effectué.");
                     j.setPosY(j.getPosY()-1);
 
@@ -208,13 +194,6 @@ public class Carte extends Observable  {
             }
             else if (j.getDirection().equals(PointCardinal.EAST)){
                 if (directionCases.contains(PointCardinal.EAST)){
-                    if (directionCases.contains(PointCardinal.SOUTH)&& prioPossible){
-                        System.out.println("Priorite a droite, il faut ping le controleur.");
-
-                        //On indique qu'il y a une priorité à droite.
-                        setChanged();
-                        notifyObservers(j);
-                    }
                     System.out.println("Déplacement vers l'est effectué.");
                     j.setPosX(j.getPosX()+1);
 
@@ -225,13 +204,6 @@ public class Carte extends Observable  {
             }
             else if (j.getDirection().equals(PointCardinal.WEST)){
                 if (directionCases.contains(PointCardinal.WEST)){
-                    if (directionCases.contains(PointCardinal.NORTH)&& prioPossible){
-                        System.out.println("Priorite a droite, il faut ping le controleur.");
-
-                        //On indique qu'il y a une priorité à droite.
-                        setChanged();
-                        notifyObservers(j);
-                    }
                     System.out.println("Déplacement vers l'ouest effectué.");
                     j.setPosX(j.getPosX()-1);
 
