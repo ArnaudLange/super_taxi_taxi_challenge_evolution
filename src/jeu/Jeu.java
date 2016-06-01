@@ -26,6 +26,7 @@ public class Jeu
         return carte;
     }
 
+
     public Joueur getGagnant()
     {
         return gagnant;
