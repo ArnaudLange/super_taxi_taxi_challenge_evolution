@@ -61,36 +61,40 @@ public class Carte extends Observable  {
         this.tableau = tableau;
     }
 
-    public Infraction getInfraction(int posX, int posY, PointCardinal direction){
+    public Evenement getEvenement(int posX, int posY, PointCardinal direction, int posXObjectif, int posYObjectif){
         List<PointCardinal> directionCase = new ArrayList<>();
         directionCase = ((List<PointCardinal>)((Route)tableau[posY][posX]).getDirections());
         System.out.println(direction);
         System.out.println(directionCase);
 
+        if(posXObjectif == posX && posY == posYObjectif){
+            return Evenement.OBJECTIF;
+        }
+
         if (directionCase.size()==2 && !directionCase.contains(direction)){
-            return Infraction.COURBE;
+            return Evenement.COURBE;
         }
 
         if (directionCase.size()>2) {
             switch (direction){
                 case NORTH:
                     if(directionCase.contains(PointCardinal.EAST)){
-                        return Infraction.PRIORITE;
+                        return Evenement.PRIORITE;
                     }
                     break;
                 case EAST:
                     if(directionCase.contains(PointCardinal.SOUTH)){
-                        return Infraction.PRIORITE;
+                        return Evenement.PRIORITE;
                     }
                     break;
                 case SOUTH:
                     if(directionCase.contains(PointCardinal.WEST)){
-                        return Infraction.PRIORITE;
+                        return Evenement.PRIORITE;
                     }
                     break;
                 case WEST:
                     if(directionCase.contains(PointCardinal.NORTH)){
-                        return Infraction.PRIORITE;
+                        return Evenement.PRIORITE;
                     }
                     break;
             }
@@ -101,7 +105,7 @@ public class Carte extends Observable  {
     // Prend en paramètre : la vitesse du joueur (pour savoir sur combien de case appliquer la direction,
     // la position en X et en Y du joueur
     // la direction du joueur
-    public void gestionDeplacements(Joueur j){
+    public void gestionDeplacements(Joueur j, int posXObjectif, int posYObjectif){
         boolean prioPossible;
         List<PointCardinal> directionCases = new ArrayList<>();
 
@@ -117,6 +121,12 @@ public class Carte extends Observable  {
                 //Sinon ce n'est pas une route, on a un accident, retourne null
                 System.out.println("Not a Route case.");
                 return;
+            }
+
+            //On vérifie si le joueur est sur l'objectif ou non
+            if(j.getPosX()==posXObjectif && j.getPosY()==posYObjectif){
+                setChanged();
+                notifyObservers(j);
             }
 
             //Si la route n'a que deux points cardinaux

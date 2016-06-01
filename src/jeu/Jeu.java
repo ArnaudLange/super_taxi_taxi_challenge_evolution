@@ -48,4 +48,12 @@ public class Jeu
     public int getPosYObjectif() {
         return posYObjectif;
     }
+
+    public void setPosXObjectif(int posXObjectif) {
+        this.posXObjectif = posXObjectif;
+    }
+
+    public void setPosYObjectif(int posYObjectif) {
+        this.posYObjectif = posYObjectif;
+    }
 }
