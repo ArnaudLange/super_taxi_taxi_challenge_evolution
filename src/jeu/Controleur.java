@@ -1,8 +1,9 @@
 package jeu;
 
 import carte.Carte;
-import carte.Infraction;
+import carte.Evenement;
 import carte.InterpreteurCarte;
+import carte.PointCardinal;
 import reseau.ConnexionClient;
 import reseau.Serveur;
 
@@ -22,7 +23,9 @@ public class Controleur implements Observer {
 
 
 
-        /*carte.addObserver(this);
+
+        carte.addObserver(this);
+        carte.addObserver(this);
 
         Joueur j = new Joueur();
         j.setPosX(0);
@@ -34,7 +37,9 @@ public class Controleur implements Observer {
         listos.add(j);
 
         jeu = new Jeu(listos, carte);
-        jeu.getCarte().gestionDeplacements(j);*/
+        jeu.setPosXObjectif(Constante.OBJCELL[0]);
+        jeu.setPosYObjectif(Constante.OBJCELL[1]);
+        jeu.getCarte().gestionDeplacements(j);
 
 
         List<Joueur> listJoueurs = new ArrayList<>();
@@ -44,16 +49,19 @@ public class Controleur implements Observer {
         Serveur.creerServeur(jeu.getListeJoueurs(), listeConnexionClient);
         Vector positionDepart = InterpreteurCarte.trouverPositionDepart(carte);
 
+        //System.out.println("Nom joueur 1 : "+ listJoueurs.get(0).getNom());
+        //System.out.println("Nom joueur 2 : "+ listJoueurs.get(1).getNom());
+
         int i = 1;
         for (Joueur joueur : listJoueurs)
         {
             int[] position = InterpreteurCarte.choisirPositionDepart(positionDepart);
             int posX = position[0];
             int posY = position[1];
-            joueur.setPosX(posX);
-            joueur.setPosY(posY);
             System.out.println("La position en X du joueur "+ i + " est " + posX);
             System.out.println("La position en Y du joueur "+ i + " est " + posY);
+            joueur.setPosX(posX);
+            joueur.setPosY(posY);
             i++;
         }
 
@@ -167,14 +175,28 @@ public class Controleur implements Observer {
     public void update(Observable obv, Object obj) {
 
         if(obj instanceof Joueur){
-            Infraction infra = jeu.getCarte().getInfraction(((Joueur) obj).getPosX(),((Joueur) obj).getPosY(), ((Joueur) obj).getDirection());
-            if(infra.equals(Infraction.COURBE)&&((Joueur) obj).getVitesse()>2){
-                System.out.println("Amis1");
+            List<Evenement> infra = jeu.getCarte().getEvenement(((Joueur) obj).getPosX(),((Joueur) obj).getPosY(), ((Joueur) obj).getDirection(), jeu.getPosXObjectif(), jeu.getPosYObjectif());
+
+            if(infra.contains(Evenement.OBJECTIF)){
+                ((Joueur)obj).setNbPoints( ((Joueur)obj).getNbPoints() + Constante.OBJPOINTS );
+
+                if(((Joueur)obj).getNbPoints() >= Constante.MAXPOINTS){
+                    System.out.println("Joueur a gagné.");
+                    jeu.setGagnant(((Joueur)obj));
+                } else{
+                    Vector positionDispo = InterpreteurCarte.trouverPositionDepart(jeu.getCarte());
+                    int[] newPositionObj = InterpreteurCarte.choisirPositionDepart(positionDispo);
+                    jeu.setPosXObjectif(newPositionObj[0]);
+                    jeu.setPosYObjectif(newPositionObj[1]);
+                }
+
+            }
+            else if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
                 System.out.println("Joueur mort.");
                 ((Joueur) obj).setEtatMarche(false);
             }
-            else if(infra.equals(Infraction.PRIORITE)){
-                System.out.println("Amis2");
+            else if(infra.contains(Evenement.PRIORITE)){
+                System.out.println("Priorite a droite.");
                 //Si vitesse du joueur est de 3, perte de majorinf points
                 if(((Joueur) obj).getVitesse()>2){
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
@@ -184,8 +206,8 @@ public class Controleur implements Observer {
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MINORINF);
                 }
             }
-            else{
-                System.out.println("c'était null négro");
+            if(infra.size()==0){
+                System.out.println("Pas d'événement.");
             }
 
         }

@@ -5,6 +5,31 @@ package jeu;
  */
 public class Constante {
 
+    /* Nombre de points perdus sur une infraction mineure */
     public final static int MINORINF=2;
+
+    /* Nombre de points perdus sur une infraction majeure */
     public final static int MAJORINF=5;
+
+    /* Délai avant que le serveur ne se lance une fois que deux joueurs sont connectés*/
+    public final static int STARTDELAY=30;
+
+    /* Nombre de points avec lesquels les joueurs commencent la partie */
+    public final static int STARTPOINTS=6;
+
+    /* Nombre de points gagnés lorsque l'on atteint l'objectif */
+    public final static int OBJPOINTS=5;
+
+    /* Nombre de points à atteindre pour remporter la partie */
+    public final static int MAXPOINTS=18;
+
+    /* Distance (en cases) à laquelle les joueurs peuvent voir */
+    public final static int FOV=3;
+
+    /* Position sur laquelle l'objectif apparait en début de partie */
+    public final static int[] OBJCELL= {2, 0};
+
+    /* Rayon de la vision des joueurs */
+    public final static int DISTANCEVISION=6;
+
 }
