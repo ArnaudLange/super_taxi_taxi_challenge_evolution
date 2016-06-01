@@ -21,9 +21,6 @@ public class Controleur implements Observer {
         File fichierCarte = new File("src/carte/carte001.txt"); // on initialise le fichier texte de la carte
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-
-
-
         carte.addObserver(this);
         carte.addObserver(this);
 
@@ -37,10 +34,9 @@ public class Controleur implements Observer {
         listos.add(j);
 
         jeu = new Jeu(listos, carte);
-        jeu.setPosXObjectif(Constante.OBJCELL[0]);
-        jeu.setPosYObjectif(Constante.OBJCELL[1]);
+        jeu.setPosXObjectif(Constante.OBJECTIFCELL[0]);
+        jeu.setPosYObjectif(Constante.OBJECTIFCELL[1]);
         jeu.getCarte().gestionDeplacements(j);
-
 
         List<Joueur> listJoueurs = new ArrayList<>();
         Jeu jeu = new Jeu(listJoueurs, carte);
@@ -48,9 +44,6 @@ public class Controleur implements Observer {
         List<ConnexionClient> listeConnexionClientPerdu = new ArrayList();
         Serveur.creerServeur(jeu.getListeJoueurs(), listeConnexionClient);
         Vector positionDepart = InterpreteurCarte.trouverPositionDepart(carte);
-
-        //System.out.println("Nom joueur 1 : "+ listJoueurs.get(0).getNom());
-        //System.out.println("Nom joueur 2 : "+ listJoueurs.get(1).getNom());
 
         int i = 1;
         for (Joueur joueur : listJoueurs)
