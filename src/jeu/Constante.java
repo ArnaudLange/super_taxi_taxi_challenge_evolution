@@ -29,5 +29,7 @@ public class Constante {
     /* Position sur laquelle l'objectif apparait en début de partie */
     public final static int[] OBJCELL= {2, 0};
 
+    /* Rayon de la vision des joueurs */
+    public final static int DISTANCEVISION=6;
 
 }
