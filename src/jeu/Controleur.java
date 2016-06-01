@@ -150,7 +150,7 @@ public class Controleur implements Observer {
         if(obj instanceof Joueur){
             List<Evenement> infra = jeu.getCarte().getEvenement(((Joueur) obj).getPosX(),((Joueur) obj).getPosY(), ((Joueur) obj).getDirection(), jeu.getPosXObjectif(), jeu.getPosYObjectif());
 
-            if(infra.equals(Evenement.OBJECTIF)){
+            if(infra.contains(Evenement.OBJECTIF)){
                 ((Joueur)obj).setNbPoints( ((Joueur)obj).getNbPoints() + Constante.OBJPOINTS );
 
                 if(((Joueur)obj).getNbPoints() >= Constante.MAXPOINTS){
@@ -164,11 +164,12 @@ public class Controleur implements Observer {
                 }
 
             }
-            else if(infra.equals(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
+            else if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
                 System.out.println("Joueur mort.");
                 ((Joueur) obj).setEtatMarche(false);
             }
-            else if(infra.equals(Evenement.PRIORITE)){
+            else if(infra.contains(Evenement.PRIORITE)){
+                System.out.println("Priorite a droite.");
                 //Si vitesse du joueur est de 3, perte de majorinf points
                 if(((Joueur) obj).getVitesse()>2){
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
@@ -178,8 +179,8 @@ public class Controleur implements Observer {
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MINORINF);
                 }
             }
-            else{
-                System.out.println("c'était null négro");
+            if(infra.size()==0){
+                System.out.println("Pas d'événement.");
             }
 
         }
