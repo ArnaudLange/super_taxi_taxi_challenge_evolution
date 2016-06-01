@@ -20,7 +20,7 @@ public class Controleur implements Observer {
     public Controleur() {
         File fichierCarte = new File("src/carte/carte001.txt"); // on initialise le fichier texte de la carte
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
-        Vector positionDepart = InterpreteurCarte.trouverPositionDepart(carte);
+
 
 
 
@@ -157,7 +157,10 @@ public class Controleur implements Observer {
                     System.out.println("Joueur a gagné.");
                     jeu.setGagnant(((Joueur)obj));
                 } else{
-                    //TODO
+                    Vector positionDispo = InterpreteurCarte.trouverPositionDepart(jeu.getCarte());
+                    int[] newPositionObj = InterpreteurCarte.choisirPositionDepart(positionDispo);
+                    jeu.setPosXObjectif(newPositionObj[0]);
+                    jeu.setPosYObjectif(newPositionObj[1]);
                 }
 
             }

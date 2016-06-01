@@ -200,6 +200,7 @@ public class InterpreteurCarte {
         int[] position = (int[]) positionDepart.get(indiceAuHasard);
         positionDepart.remove(indiceAuHasard); // on l'enlève de la liste pour éviter
         // que 2 joueurs se retrouvent au même endroit
+        System.out.println("New position : (" + position[0] + "," + position[1] +")");
         return position;
     }
     public static void positionnerJoueur(List<Joueur> listJoueurs, Vector positionDepart){
@@ -214,4 +215,5 @@ public class InterpreteurCarte {
             joueur.setPosY(posY);
         }
     }
+
 }
