@@ -3,7 +3,6 @@ package jeu;
 import carte.Carte;
 import carte.Infraction;
 import carte.InterpreteurCarte;
-import carte.PointCardinal;
 import reseau.ConnexionClient;
 import reseau.Serveur;
 
@@ -23,7 +22,7 @@ public class Controleur implements Observer {
 
 
 
-        carte.addObserver(this);
+        /*carte.addObserver(this);
 
         Joueur j = new Joueur();
         j.setPosX(0);
@@ -35,11 +34,9 @@ public class Controleur implements Observer {
         listos.add(j);
 
         jeu = new Jeu(listos, carte);
+        jeu.getCarte().gestionDeplacements(j);*/
 
-        jeu.getCarte().gestionDeplacements(j);
 
-
-        /*
         List<Joueur> listJoueurs = new ArrayList<>();
         Jeu jeu = new Jeu(listJoueurs, carte);
         List<ConnexionClient> listeConnexionClient = new ArrayList();
@@ -47,98 +44,123 @@ public class Controleur implements Observer {
         Serveur.creerServeur(jeu.getListeJoueurs(), listeConnexionClient);
         Vector positionDepart = InterpreteurCarte.trouverPositionDepart(carte);
 
-        //System.out.println("Nom joueur 1 : "+ listJoueurs.get(0).getNom());
-        //System.out.println("Nom joueur 2 : "+ listJoueurs.get(1).getNom());
-
         int i = 1;
         for (Joueur joueur : listJoueurs)
         {
             int[] position = InterpreteurCarte.choisirPositionDepart(positionDepart);
             int posX = position[0];
             int posY = position[1];
-            System.out.println("La position en X du joueur "+ i + " est " + posX);
-            System.out.println("La position en Y du joueur "+ i + " est " + posY);
             joueur.setPosX(posX);
             joueur.setPosY(posY);
+            System.out.println("La position en X du joueur "+ i + " est " + posX);
+            System.out.println("La position en Y du joueur "+ i + " est " + posY);
             i++;
         }
 
+
         int nbTour=1;
-        int nbJoueurOut = 0;
         boolean jeuFini = false;
-        long tempsTour = 5000;
+        long tempsTour = 2000;
         long tempsDebutTour = System.currentTimeMillis();
         Joueur joueurActuel;
 
         while(!jeuFini)
         {
-            // Tous les joueurs sont éliminés
-            if(listJoueurs.size() <= 1)
+            // Temps du tour atteint
+            if (System.currentTimeMillis() - tempsDebutTour > tempsTour)
             {
-                jeuFini = true;
-                break;
-            }
-            else
-            {
-                // Temps du tour atteint
-                if (System.currentTimeMillis() - tempsDebutTour > tempsTour)
+                System.out.println("Tour " + nbTour++);
+                tempsDebutTour = System.currentTimeMillis();
+
+                // Boucle sur la liste des clients connectés
+                for (ConnexionClient c : listeConnexionClient)
                 {
-                    tempsDebutTour = System.currentTimeMillis();
-                    System.out.println("Tour " + nbTour++);
-                    // les connexion clients se coupent
-                    for (ConnexionClient c : listeConnexionClient)
+                    joueurActuel = c.getJoueur();
+
+                    // Gestion déconnexion et joueur perdu
+                    if (!c.isAlive())
                     {
-                        joueurActuel = c.getJoueur();
-                        // Gestion colision joueur
-                        for (Joueur k : listJoueurs)
-                        {
-                            if (k == joueurActuel)
-                                continue;
-                            if (joueurActuel.getPosX() == k.getPosX() && joueurActuel.getPosY() == k.getPosY())
-                            {
-                                joueurActuel.setNbPoints(0);
-                                c.envoyerMessage(Commande.GAMEOVER.toString());
-                            }
-                        }
+                        System.out.println("Le joueur " + joueurActuel.getId() + " s'est déconnecté.");
+                        listJoueurs.remove(joueurActuel);
+                        listeConnexionClientPerdu.add(c);
+                        continue;
+                    }
 
-                        // Gestion déconnexion et joueur perdu
-                        if (!c.isAlive())
-                        {
-                            if (c.isGameOver())
-                                System.out.println("Le joueur " + joueurActuel.getId() + " a perdu.");
-                            else
-                                System.out.println("Le joueur " + joueurActuel.getId() + " s'est déconnecté.");
-
-                            listJoueurs.remove(joueurActuel);
-                            nbJoueurOut++;
-                            listeConnexionClientPerdu.add(c);
+                    // Gestion colision joueur
+                    for (Joueur k : listJoueurs)
+                    {
+                        if (k == joueurActuel || k.getNbPoints() == 0)
                             continue;
-                        }
-
-                        // Un joueur a gagné
-                        if ((((c.getJoueur().getPosX() == jeu.getPosXObjectif()) && (joueurActuel.getPosY() == jeu.getPosYObjectif()))) || (listJoueurs.size() == 1))
+                        if (joueurActuel.getPosX() == k.getPosX() && joueurActuel.getPosY() == k.getPosY())
                         {
-                            jeu.setGagnant(joueurActuel);
-                            jeuFini = true;
-                            break;
-                        }
+                            System.out.println("Colision entre le joueur " + joueurActuel.getId() + " et le joueur " + k.getId());
+                            System.out.println("Le joueur " + joueurActuel.getId() + " a perdu.");
+                            System.out.println("Le joueur " + k.getId() + " a perdu.");
 
-                        // Envoie message joueur
-                        if (joueurActuel.getNbPoints() != 0)
-                        {
-                            c.envoyerMessage("action");
+                            joueurActuel.setNbPoints(0);
+                            k.setNbPoints(0);
                         }
                     }
 
-                    // Suppression des clients déconnectés
-                    for (ConnexionClient c : listeConnexionClientPerdu)
-                        listeConnexionClient.remove(c);
+                    // Un joueur a gagné
+                    if ((((joueurActuel.getPosX() == jeu.getPosXObjectif()) && (joueurActuel.getPosY() == jeu.getPosYObjectif()))))
+                    {
+                        System.out.println("Objectif atteint !");
+                        jeu.setGagnant(joueurActuel);
+                        jeuFini = true;
 
-                    listeConnexionClientPerdu.clear();
+                        for (ConnexionClient cC : listeConnexionClient)
+                        {
+                            if (jeu.getGagnant().equals(cC.getJoueur()))
+                                cC.envoyerMessage(Commande.GAMEWIN.toString());
+                            else
+                            {
+                                cC.envoyerMessage("Joueur " + joueurActuel.getId() + " a gagné la partie !");
+                                cC.envoyerMessage(Commande.GAMENOTWIN.toString());
+                            }
+                        }
+                        break;
+                    }
+
+                    // Un joueur gagne par défaut
+                    if (listJoueurs.size() <=1)
+                    {
+                        jeuFini = true;
+                        if (listJoueurs.size() == 1)
+                        {
+                            c.envoyerMessage("Vous gagnez par forfait !");
+                            c.envoyerMessage(Commande.GAMEWIN.toString());
+                        }
+                    }
+
+                    // Un joueur a perdu
+                    if (joueurActuel.getNbPoints() == 0)
+                    {
+                        c.setGameOver(true);
+                        listJoueurs.remove(joueurActuel);
+                        listeConnexionClientPerdu.add(c);
+                        c.envoyerMessage(Commande.GAMEOVER.toString());
+                    }
+
+                    // Envoie message joueur
+                    if (joueurActuel.getNbPoints() != 0)
+                        c.envoyerMessage("action");
                 }
+
+                // Suppression des clients déconnectés
+                for (ConnexionClient c : listeConnexionClientPerdu)
+                    listeConnexionClient.remove(c);
+
+                listeConnexionClientPerdu.clear();
             }
         }
-        */
+
+        if (jeu.getGagnant() != null)
+            System.out.println("Le joueur " + jeu.getGagnant().getId() + " a gagné la partie !");
+        else if (listJoueurs.size() == 1)
+            System.out.println("Le joueur " + listJoueurs.get(0).getId() + " gagne par forfait !");
+        else
+            System.out.println("Match nul !");
     }
 
     @Override

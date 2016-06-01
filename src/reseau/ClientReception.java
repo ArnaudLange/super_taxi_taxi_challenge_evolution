@@ -46,6 +46,10 @@ public class ClientReception extends Thread
                 case NOM:
                     System.out.println("Entrez votre nom :");
                     break;
+                case GAMENOTWIN:
+                    System.out.println("Vous avez perdu, un autre joueur a atteint l'objectif avant vous.");
+                    gameOver = true;
+                    break;
                 case GAMEOVER:
                     System.out.println("Vous avez perdu");
                     gameOver = true;
@@ -58,15 +62,16 @@ public class ClientReception extends Thread
                     System.out.println("Tour n°" + ++nbTour + "\nProchaine action ?");
                     break;
                 case ERREUR_ACTION:
-                    System.out.println("Mauvaise commande");
-                    break;
-                default:
-                    if (messageEntrant == null)
-                        System.out.println("Erreur de connexion avec le serveur");
+                    if (messageEntrant.equals(Commande.ERREUR_ACTION.toString()))
+                        System.out.println("Mauvaise commande");
                     else
                         System.out.println(messageEntrant);
+                    break;
+                default:
+                    System.out.println("Erreur de connexion avec le serveur");
             }
         }
+
         Thread.currentThread().interrupt();
     }
 }

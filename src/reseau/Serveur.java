@@ -10,7 +10,7 @@ import static java.lang.Thread.sleep;
 
 public class Serveur
 {
-    public static int TIMEOUT = 10000;
+    public static int TIMEOUT = 5000;
 
     public static void creerServeur(List<Joueur> listJoueurs, List listeConnexionClient)
     {

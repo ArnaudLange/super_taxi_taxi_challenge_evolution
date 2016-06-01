@@ -15,6 +15,7 @@ public enum Commande
     OUEST("ouest"),
     ACCELERER("accelerer"),
     RALENTIR("ralentir"),
+    GAMENOTWIN("gamenotwin"),
     GAMEOVER("gameover"),
     GAMEWIN("gamewin");
 
@@ -47,6 +48,8 @@ public enum Commande
                 return ACCELERER;
             case "ralentir":
                 return RALENTIR;
+            case "gamenotwin":
+                return GAMENOTWIN;
             case "gameover":
                 return GAMEOVER;
             case "gamewin":
@@ -56,7 +59,7 @@ public enum Commande
             case "":
                 return AUCUNE_ACTION;
             default:
-                return ERREUR_ACTION;
+                    return ERREUR_ACTION;
         }
     }
 }

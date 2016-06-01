@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * Created by swag on 14/05/16.
@@ -40,6 +41,11 @@ public class ConnexionClient extends Thread
         return gameOver;
     }
 
+    public void setGameOver(boolean b)
+    {
+        this.gameOver = b;
+    }
+
     public void envoyerMessage(String s)
     {
         // Début de tour
@@ -48,10 +54,6 @@ public class ConnexionClient extends Thread
 
         out.println(s);
         out.flush();
-
-        // Si le client a perdu on stop le thread
-        if (s.equals(Commande.GAMEOVER.toString()))
-            gameOver = true;
     }
 
     /**
@@ -64,6 +66,11 @@ public class ConnexionClient extends Thread
         {
             if ((readLine = in.readLine()) == null)
                 Thread.currentThread().interrupt();
+        }
+        catch (SocketException se)
+        {
+            Thread.currentThread().interrupt();
+            se.printStackTrace();
         }
         catch (IOException e)
         {

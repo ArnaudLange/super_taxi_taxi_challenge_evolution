@@ -9,30 +9,42 @@ import java.util.Scanner;
  */
 public class ClientEnvoie extends Thread
 {
-
-    private Scanner in;
-    private PrintWriter out;
+    private BufferedReader in;
+    private PrintWriter pW;
     private int nbTour;
     private Commande action;
 
     public ClientEnvoie(OutputStream out)
     {
-        this.out = new PrintWriter(out);
+        this.pW = new PrintWriter(out);
         nbTour = 1;
-        in = new Scanner(System.in);
+        InputStreamReader isr = new InputStreamReader(System.in);
+        in = new BufferedReader(isr);
     }
 
     public void run()
     {
-        out.println(in.nextLine());
-        out.flush();
-
-        while(!Thread.currentThread().isInterrupted())
+        try
         {
-            action = Commande.getCommande(in.nextLine());
-            out.println(action);
-            out.flush();
+            pW.println(in.readLine());
+            pW.flush();
+
+            while(!Thread.currentThread().isInterrupted())
+            {
+                action = Commande.getCommande(in.readLine());
+                pW.println(action);
+                pW.flush();
+            }
         }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void close()
+    {
+        System.exit(0);
     }
 }
 
