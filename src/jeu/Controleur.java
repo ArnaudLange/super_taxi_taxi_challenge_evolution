@@ -3,7 +3,6 @@ package jeu;
 import carte.Carte;
 import carte.Evenement;
 import carte.InterpreteurCarte;
-import carte.PointCardinal;
 import reseau.ConnexionClient;
 import reseau.Serveur;
 
@@ -47,7 +46,7 @@ public class Controleur implements Observer {
 
         int nbTour=1;
         boolean jeuFini = false;
-        long tempsTour = 2000;
+        long tempsTour = 10000;
         long tempsDebutTour = System.currentTimeMillis();
         Joueur joueurActuel;
 

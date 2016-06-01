@@ -101,7 +101,6 @@ public class ConnexionClient extends Thread
                 {
                     case NORD:
                         this.joueur.setDirection(PointCardinal.NORTH);
-                        System.out.println("il va au nord");
                         break;
                     case SUD:
                         this.joueur.setDirection(PointCardinal.SOUTH);
