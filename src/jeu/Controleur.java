@@ -39,7 +39,7 @@ public class Controleur implements Observer {
         jeu.setPosXObjectif(Constante.OBJCELL[0]);
         jeu.setPosYObjectif(Constante.OBJCELL[1]);
 
-        jeu.getCarte().gestionDeplacements(j, jeu.getPosXObjectif(), jeu.getPosYObjectif());
+        jeu.getCarte().gestionDeplacements(j);
 
 
         /*
