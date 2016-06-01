@@ -1,7 +1,7 @@
 package jeu;
 
 import carte.Carte;
-import carte.Infraction;
+import carte.Evenement;
 import carte.InterpreteurCarte;
 import carte.PointCardinal;
 import reseau.ConnexionClient;
@@ -28,15 +28,17 @@ public class Controleur implements Observer {
         Joueur j = new Joueur();
         j.setPosX(0);
         j.setPosY(0);
-        j.setVitesse(4);
+        j.setVitesse(3);
         j.setDirection(PointCardinal.EAST);
 
         List<Joueur> listos = new ArrayList<Joueur>();
         listos.add(j);
 
         jeu = new Jeu(listos, carte);
+        jeu.setPosXObjectif(1);
+        jeu.setPosYObjectif(0);
 
-        jeu.getCarte().gestionDeplacements(j);
+        jeu.getCarte().gestionDeplacements(j, jeu.getPosXObjectif(), jeu.getPosYObjectif());
 
 
         /*
@@ -145,14 +147,17 @@ public class Controleur implements Observer {
     public void update(Observable obv, Object obj) {
 
         if(obj instanceof Joueur){
-            Infraction infra = jeu.getCarte().getInfraction(((Joueur) obj).getPosX(),((Joueur) obj).getPosY(), ((Joueur) obj).getDirection());
-            if(infra.equals(Infraction.COURBE)&&((Joueur) obj).getVitesse()>2){
-                System.out.println("Amis1");
+            Evenement infra = jeu.getCarte().getEvenement(((Joueur) obj).getPosX(),((Joueur) obj).getPosY(), ((Joueur) obj).getDirection(), jeu.getPosXObjectif(), jeu.getPosYObjectif());
+
+            if(infra.equals(Evenement.OBJECTIF)){
+                System.out.println("Joueur a gagné.");
+                jeu.setGagnant(((Joueur)obj));
+            }
+            else if(infra.equals(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
                 System.out.println("Joueur mort.");
                 ((Joueur) obj).setEtatMarche(false);
             }
-            else if(infra.equals(Infraction.PRIORITE)){
-                System.out.println("Amis2");
+            else if(infra.equals(Evenement.PRIORITE)){
                 //Si vitesse du joueur est de 3, perte de majorinf points
                 if(((Joueur) obj).getVitesse()>2){
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
