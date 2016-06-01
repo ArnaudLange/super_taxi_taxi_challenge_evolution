@@ -108,7 +108,7 @@ public class Carte extends Observable  {
     // Prend en paramètre : la vitesse du joueur (pour savoir sur combien de case appliquer la direction,
     // la position en X et en Y du joueur
     // la direction du joueur
-    public void gestionDeplacements(Joueur j, int posXObjectif, int posYObjectif){
+    public void gestionDeplacements(Joueur j){
         boolean prioPossible;
         List<PointCardinal> directionCases = new ArrayList<>();
 
@@ -125,10 +125,6 @@ public class Carte extends Observable  {
                 System.out.println("Not a Route case.");
                 return;
             }
-
-            //On appelle le controleur qui va vérifier la présence ou non d'événements sur cette case et agir en conséquence.
-            setChanged();
-            notifyObservers(j);
 
             //Si la route n'a que deux points cardinaux
             if(directionCases.size()==2){
@@ -213,6 +209,10 @@ public class Carte extends Observable  {
                 }
             }
             System.out.println("Position : "+j.getPosX()+","+j.getPosY());
+
+            //On appelle le controleur qui va vérifier la présence ou non d'événements sur cette case et agir en conséquence.
+            setChanged();
+            notifyObservers(j);
         }
 
     }

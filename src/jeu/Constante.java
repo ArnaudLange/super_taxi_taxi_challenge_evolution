@@ -27,7 +27,7 @@ public class Constante {
     public final static int FOV=3;
 
     /* Position sur laquelle l'objectif apparait en début de partie */
-    public final static int[] OBJCELL= {15, 15};
+    public final static int[] OBJCELL= {2, 0};
 
 
 }
