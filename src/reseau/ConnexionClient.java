@@ -36,11 +36,6 @@ public class ConnexionClient extends Thread
         this.gameOver = false;
     }
 
-    public boolean isGameOver()
-    {
-        return gameOver;
-    }
-
     public void setGameOver(boolean b)
     {
         this.gameOver = b;

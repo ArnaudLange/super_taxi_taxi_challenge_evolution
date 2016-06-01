@@ -169,7 +169,7 @@ public class Carte extends Observable  {
             }
 
             //Ensuite on effectue les tests pour chaque direction du joueur.
-            if (j.getDirection().equals(PointCardinal.SOUTH)) {
+            if (PointCardinal.SOUTH.equals(j.getDirection())) {
                 if (directionCases.contains(PointCardinal.SOUTH)){
                     System.out.println("Déplacement vers le sud effectué.");
                     j.setPosY(j.getPosY()+1);
@@ -180,7 +180,7 @@ public class Carte extends Observable  {
                     return;
                 }
             }
-            else if (j.getDirection().equals(PointCardinal.NORTH)){
+            else if (PointCardinal.NORTH.equals(j.getDirection())){
                 if (directionCases.contains(PointCardinal.NORTH)){
                     System.out.println("Déplacement vers le nord effectué.");
                     j.setPosY(j.getPosY()-1);
@@ -191,7 +191,7 @@ public class Carte extends Observable  {
                     return;
                 }
             }
-            else if (j.getDirection().equals(PointCardinal.EAST)){
+            else if (PointCardinal.EAST.equals(j.getDirection())){
                 if (directionCases.contains(PointCardinal.EAST)){
                     System.out.println("Déplacement vers l'est effectué.");
                     j.setPosX(j.getPosX()+1);
@@ -202,7 +202,7 @@ public class Carte extends Observable  {
                     return;
                 }
             }
-            else if (j.getDirection().equals(PointCardinal.WEST)){
+            else if (PointCardinal.WEST.equals(j.getDirection())){
                 if (directionCases.contains(PointCardinal.WEST)){
                     System.out.println("Déplacement vers l'ouest effectué.");
                     j.setPosX(j.getPosX()-1);
