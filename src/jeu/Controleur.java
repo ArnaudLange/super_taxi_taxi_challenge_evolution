@@ -18,7 +18,7 @@ public class Controleur implements Observer {
     private Jeu jeu;
 
     public Controleur() {
-        File fichierCarte = new File("src/carte/carte001.txt"); // on initialise le fichier texte de la carte
+        File fichierCarte = new File("src/carte/cartetest.txt"); // on initialise le fichier texte de la carte
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
         carte.addObserver(this);
@@ -51,7 +51,7 @@ public class Controleur implements Observer {
 
         int nbTour=1;
         boolean jeuFini = false;
-        long tempsTour = 2000;
+        long tempsTour = 5000;
         long tempsDebutTour = System.currentTimeMillis();
         Joueur joueurActuel;
 
@@ -66,6 +66,10 @@ public class Controleur implements Observer {
                 for (ConnexionClient c : listeConnexionClient)
                 {
                     jeu.getCarte().gestionDeplacements(c.getJoueur());
+                    System.out.println("La vitesse du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getVitesse());
+                    System.out.println("La direction du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getDirection());
+                    System.out.println("La position en X du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getPosX());
+                    System.out.println("La position en Y du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getPosY());
                 }
 
                 // Boucle sur la liste des clients connectés
