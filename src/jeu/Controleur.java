@@ -28,14 +28,14 @@ public class Controleur implements Observer {
         Joueur j = new Joueur();
         j.setPosX(0);
         j.setPosY(0);
-        j.setVitesse(3);
+        j.setVitesse(4);
         j.setDirection(PointCardinal.EAST);
 
         List<Joueur> listos = new ArrayList<Joueur>();
         listos.add(j);
 
         jeu = new Jeu(listos, carte);
-        jeu.setPosXObjectif(1);
+        jeu.setPosXObjectif(2);
         jeu.setPosYObjectif(0);
 
         jeu.getCarte().gestionDeplacements(j, jeu.getPosXObjectif(), jeu.getPosYObjectif());
@@ -147,17 +147,18 @@ public class Controleur implements Observer {
     public void update(Observable obv, Object obj) {
 
         if(obj instanceof Joueur){
-            Evenement infra = jeu.getCarte().getEvenement(((Joueur) obj).getPosX(),((Joueur) obj).getPosY(), ((Joueur) obj).getDirection(), jeu.getPosXObjectif(), jeu.getPosYObjectif());
+            List<Evenement> infra = jeu.getCarte().getEvenement(((Joueur) obj).getPosX(),((Joueur) obj).getPosY(), ((Joueur) obj).getDirection(), jeu.getPosXObjectif(), jeu.getPosYObjectif());
 
-            if(infra.equals(Evenement.OBJECTIF)){
+            if(infra.contains(Evenement.OBJECTIF)){
                 System.out.println("Joueur a gagné.");
                 jeu.setGagnant(((Joueur)obj));
             }
-            else if(infra.equals(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
+            if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
                 System.out.println("Joueur mort.");
                 ((Joueur) obj).setEtatMarche(false);
             }
-            else if(infra.equals(Evenement.PRIORITE)){
+            if(infra.contains(Evenement.PRIORITE)){
+                System.out.println("Priorite a droite.");
                 //Si vitesse du joueur est de 3, perte de majorinf points
                 if(((Joueur) obj).getVitesse()>2){
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
@@ -167,8 +168,8 @@ public class Controleur implements Observer {
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MINORINF);
                 }
             }
-            else{
-                System.out.println("c'était null négro");
+            if(infra.size()==0){
+                System.out.println("Pas d'événement.");
             }
 
         }
