@@ -22,24 +22,11 @@ public class Controleur implements Observer {
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
         carte.addObserver(this);
-        carte.addObserver(this);
-
-        Joueur j = new Joueur();
-        j.setPosX(0);
-        j.setPosY(0);
-        j.setVitesse(4);
-        j.setDirection(PointCardinal.EAST);
-
-        List<Joueur> listos = new ArrayList<Joueur>();
-        listos.add(j);
-
-        jeu = new Jeu(listos, carte);
-        jeu.setPosXObjectif(Constante.OBJECTIFCELL[0]);
-        jeu.setPosYObjectif(Constante.OBJECTIFCELL[1]);
-        jeu.getCarte().gestionDeplacements(j);
 
         List<Joueur> listJoueurs = new ArrayList<>();
-        Jeu jeu = new Jeu(listJoueurs, carte);
+        jeu = new Jeu(listJoueurs, carte);
+        jeu.setPosXObjectif(Constante.OBJECTIFCELL[0]);
+        jeu.setPosYObjectif(Constante.OBJECTIFCELL[1]);
         List<ConnexionClient> listeConnexionClient = new ArrayList();
         List<ConnexionClient> listeConnexionClientPerdu = new ArrayList();
         Serveur.creerServeur(jeu.getListeJoueurs(), listeConnexionClient);
@@ -58,7 +45,6 @@ public class Controleur implements Observer {
             i++;
         }
 
-
         int nbTour=1;
         boolean jeuFini = false;
         long tempsTour = 2000;
@@ -72,6 +58,11 @@ public class Controleur implements Observer {
             {
                 System.out.println("Tour " + nbTour++);
                 tempsDebutTour = System.currentTimeMillis();
+
+                for (ConnexionClient c : listeConnexionClient)
+                {
+                    jeu.getCarte().gestionDeplacements(c.getJoueur());
+                }
 
                 // Boucle sur la liste des clients connectés
                 for (ConnexionClient c : listeConnexionClient)

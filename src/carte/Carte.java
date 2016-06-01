@@ -1,11 +1,12 @@
 package carte;
 
+import jeu.Constante;
 import jeu.Joueur;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import javax.swing.*;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
-import java.util.Observable;
 
 /**
  * Created by cokral on 02/05/16.
