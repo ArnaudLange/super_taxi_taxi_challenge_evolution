@@ -20,6 +20,7 @@ public class Controleur implements Observer {
     public Controleur() {
         File fichierCarte = new File("src/carte/carte001.txt"); // on initialise le fichier texte de la carte
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+        Vector positionDepart = InterpreteurCarte.trouverPositionDepart(carte);
 
 
 
@@ -35,8 +36,8 @@ public class Controleur implements Observer {
         listos.add(j);
 
         jeu = new Jeu(listos, carte);
-        jeu.setPosXObjectif(1);
-        jeu.setPosYObjectif(0);
+        jeu.setPosXObjectif(Constante.OBJCELL[0]);
+        jeu.setPosYObjectif(Constante.OBJCELL[1]);
 
         jeu.getCarte().gestionDeplacements(j, jeu.getPosXObjectif(), jeu.getPosYObjectif());
 
@@ -150,8 +151,15 @@ public class Controleur implements Observer {
             Evenement infra = jeu.getCarte().getEvenement(((Joueur) obj).getPosX(),((Joueur) obj).getPosY(), ((Joueur) obj).getDirection(), jeu.getPosXObjectif(), jeu.getPosYObjectif());
 
             if(infra.equals(Evenement.OBJECTIF)){
-                System.out.println("Joueur a gagné.");
-                jeu.setGagnant(((Joueur)obj));
+                ((Joueur)obj).setNbPoints( ((Joueur)obj).getNbPoints() + Constante.OBJPOINTS );
+
+                if(((Joueur)obj).getNbPoints() >= Constante.MAXPOINTS){
+                    System.out.println("Joueur a gagné.");
+                    jeu.setGagnant(((Joueur)obj));
+                } else{
+
+                }
+
             }
             else if(infra.equals(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
                 System.out.println("Joueur mort.");

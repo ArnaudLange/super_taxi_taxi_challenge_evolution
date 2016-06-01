@@ -177,20 +177,19 @@ public class InterpreteurCarte {
         }
         return null;
     }
-    public static Vector trouverPositionDepart(Carte carte) //TODO (pas toutes les positions dans le vector)
+    public static Vector trouverPositionDepart(Carte carte)
     {
         //Carte carteDepart = new Carte();
         //int[] posX = new int[30];
         //int[] posY = new int[30];
         Vector positionDepart = new Vector(); // contient les couples de positions possible
-
-        for (int i = 0; i<carte.getLongueur()-1;i++){
-            for (int j = 0; j<carte.getLargeur()-1;j++){
+        for (int i = 0; i<carte.getLargeur();i++){
+            for (int j = 0; j<carte.getLongueur();j++){
                 if (carte.getTableau()[i][j] instanceof Route){
                     int[] position = new int[2];
                     position[0] = i;
                     position[1] = j;
-                    positionDepart.addElement(position); //on replit la liste des positions possibles
+                    positionDepart.addElement(position); //on remplit la liste des positions possibles
                 }
             }
         }
