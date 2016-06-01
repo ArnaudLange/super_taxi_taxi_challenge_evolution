@@ -21,26 +21,12 @@ public class Controleur implements Observer {
         File fichierCarte = new File("src/carte/carte001.txt"); // on initialise le fichier texte de la carte
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-
         carte.addObserver(this);
 
-        Joueur j = new Joueur();
-        j.setPosX(0);
-        j.setPosY(0);
-        j.setVitesse(4);
-        j.setDirection(PointCardinal.EAST);
-
-        List<Joueur> listos = new ArrayList<Joueur>();
-        listos.add(j);
-
-        jeu = new Jeu(listos, carte);
-        jeu.setPosXObjectif(Constante.OBJCELL[0]);
-        jeu.setPosYObjectif(Constante.OBJCELL[1]);
-        jeu.getCarte().gestionDeplacements(j);
-
-
         List<Joueur> listJoueurs = new ArrayList<>();
-        Jeu jeu = new Jeu(listJoueurs, carte);
+        jeu = new Jeu(listJoueurs, carte);
+        jeu.setPosXObjectif(Constante.OBJECTIFCELL[0]);
+        jeu.setPosYObjectif(Constante.OBJECTIFCELL[1]);
         List<ConnexionClient> listeConnexionClient = new ArrayList();
         List<ConnexionClient> listeConnexionClientPerdu = new ArrayList();
         Serveur.creerServeur(jeu.getListeJoueurs(), listeConnexionClient);
@@ -76,6 +62,11 @@ public class Controleur implements Observer {
             {
                 System.out.println("Tour " + nbTour++);
                 tempsDebutTour = System.currentTimeMillis();
+
+                for (ConnexionClient c : listeConnexionClient)
+                {
+                    jeu.getCarte().gestionDeplacements(c.getJoueur());
+                }
 
                 // Boucle sur la liste des clients connectés
                 for (ConnexionClient c : listeConnexionClient)
@@ -176,6 +167,7 @@ public class Controleur implements Observer {
 
             if(infra.contains(Evenement.OBJECTIF)){
                 ((Joueur)obj).setNbPoints( ((Joueur)obj).getNbPoints() + Constante.OBJPOINTS );
+
                 if(((Joueur)obj).getNbPoints() >= Constante.MAXPOINTS){
                     System.out.println("Joueur a récupéré l'objectif.");
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()+Constante.OBJPOINTS);
