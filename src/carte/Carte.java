@@ -64,9 +64,10 @@ public class Carte extends Observable  {
 
     //Fonction utilisée pour récupérer le type d'événement : soit on a atteint l'objectif, soit il y a une priorité à droite, soit il y a une courbe.
     public List<Evenement> getEvenement(int posX, int posY, PointCardinal direction, int posXObjectif, int posYObjectif){
-        List<PointCardinal> directionCase = new ArrayList<>();
+        List<PointCardinal> directionCase;
         List<Evenement> evenements = new ArrayList<>();
-        directionCase = ((List<PointCardinal>)((Route)tableau[posY][posX]).getDirections());
+        directionCase = ((Route)tableau[posY][posX]).getDirections();
+
 
         //Si on est sur l'objectif
         if(posXObjectif == posX && posY == posYObjectif){
@@ -109,20 +110,15 @@ public class Carte extends Observable  {
     //Fonction qui gère le déplacement d'un joueur j
     public void gestionDeplacements(Joueur j){
 
-        //Si la direction du joueur est nulle, on quitte directement la fonction
-        if(j.getDirection().equals(null)){
-            System.out.println("Pas de direction, ça a aucun sens mais bon...");
-            return;
-        }
+        List<PointCardinal> directionCases;
 
-        List<PointCardinal> directionCases = new ArrayList<>();
 
         //on va effectuer l'algorithme x fois avec x la vitesse
         for (int i = 0; i < j.getVitesse() ; i++) {
             // La carte est codée de façon : tableau[ligne][colonne] donc on inverse posX et posY
             if (tableau[j.getPosY()][j.getPosX()] instanceof Route){
                 //Si c'est une case route on récupère les points cardinaux
-                directionCases = ((List<PointCardinal>)((Route)tableau[j.getPosY()][j.getPosX()]).getDirections());
+                directionCases = ((Route)tableau[j.getPosY()][j.getPosX()]).getDirections();
             }
             else {
                 //Sinon ce n'est pas une route, on a un accident, retourne null
@@ -130,7 +126,6 @@ public class Carte extends Observable  {
                 j.setNbPoints(0);
                 return;
             }
-
 
             //Si la route n'a que deux points cardinaux
             if(directionCases.size()==2){
@@ -146,26 +141,30 @@ public class Carte extends Observable  {
                     //Parcours des deux points cardinaux de la case
                     for (PointCardinal dir:directionCases) {
                         //Si le joueur va vers l'est
-                        if(j.getDirection().equals(PointCardinal.EST)){
+                        if(PointCardinal.EST.equals(j.getDirection())){
                             //Si la direction qu'on regarde n'est pas celle d'où l'on vient
-                            if (dir!=PointCardinal.OUEST){
+                            if (!PointCardinal.OUEST.equals(dir)){
                                 j.setDirection(dir);
+                                break;
                             }
                         }
                         //Sinon, de même avec autres directions
-                        else if(j.getDirection().equals(PointCardinal.NORD)){
-                            if (dir!=PointCardinal.SUD){
+                        else if(PointCardinal.NORD.equals(j.getDirection())){
+                            if (!PointCardinal.SUD.equals(dir)){
                                 j.setDirection(dir);
+                                break;
                             }
                         }
-                        if(j.getDirection().equals(PointCardinal.SUD)){
-                            if (dir!=PointCardinal.NORD){
+                        else if(PointCardinal.SUD.equals(j.getDirection())){
+                            if (!PointCardinal.NORD.equals(dir)){
                                 j.setDirection(dir);
+                                break;
                             }
                         }
-                        if(j.getDirection().equals(PointCardinal.OUEST)){
-                            if (dir!=PointCardinal.EST){
+                        else if(PointCardinal.OUEST.equals(j.getDirection())){
+                            if (!PointCardinal.EST.equals(dir)){
                                 j.setDirection(dir);
+                                break;
                             }
                         }
                     }
@@ -243,7 +242,6 @@ public class Carte extends Observable  {
     			}
     		}
     	}
-    	
     	return vision;
     }
     
