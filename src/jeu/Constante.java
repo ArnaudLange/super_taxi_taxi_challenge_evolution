@@ -32,4 +32,7 @@ public class Constante {
     /* Rayon de la vision des joueurs */
     public final static int DISTANCEVISION=6;
 
+    /*TimeOut lancé quand 2 joueurs sont connectés*/
+    public final static int TIMEOUTCONNECTION=5000;
+
 }

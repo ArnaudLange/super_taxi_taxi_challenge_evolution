@@ -1,5 +1,6 @@
 package reseau;
 
+import jeu.Constante;
 import jeu.Joueur;
 
 import java.io.IOException;
@@ -10,9 +11,8 @@ import static java.lang.Thread.sleep;
 
 public class Serveur
 {
-    public static int TIMEOUT = 5000;
 
-    public static void creerServeur(List<Joueur> listJoueurs, List listeConnexionClient)
+    public static void creerServeur(List<Joueur> listJoueurs, List<ConnexionClient> listeConnexionClient)
     {
 
         ServerSocket listeningSocket;
@@ -30,7 +30,7 @@ public class Serveur
             boolean timeout = false;
 
 
-            while(!timeout || (System.currentTimeMillis() - startTimeOut < TIMEOUT))
+            while(!timeout || (System.currentTimeMillis() - startTimeOut < Constante.TIMEOUTCONNECTION))
             {
                 int taille = listJoueurs.size();
 
@@ -42,14 +42,19 @@ public class Serveur
                     if (listJoueurs.isEmpty())
                         sleep(3000);*/
 
-                if (taille >= 2) //TODO Gérer le cas ou le client 2 disconnect avant le début de la partie
+                if (taille >= 2)
+
+                //TODO Gérer le cas ou le client 2 disconnect avant le début de la partie
                 {
                     if (!timeout)
                         startTimeOut = System.currentTimeMillis();
 
                     // débloque le accept du socket
-                    listeningSocket.setSoTimeout(TIMEOUT - (int)(System.currentTimeMillis() - startTimeOut));
+                    listeningSocket.setSoTimeout(Constante.TIMEOUTCONNECTION - (int)(System.currentTimeMillis() - startTimeOut));
                     timeout = true;
+                    for (ConnexionClient c: listeConnexionClient){
+                        c.envoyerMessage("2 joueurs sont arrivés, la partie va commencer dans "+ Constante.TIMEOUTCONNECTION/1000+ "secondes ");
+                    }
                 }
 
                 // Création du prochain joueur relié au client qui se connectera
