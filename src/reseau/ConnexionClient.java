@@ -132,7 +132,7 @@ public class ConnexionClient extends Thread
 
     private void changerDirection(Commande d)
     {
-        envoyerMessage("Vous avez changer votre direction vers " + d.toString());
+        envoyerMessage("Vous avez changé votre direction vers " + d.toString());
 
         if (Commande.ACCELERER.equals(derniereAction))
         {
