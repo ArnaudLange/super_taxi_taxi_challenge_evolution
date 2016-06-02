@@ -111,7 +111,7 @@ public class ConnexionClient extends Thread
                         {
                             this.changementVitesse = true;
                             this.joueur.accelerer();
-                            this.joueur.setDirection(null);
+                            //this.joueur.setDirection(null);//TODO Quentin?
                         }
                         break;
                     case RALENTIR:
@@ -119,7 +119,7 @@ public class ConnexionClient extends Thread
                         {
                             this.changementVitesse = true;
                             this.joueur.ralentir();
-                            this.joueur.setDirection(null);
+                            //this.joueur.setDirection(null);//TODO Quentin ?
                         }
                         break;
                     case AUCUNE_ACTION:
