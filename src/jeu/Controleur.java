@@ -124,9 +124,9 @@ public class Controleur implements Observer {
                     }
 
                     // Un joueur a gagné
-                    if ((((joueurActuel.getPosX() == jeu.getPosXObjectif()) && (joueurActuel.getPosY() == jeu.getPosYObjectif()))))
+                    if (joueurActuel.getNbPoints() == Constante.MAXPOINTS)
                     {
-                        System.out.println("Objectif atteint !");
+                        System.out.println("Partie gagnée !");
                         jeu.setGagnant(joueurActuel);
                         jeuFini = true;
 
