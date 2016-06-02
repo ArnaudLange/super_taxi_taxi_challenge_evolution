@@ -200,22 +200,17 @@ public class Controleur implements Observer {
             if(infra.contains(Evenement.OBJECTIF)){
                 ((Joueur)obj).setNbPoints( ((Joueur)obj).getNbPoints() + Constante.OBJPOINTS );
 
-                if(((Joueur)obj).getNbPoints() >= Constante.MAXPOINTS){
-                    System.out.println("Joueur a récupéré l'objectif.");
-                    ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()+Constante.OBJPOINTS);
-                } else{
-                    Vector positionDispo = InterpreteurCarte.trouverPositionDepart(jeu.getCarte());
-                    int[] newPositionObj = InterpreteurCarte.choisirPositionDepart(positionDispo);
-                    jeu.setPosXObjectif(newPositionObj[0]);
-                    jeu.setPosYObjectif(newPositionObj[1]);
-                }
+                Vector positionDispo = InterpreteurCarte.trouverPositionDepart(jeu.getCarte());
+                int[] newPositionObj = InterpreteurCarte.choisirPositionDepart(positionDispo);
+                jeu.setPosXObjectif(newPositionObj[0]);
+                jeu.setPosYObjectif(newPositionObj[1]);
 
             }
-            else if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
+            if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
                 System.out.println("Joueur mort.");
-                ((Joueur) obj).setEtatMarche(false);
+                ((Joueur) obj).setNbPoints(0);
             }
-            if(infra.contains(Evenement.FEU)){
+            else if(infra.contains(Evenement.FEU)){
             	if(((Feu)jeu.getCarte().getTableau()[((Joueur) obj).getPosY()][((Joueur) obj).getPosX()]).getCouleurFeu(((Joueur) obj).getDirection())){
             		((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
             	}

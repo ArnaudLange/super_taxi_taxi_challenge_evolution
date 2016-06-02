@@ -9,12 +9,12 @@ import java.awt.*;
  */
 public enum Commande
 {
-    DROITE("droite"),
-    GAUCHE("gauche"),
     AUCUNE_ACTION(""),
     ERREUR_ACTION("erreuraction"),
     NOM("nom"),
     NEXT_ACTION("action"),
+    GAUCHE("gauche"),
+    DROITE("Droite"),
     NORD(PointCardinal.NORD.toString()),
     SUD(PointCardinal.SUD.toString()),
     EST(PointCardinal.EST.toString()),
@@ -42,12 +42,12 @@ public enum Commande
     {
         switch(((s == null)?"":s).toLowerCase())
         {
-            case "droite":
-                return DROITE;
-            case "gauche":
-                return GAUCHE;
             case "action":
                 return NEXT_ACTION;
+            case "gauche":
+                return GAUCHE;
+            case "droite":
+                return DROITE;
             case "nord":
                 return NORD;
             case "sud":

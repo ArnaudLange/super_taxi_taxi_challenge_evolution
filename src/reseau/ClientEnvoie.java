@@ -2,7 +2,6 @@ package reseau;
 
 import jeu.Commande;
 import java.io.*;
-import java.util.Scanner;
 
 /**
  * Created by swag on 25/05/16.

@@ -25,7 +25,6 @@ public class ConnexionClient extends Thread
     private Commande derniereAction;
     private PointCardinal derniereDirection;
     private boolean gameOver;
-    private boolean premierTour;
 
     ConnexionClient(Socket s, Joueur joueur) throws IOException
     {
@@ -34,7 +33,6 @@ public class ConnexionClient extends Thread
         this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         this.out = new PrintWriter(this.socket.getOutputStream());
         this.gameOver = false;
-        this.premierTour = true;
     }
 
     public void setGameOver(boolean b)
@@ -144,6 +142,20 @@ public class ConnexionClient extends Thread
             changerDirection(Commande.DROITE);
         }else{
             changerDirection(Commande.GAUCHE);
+    private void changerDirection(Commande d)
+    {
+        PointCardinal direction;
+        int i;
+
+        if (Commande.ACCELERER.equals(derniereAction))
+        {
+            joueur.ralentir();
+            envoyerMessage("Annulation du changement de vitesse : vitesse = " + joueur.getVitesse());
+        }
+        else if (Commande.RALENTIR.equals(derniereAction))
+        {
+            joueur.accelerer();
+            envoyerMessage("Annulation du changement de vitesse : vitesse = " + joueur.getVitesse());
         }
         envoyerMessage("Annulation du changement de direction : direction = " + joueur.getDirection());
     }
@@ -277,8 +289,6 @@ public class ConnexionClient extends Thread
 
     private void changerVitesse(Commande c)
     {
-
-
         if (joueur.getDirection() == null)
             envoyerMessage("Vous devez d'abord choisir une direction avant de changer votre vitesse");
         else if (derniereAction != null && PointCardinal.getPointCardinal(derniereAction.toString()) != null && derniereDirection == null)
@@ -290,7 +300,6 @@ public class ConnexionClient extends Thread
             // S'il a déjà changer de direction on remets le joueur dans sa derniere direction possible
             if (derniereAction != null && PointCardinal.getPointCardinal(derniereAction.toString()) != null)
             {
-                envoyerMessage("je suis la"+derniereAction+"on va mettre ca"+derniereDirection);
                 envoyerMessage("Annulation du changement de direction : direction = " + derniereDirection);
                 joueur.setDirection(derniereDirection);
                 derniereAction=null;

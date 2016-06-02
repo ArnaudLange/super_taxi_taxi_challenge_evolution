@@ -71,7 +71,13 @@ public class ClientReception extends Thread
                     gameOver = true;
                     break;
                 case NEXT_ACTION:
-                    System.out.println("Tour n°" + ++nbTour + "\nProchaine action ?");
+                    System.out.println("-------------------------------------");
+                    System.out.println("\tTour n°" + ++nbTour);
+                    System.out.println("Points : "+nbPoint);
+                    System.out.println("Vitesse : "+ vitesse);
+                    System.out.println("Direction : "+ direction);
+                    System.out.println("Prochaine action ? ( accelerer, ralentir, droite, gauche )");
+
                     break;
                 case ERREUR_ACTION:
                     if (messageEntrant.equals(Commande.ERREUR_ACTION.toString()))
