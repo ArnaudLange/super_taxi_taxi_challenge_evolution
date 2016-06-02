@@ -37,7 +37,7 @@ public class CarteTest {
     }
 
 
-    //Tests de gestionDeplacement() à  l'est dans un cul de sac
+    //Tests de gestionDeplacement() est
     @Test
     public void testDeplacementEast1() {
         File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
@@ -88,6 +88,168 @@ public class CarteTest {
         carte.gestionDeplacements(j);
         Assert.assertEquals(1, j.getPosX());
         Assert.assertEquals(0, j.getPosY());
+        Assert.assertEquals(0, j.getNbPoints());
+    }
+
+    //Tests de gestionDeplacement() ouest
+    @Test
+    public void testDeplacementOuest1() {
+        File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+        Joueur j = new Joueur();
+
+        j.setPosX(1);
+        j.setPosY(0);
+        j.setNbPoints(Constante.STARTPOINTS);
+        j.setDirection(PointCardinal.WEST);
+        j.setVitesse(0);
+
+        carte.gestionDeplacements(j);
+        Assert.assertEquals(1, j.getPosX());
+        Assert.assertEquals(0, j.getPosY());
+        Assert.assertEquals(30, j.getNbPoints());
+    }
+    @Test
+    public void testDeplacementOuest2() {
+        File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+        Joueur j = new Joueur();
+
+        j.setPosX(1);
+        j.setPosY(0);
+        j.setNbPoints(Constante.STARTPOINTS);
+        j.setDirection(PointCardinal.WEST);
+        j.setVitesse(1);
+
+        carte.gestionDeplacements(j);
+        Assert.assertEquals(0, j.getPosX());
+        Assert.assertEquals(0, j.getPosY());
+        Assert.assertEquals(30, j.getNbPoints());
+    }
+
+    @Test
+    public void testDeplacementOuest3() {
+        File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+        Joueur j = new Joueur();
+
+        j.setPosX(1);
+        j.setPosY(0);
+        j.setNbPoints(Constante.STARTPOINTS);
+        j.setDirection(PointCardinal.WEST);
+        j.setVitesse(2);
+
+        carte.gestionDeplacements(j);
+        Assert.assertEquals(0, j.getPosX());
+        Assert.assertEquals(0, j.getPosY());
+        Assert.assertEquals(0, j.getNbPoints());
+    }
+
+    //Tests de gestionDeplacement() nord
+    @Test
+    public void testDeplacementNord1() {
+        File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+        Joueur j = new Joueur();
+
+        j.setPosX(0);
+        j.setPosY(3);
+        j.setNbPoints(Constante.STARTPOINTS);
+        j.setDirection(PointCardinal.NORTH);
+        j.setVitesse(0);
+
+        carte.gestionDeplacements(j);
+        Assert.assertEquals(0, j.getPosX());
+        Assert.assertEquals(3, j.getPosY());
+        Assert.assertEquals(30, j.getNbPoints());
+    }
+    @Test
+    public void testDeplacementNord2() {
+        File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+        Joueur j = new Joueur();
+
+        j.setPosX(0);
+        j.setPosY(3);
+        j.setNbPoints(Constante.STARTPOINTS);
+        j.setDirection(PointCardinal.NORTH);
+        j.setVitesse(1);
+
+        carte.gestionDeplacements(j);
+        Assert.assertEquals(0, j.getPosX());
+        Assert.assertEquals(2, j.getPosY());
+        Assert.assertEquals(30, j.getNbPoints());
+    }
+
+    @Test
+    public void testDeplacementNord3() {
+        File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+        Joueur j = new Joueur();
+
+        j.setPosX(0);
+        j.setPosY(3);
+        j.setNbPoints(Constante.STARTPOINTS);
+        j.setDirection(PointCardinal.NORTH);
+        j.setVitesse(2);
+
+        carte.gestionDeplacements(j);
+        Assert.assertEquals(0, j.getPosX());
+        Assert.assertEquals(2, j.getPosY());
+        Assert.assertEquals(0, j.getNbPoints());
+    }
+
+    //Tests de gestionDeplacement() sud
+    @Test
+    public void testDeplacementSud1() {
+        File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+        Joueur j = new Joueur();
+
+        j.setPosX(0);
+        j.setPosY(2);
+        j.setNbPoints(Constante.STARTPOINTS);
+        j.setDirection(PointCardinal.SOUTH);
+        j.setVitesse(0);
+
+        carte.gestionDeplacements(j);
+        Assert.assertEquals(0, j.getPosX());
+        Assert.assertEquals(2, j.getPosY());
+        Assert.assertEquals(30, j.getNbPoints());
+    }
+    @Test
+    public void testDeplacementSud2() {
+        File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+        Joueur j = new Joueur();
+
+        j.setPosX(0);
+        j.setPosY(2);
+        j.setNbPoints(Constante.STARTPOINTS);
+        j.setDirection(PointCardinal.SOUTH);
+        j.setVitesse(1);
+
+        carte.gestionDeplacements(j);
+        Assert.assertEquals(0, j.getPosX());
+        Assert.assertEquals(3, j.getPosY());
+        Assert.assertEquals(30, j.getNbPoints());
+    }
+
+    @Test
+    public void testDeplacementSud3() {
+        File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+        Joueur j = new Joueur();
+
+        j.setPosX(0);
+        j.setPosY(2);
+        j.setNbPoints(Constante.STARTPOINTS);
+        j.setDirection(PointCardinal.SOUTH);
+        j.setVitesse(2);
+
+        carte.gestionDeplacements(j);
+        Assert.assertEquals(0, j.getPosX());
+        Assert.assertEquals(3, j.getPosY());
         Assert.assertEquals(0, j.getNbPoints());
     }
 
