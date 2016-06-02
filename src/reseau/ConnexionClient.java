@@ -142,59 +142,69 @@ public class ConnexionClient extends Thread
         PointCardinal direction;
         int i;
 
-        if (Commande.ACCELERER.equals(derniereAction))
-        {
+        if (Commande.ACCELERER.equals(derniereAction)) {
             joueur.ralentir();
             envoyerMessage("Annulation du changement de vitesse : vitesse = " + joueur.getVitesse());
-        }
-        else if (Commande.RALENTIR.equals(derniereAction))
-        {
+        } else if (Commande.RALENTIR.equals(derniereAction)) {
             joueur.accelerer();
             envoyerMessage("Annulation du changement de vitesse : vitesse = " + joueur.getVitesse());
         }
 
-        derniereAction = d;
-        derniereDirection = joueur.getDirection();
-        if(joueur.getVitesse()<2) {
-            if (PointCardinal.NORD.equals(derniereDirection)) {
-                if (Commande.DROITE.equals(d)) {
-                    direction=PointCardinal.EST;
-                }else{
-                    direction=PointCardinal.OUEST;
-                }
-            } else if (PointCardinal.EST.equals(derniereDirection)) {
-                if (Commande.DROITE.equals(d)) {
-                    direction=PointCardinal.SUD;
-                }else{
-                    direction=PointCardinal.NORD;
-                }
-            } else if (PointCardinal.SUD.equals(derniereDirection)) {
-                if (Commande.DROITE.equals(d)) {
-                    direction=PointCardinal.OUEST;
-                }else{
-                    direction=PointCardinal.EST;
-                }
-            }else if(PointCardinal.OUEST.equals(derniereDirection)){
-                if (Commande.DROITE.equals(d)) {
-                    direction=PointCardinal.NORD;
-                } else{
-                    direction=PointCardinal.SUD;
-                }
+        if(joueur.getDirection()==null){
+            if(Commande.NORD.equals(d)||Commande.EST.equals(d)||Commande.SUD.equals(d)||Commande.OUEST.equals(d)) {
+                derniereAction = d;
+                joueur.setDirection(PointCardinal.getPointCardinal(d.toString()));
+                envoyerMessage("Vous avez changé votre direction vers " + d.toString());
             }else{
-                //IL FAUT FAIRE UN TRUC LA
-                direction=null;
-                envoyerMessage("lolol pas de direction");
+                envoyerMessage("direction = null, veuillez choisir une direction (nord, est, sud ou ouest)");
                 return;
             }
-            joueur.setDirection(direction);
-
-            envoyerMessage("Vous avez changé votre direction vers " + direction.toString());
         }else {
-            if (Commande.DROITE.equals(d) || Commande.GAUCHE.equals(d)) {
-                System.out.println("trop rapide donc déces.");
-                joueur.setNbPoints(0);
+
+
+            derniereAction = d;
+            derniereDirection = joueur.getDirection();
+            if (joueur.getVitesse() < 2) {
+                if (PointCardinal.NORD.equals(derniereDirection)) {
+                    if (Commande.DROITE.equals(d)) {
+                        direction = PointCardinal.EST;
+                    } else {
+                        direction = PointCardinal.OUEST;
+                    }
+                } else if (PointCardinal.EST.equals(derniereDirection)) {
+                    if (Commande.DROITE.equals(d)) {
+                        direction = PointCardinal.SUD;
+                    } else {
+                        direction = PointCardinal.NORD;
+                    }
+                } else if (PointCardinal.SUD.equals(derniereDirection)) {
+                    if (Commande.DROITE.equals(d)) {
+                        direction = PointCardinal.OUEST;
+                    } else {
+                        direction = PointCardinal.EST;
+                    }
+                } else if (PointCardinal.OUEST.equals(derniereDirection)) {
+                    if (Commande.DROITE.equals(d)) {
+                        direction = PointCardinal.NORD;
+                    } else {
+                        direction = PointCardinal.SUD;
+                    }
+                } else {
+                    //IL FAUT FAIRE UN TRUC LA
+                    direction = null;
+                    envoyerMessage("lolol pas de direction");
+                    return;
+                }
+                joueur.setDirection(direction);
+
+                envoyerMessage("Vous avez changé votre direction vers " + direction.toString());
+            } else {
+                if (Commande.DROITE.equals(d) || Commande.GAUCHE.equals(d)) {
+                    System.out.println("trop rapide donc déces.");
+                    joueur.setNbPoints(0);
+                }
+                envoyerMessage("Vous avez changé votre direction vers " + d.toString() + "en allant trop vite");
             }
-            envoyerMessage("Vous avez changé votre direction vers " + d.toString()+"en allant trop vite");
         }
 
         //joueur.setDirection(PointCardinal.getPointCardinal(d.toString()));
