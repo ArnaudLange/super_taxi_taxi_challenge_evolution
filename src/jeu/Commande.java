@@ -2,11 +2,15 @@ package jeu;
 
 import carte.PointCardinal;
 
+import java.awt.*;
+
 /**
  * Created by jimmy on 17/05/16.
  */
 public enum Commande
 {
+    DROITE("droite"),
+    GAUCHE("gauche"),
     AUCUNE_ACTION(""),
     ERREUR_ACTION("erreuraction"),
     NOM("nom"),
@@ -21,6 +25,8 @@ public enum Commande
     GAMEOVER("gameover"),
     GAMEWINOBJ("gamewinobj"),
     GAMEWINLASTPLAYER("gamewinlastplayer");
+
+
 
     private final String text;
 
@@ -37,6 +43,10 @@ public enum Commande
     {
         switch(((s == null)?"":s).toLowerCase())
         {
+            case "droite":
+                return DROITE;
+            case "gauche":
+                return GAUCHE;
             case "action":
                 return NEXT_ACTION;
             case "nord":

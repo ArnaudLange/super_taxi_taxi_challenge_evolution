@@ -1,12 +1,6 @@
 package jeu;
 
-import carte.Carte;
-import carte.Evenement;
-import carte.Feu;
-import carte.InterpreteurCarte;
-import carte.PointCardinal;
-import carte.Route;
-import carte.Stop;
+import carte.*;
 import reseau.ConnexionClient;
 import reseau.Serveur;
 
@@ -43,6 +37,7 @@ public class Controleur implements Observer {
 
         //System.out.println("Nom joueur 1 : "+ listJoueurs.get(0).getNom());
         //System.out.println("Nom joueur 2 : "+ listJoueurs.get(1).getNom());
+
 
         int i = 1;
         for (Joueur joueur : listJoueurs)

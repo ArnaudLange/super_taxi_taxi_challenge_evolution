@@ -29,6 +29,8 @@ public class Joueur
         this.nbPoints = 10;
         this.etatMarche = true;
         this.vitesse = 0;
+        double rand;
+
         this.direction = null;
     }
 
