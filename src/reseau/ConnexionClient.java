@@ -109,9 +109,14 @@ public class ConnexionClient extends Thread
                     case ACCELERER:
                         if (!this.changementVitesse)
                         {
-                            this.changementVitesse = true;
-                            this.joueur.accelerer();
-                            //this.joueur.setDirection(null);//TODO Quentin?
+                            if(this.joueur.getDirection()==null){
+                                envoyerMessage("Choisissez d'abord une direction.");
+                            }
+                            else {
+                                this.changementVitesse = true;
+                                this.joueur.accelerer();
+                                //this.joueur.setDirection(null);//TODO Quentin?
+                            }
                         }
                         break;
                     case RALENTIR:

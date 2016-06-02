@@ -44,7 +44,7 @@ public class Controleur implements Observer {
             joueur.setPosX(posY);
             joueur.setPosY(posX);
             joueur.setNbPoints(Constante.STARTPOINTS);
-            joueur.setDirection(PointCardinal.SOUTH);
+            //joueur.setDirection(PointCardinal.SOUTH);
             joueur.setVitesse(1);
 
             System.out.println("\nInitialisation du joueur : "+joueur.getNom());
