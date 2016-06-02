@@ -137,27 +137,12 @@ public class ConnexionClient extends Thread
         }
     }
 
-    private void undoDroiteGauche(Commande d){
-        if(Commande.GAUCHE.equals(d)) {
+    private void undoDroiteGauche(Commande d) {
+        if (Commande.GAUCHE.equals(d)) {
             changerDirection(Commande.DROITE);
-        }else{
+        } else {
             changerDirection(Commande.GAUCHE);
-    private void changerDirection(Commande d)
-    {
-        PointCardinal direction;
-        int i;
-
-        if (Commande.ACCELERER.equals(derniereAction))
-        {
-            joueur.ralentir();
-            envoyerMessage("Annulation du changement de vitesse : vitesse = " + joueur.getVitesse());
         }
-        else if (Commande.RALENTIR.equals(derniereAction))
-        {
-            joueur.accelerer();
-            envoyerMessage("Annulation du changement de vitesse : vitesse = " + joueur.getVitesse());
-        }
-        envoyerMessage("Annulation du changement de direction : direction = " + joueur.getDirection());
     }
 
     private boolean actionValide(Commande d){
