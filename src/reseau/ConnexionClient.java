@@ -22,8 +22,7 @@ public class ConnexionClient extends Thread
     private PrintWriter out;
     private BufferedReader in;
     private String readLine;
-    private Commande dernierChangementVitesse;
-    private int nbTour;
+    private Commande derniereAction;
     private boolean gameOver;
 
     ConnexionClient(Socket s, Joueur joueur) throws IOException
@@ -33,7 +32,6 @@ public class ConnexionClient extends Thread
         this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         this.out = new PrintWriter(this.socket.getOutputStream());
         this.gameOver = false;
-        this.nbTour = 0;
     }
 
     public void setGameOver(boolean b)
@@ -46,8 +44,8 @@ public class ConnexionClient extends Thread
         // Début de tour
         if (s.equals(Commande.NEXT_ACTION.toString()))
         {
-            this.dernierChangementVitesse = null;
-            this.nbTour++;
+            derniereAction = null;
+            derniereAction = null;
         }
 
         out.println(s);
@@ -92,16 +90,16 @@ public class ConnexionClient extends Thread
                 switch (Commande.getCommande(readLine))
                 {
                     case NORD:
-                        changerDirection(PointCardinal.NORTH);
+                        changerDirection(Commande.NORD);
                         break;
                     case SUD:
-                        changerDirection(PointCardinal.SOUTH);
+                        changerDirection(Commande.SUD);
                         break;
                     case EST:
-                        changerDirection(PointCardinal.EAST);
+                        changerDirection(Commande.EST);
                         break;
                     case OUEST:
-                        changerDirection(PointCardinal.WEST);
+                        changerDirection(Commande.OUEST);
                         break;
                     case ACCELERER:
                         changerVitesse(Commande.ACCELERER);
@@ -132,32 +130,77 @@ public class ConnexionClient extends Thread
         }
     }
 
-    private void changerDirection(PointCardinal d)
+    private void changerDirection(Commande d)
     {
-        if(dernierChangementVitesse != null)
+        envoyerMessage("Vous avez changer votre direction vers " + d.toString());
+
+        if (Commande.ACCELERER.equals(derniereAction))
         {
-            if (Commande.ACCELERER.equals(dernierChangementVitesse))
-                joueur.ralentir();
-            else if (Commande.RALENTIR.equals(dernierChangementVitesse))
-                joueur.accelerer();
-            dernierChangementVitesse = null;
+            joueur.ralentir();
+            envoyerMessage("Annulation du changement de vitesse : vitesse = " + joueur.getVitesse());
         }
-        joueur.setDirection(d);
+        else if (Commande.RALENTIR.equals(derniereAction))
+        {
+            joueur.accelerer();
+            envoyerMessage("Annulation du changement de vitesse : vitesse = " + joueur.getVitesse());
+        }
+
+        derniereAction = d;
+        joueur.setDirection(PointCardinal.getPointCardinal(d.toString()));
     }
 
     private void changerVitesse(Commande c)
     {
-        if (nbTour == 1)
-            joueur.setDirection(null);
+        if (joueur.getDirection() == null)
+            envoyerMessage("Vous devez d'abord choisir une direction avant de changer votre vitesse");
 
-        if (dernierChangementVitesse == null)
+        else
         {
-            if (c.equals(Commande.ACCELERER)) {
-                joueur.accelerer();
-                dernierChangementVitesse = Commande.ACCELERER;
-            } else if (c.equals(Commande.RALENTIR)) {
-                joueur.ralentir();
-                dernierChangementVitesse = Commande.RALENTIR;
+            // S'il a déjà changer de direction on remets le joueur dans sa derniere direction possible
+            if (derniereAction != null && PointCardinal.getPointCardinal(derniereAction.toString()) != null)
+            {
+                envoyerMessage("Annulation du changement de direction : direction = " + derniereAction.toString());
+                joueur.setDirection(PointCardinal.getPointCardinal(derniereAction.toString()));
+            }
+
+            if (c.equals(Commande.ACCELERER))
+            {
+                if (Commande.RALENTIR.equals(derniereAction))
+                {
+                    joueur.accelerer();
+                    joueur.accelerer();
+                    derniereAction = Commande.ACCELERER;
+                    envoyerMessage("Annulation du changement de vitesse et accélération : vitesse = " + joueur.getVitesse());
+                }
+                else if (Commande.ACCELERER.equals(derniereAction))
+                {
+                    envoyerMessage("Vous avez déjà accélerer à pendant ce tour");
+                }
+                else
+                {
+                    joueur.accelerer();
+                    derniereAction = Commande.ACCELERER;
+                    envoyerMessage("Vous accélerez : vitesse = " + joueur.getVitesse());
+                }
+            } else if (c.equals(Commande.RALENTIR))
+            {
+                if (Commande.ACCELERER.equals(derniereAction))
+                {
+                    joueur.ralentir();
+                    joueur.ralentir();
+                    derniereAction = Commande.RALENTIR;
+                    envoyerMessage("Annulation du changement de vitesse et ralentissement : vitesse = " + joueur.getVitesse());
+                }
+                else if (Commande.RALENTIR.equals(derniereAction))
+                {
+                    envoyerMessage("Vous avez déjà ralenti à pendant ce tour");
+                }
+                else
+                {
+                    joueur.ralentir();
+                    derniereAction = Commande.RALENTIR;
+                    envoyerMessage("Vous ralentissez : vitesse = " + joueur.getVitesse());
+                }
             }
         }
     }

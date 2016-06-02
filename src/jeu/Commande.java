@@ -1,5 +1,7 @@
 package jeu;
 
+import carte.PointCardinal;
+
 /**
  * Created by jimmy on 17/05/16.
  */
@@ -9,10 +11,10 @@ public enum Commande
     ERREUR_ACTION("erreuraction"),
     NOM("nom"),
     NEXT_ACTION("action"),
-    NORD("nord"),
-    SUD("sud"),
-    EST("est"),
-    OUEST("ouest"),
+    NORD(PointCardinal.NORD.toString()),
+    SUD(PointCardinal.SUD.toString()),
+    EST(PointCardinal.EST.toString()),
+    OUEST(PointCardinal.OUEST.toString()),
     ACCELERER("accelerer"),
     RALENTIR("ralentir"),
     GAMENOTWIN("gamenotwin"),

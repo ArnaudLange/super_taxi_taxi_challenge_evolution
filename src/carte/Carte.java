@@ -81,23 +81,23 @@ public class Carte extends Observable  {
         //Si il y a une priorité
         if (directionCase.size()>2) {
             switch (direction){
-                case NORTH:
-                    if(directionCase.contains(PointCardinal.EAST)){
+                case NORD:
+                    if(directionCase.contains(PointCardinal.EST)){
                         evenements.add(Evenement.PRIORITE);
                     }
                     break;
-                case EAST:
-                    if(directionCase.contains(PointCardinal.SOUTH)){
+                case EST:
+                    if(directionCase.contains(PointCardinal.SUD)){
                         evenements.add(Evenement.PRIORITE);
                     }
                     break;
-                case SOUTH:
-                    if(directionCase.contains(PointCardinal.WEST)){
+                case SUD:
+                    if(directionCase.contains(PointCardinal.OUEST)){
                         evenements.add(Evenement.PRIORITE);
                     }
                     break;
-                case WEST:
-                    if(directionCase.contains(PointCardinal.NORTH)){
+                case OUEST:
+                    if(directionCase.contains(PointCardinal.NORD)){
                         evenements.add(Evenement.PRIORITE);
                     }
                     break;
@@ -146,25 +146,25 @@ public class Carte extends Observable  {
                     //Parcours des deux points cardinaux de la case
                     for (PointCardinal dir:directionCases) {
                         //Si le joueur va vers l'est
-                        if(j.getDirection().equals(PointCardinal.EAST)){
+                        if(j.getDirection().equals(PointCardinal.EST)){
                             //Si la direction qu'on regarde n'est pas celle d'où l'on vient
-                            if (dir!=PointCardinal.WEST){
+                            if (dir!=PointCardinal.OUEST){
                                 j.setDirection(dir);
                             }
                         }
                         //Sinon, de même avec autres directions
-                        else if(j.getDirection().equals(PointCardinal.NORTH)){
-                            if (dir!=PointCardinal.SOUTH){
+                        else if(j.getDirection().equals(PointCardinal.NORD)){
+                            if (dir!=PointCardinal.SUD){
                                 j.setDirection(dir);
                             }
                         }
-                        if(j.getDirection().equals(PointCardinal.SOUTH)){
-                            if (dir!=PointCardinal.NORTH){
+                        if(j.getDirection().equals(PointCardinal.SUD)){
+                            if (dir!=PointCardinal.NORD){
                                 j.setDirection(dir);
                             }
                         }
-                        if(j.getDirection().equals(PointCardinal.WEST)){
-                            if (dir!=PointCardinal.EAST){
+                        if(j.getDirection().equals(PointCardinal.OUEST)){
+                            if (dir!=PointCardinal.EST){
                                 j.setDirection(dir);
                             }
                         }
@@ -173,8 +173,8 @@ public class Carte extends Observable  {
             }
 
             //Ensuite on effectue les tests pour chaque direction du joueur.
-            if (PointCardinal.SOUTH.equals(j.getDirection())) {
-                if (directionCases.contains(PointCardinal.SOUTH)){
+            if (PointCardinal.SUD.equals(j.getDirection())) {
+                if (directionCases.contains(PointCardinal.SUD)){
                     System.out.println("Déplacement vers le sud effectué.");
                     j.setPosY(j.getPosY()+1);
 
@@ -184,8 +184,8 @@ public class Carte extends Observable  {
                     return;
                 }
             }
-            else if (PointCardinal.NORTH.equals(j.getDirection())){
-                if (directionCases.contains(PointCardinal.NORTH)){
+            else if (PointCardinal.NORD.equals(j.getDirection())){
+                if (directionCases.contains(PointCardinal.NORD)){
                     System.out.println("Déplacement vers le nord effectué.");
                     j.setPosY(j.getPosY()-1);
 
@@ -195,8 +195,8 @@ public class Carte extends Observable  {
                     return;
                 }
             }
-            else if (PointCardinal.EAST.equals(j.getDirection())){
-                if (directionCases.contains(PointCardinal.EAST)){
+            else if (PointCardinal.EST.equals(j.getDirection())){
+                if (directionCases.contains(PointCardinal.EST)){
                     System.out.println("Déplacement vers l'est effectué.");
                     j.setPosX(j.getPosX()+1);
 
@@ -206,8 +206,8 @@ public class Carte extends Observable  {
                     return;
                 }
             }
-            else if (PointCardinal.WEST.equals(j.getDirection())){
-                if (directionCases.contains(PointCardinal.WEST)){
+            else if (PointCardinal.OUEST.equals(j.getDirection())){
+                if (directionCases.contains(PointCardinal.OUEST)){
                     System.out.println("Déplacement vers l'ouest effectué.");
                     j.setPosX(j.getPosX()-1);
 
@@ -254,13 +254,13 @@ public class Carte extends Observable  {
     	Case current;
     	JLabel imageJoueur;
     	
-    	if(PointCardinal.NORTH.equals(player.getDirection())){
+    	if(PointCardinal.NORD.equals(player.getDirection())){
     		ImageIcon joueur = new ImageIcon("E:/Cours/projet java/projet voiture/voitureBasHaut.png");
     		imageJoueur = new JLabel(joueur);
-		}else if(PointCardinal.EAST.equals(player.getDirection())){
+		}else if(PointCardinal.EST.equals(player.getDirection())){
 			ImageIcon joueur = new ImageIcon("E:/Cours/projet java/projet voiture/voitureGaucheDroite.png");
 			imageJoueur = new JLabel(joueur);
-		}else if(PointCardinal.SOUTH.equals(player.getDirection())){
+		}else if(PointCardinal.SUD.equals(player.getDirection())){
 			ImageIcon joueur = new ImageIcon("E:/Cours/projet java/projet voiture/voitureHautBas.png");
 			imageJoueur = new JLabel(joueur);
 		}else{
@@ -277,16 +277,16 @@ public class Carte extends Observable  {
     			somme=0;
     			current = map[i][j];
     			if(current instanceof Route){
-    				if(((Route) current).getDirections().contains(PointCardinal.NORTH)){
+    				if(((Route) current).getDirections().contains(PointCardinal.NORD)){
     					somme += 1;
     				}
-    				if(((Route) current).getDirections().contains(PointCardinal.EAST)){
+    				if(((Route) current).getDirections().contains(PointCardinal.EST)){
     					somme += 2;
     				}
-    				if(((Route) current).getDirections().contains(PointCardinal.SOUTH)){
+    				if(((Route) current).getDirections().contains(PointCardinal.SUD)){
     					somme += 4;
     				}
-    				if(((Route) current).getDirections().contains(PointCardinal.WEST)){
+    				if(((Route) current).getDirections().contains(PointCardinal.OUEST)){
     					somme += 8;
     				}
     			}

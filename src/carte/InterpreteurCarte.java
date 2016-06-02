@@ -3,12 +3,9 @@ package carte;
 import jeu.Joueur;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-
-import static javax.print.attribute.standard.ReferenceUriSchemesSupported.FILE;
 
 /**
  * Created by jimmy on 03/05/16.
@@ -45,14 +42,14 @@ public class InterpreteurCarte {
 
                             if (i > 0)
                                 if (tableau[i - 1][j] instanceof Route) {
-                                    ((Route) tableau[i][j]).getDirections().add(PointCardinal.NORTH);
-                                    ((Route) tableau[i - 1][j]).getDirections().add(PointCardinal.SOUTH);
+                                    ((Route) tableau[i][j]).getDirections().add(PointCardinal.NORD);
+                                    ((Route) tableau[i - 1][j]).getDirections().add(PointCardinal.SUD);
                                 }
 
                             if (j > 0)
                                 if (tableau[i][j - 1] instanceof Route) {
-                                    ((Route) tableau[i][j]).getDirections().add(PointCardinal.WEST);
-                                    ((Route) tableau[i][j - 1]).getDirections().add(PointCardinal.EAST);
+                                    ((Route) tableau[i][j]).getDirections().add(PointCardinal.OUEST);
+                                    ((Route) tableau[i][j - 1]).getDirections().add(PointCardinal.EST);
                                 }
                             j++;
                             break;
@@ -105,13 +102,13 @@ public class InterpreteurCarte {
                 for (j = 0; j < carte.getLongueur(); j++)
                 {
                     if (carte.getTableau()[i][j] instanceof Route) {
-                        if (((Route) carte.getTableau()[i][j]).getDirections().contains(PointCardinal.NORTH))
+                        if (((Route) carte.getTableau()[i][j]).getDirections().contains(PointCardinal.NORD))
                             sommeChemin += nord;
-                        if (((Route) carte.getTableau()[i][j]).getDirections().contains(PointCardinal.SOUTH))
+                        if (((Route) carte.getTableau()[i][j]).getDirections().contains(PointCardinal.SUD))
                             sommeChemin += sud;
-                        if (((Route) carte.getTableau()[i][j]).getDirections().contains(PointCardinal.EAST))
+                        if (((Route) carte.getTableau()[i][j]).getDirections().contains(PointCardinal.EST))
                             sommeChemin += est;
-                        if (((Route) carte.getTableau()[i][j]).getDirections().contains(PointCardinal.WEST))
+                        if (((Route) carte.getTableau()[i][j]).getDirections().contains(PointCardinal.OUEST))
                             sommeChemin += ouest;
 
                         switch (sommeChemin) {
