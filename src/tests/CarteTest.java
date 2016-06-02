@@ -1,6 +1,7 @@
 package tests;
 
 import carte.Carte;
+import carte.Evenement;
 import carte.InterpreteurCarte;
 import carte.PointCardinal;
 import jeu.Constante;
@@ -9,6 +10,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lange_000 on 02/06/2016.
@@ -252,5 +255,186 @@ public class CarteTest {
         Assert.assertEquals(3, j.getPosY());
         Assert.assertEquals(0, j.getNbPoints());
     }
+
+    @Test
+    public void testEvenementRien(){
+        File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+        List<Evenement> liste = carte.getEvenement(0, 0, PointCardinal.EAST, 0, 1);
+        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        Assert.assertEquals(listeAttendue, liste);
+    }
+
+    @Test
+    public void testEvenementObj(){
+        File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+        List<Evenement> liste = carte.getEvenement(0, 0, PointCardinal.EAST, 0, 0);
+        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        listeAttendue.add(Evenement.OBJECTIF);
+        Assert.assertEquals(listeAttendue, liste);
+    }
+
+    @Test
+    public void testEvenementCourb(){
+        File fichierCarte = new File("src/carte/cartetestevent01.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+        List<Evenement> liste = carte.getEvenement(4, 0, PointCardinal.NORTH, 0, 1);
+        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        listeAttendue.add(Evenement.COURBE);
+        Assert.assertEquals(listeAttendue, liste);
+    }
+
+    @Test
+    public void testEvenementObjCourb(){
+        File fichierCarte = new File("src/carte/cartetestevent01.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+        List<Evenement> liste = carte.getEvenement(4, 0, PointCardinal.NORTH, 4, 0);
+        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        listeAttendue.add(Evenement.OBJECTIF);
+        listeAttendue.add(Evenement.COURBE);
+        Assert.assertEquals(listeAttendue, liste);
+    }
+
+    @Test
+    public void testEvenementPrio1(){
+        File fichierCarte = new File("src/carte/cartetestevent01.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.NORTH, 0, 0);
+        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        listeAttendue.add(Evenement.PRIORITE);
+        Assert.assertEquals(listeAttendue, liste);
+    }
+
+    @Test
+    public void testEvenementPrio2(){
+        File fichierCarte = new File("src/carte/cartetestevent01.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.SOUTH, 0, 0);
+        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        listeAttendue.add(Evenement.PRIORITE);
+        Assert.assertEquals(listeAttendue, liste);
+    }
+
+    @Test
+    public void testEvenementPrio3(){
+        File fichierCarte = new File("src/carte/cartetestevent01.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.EAST, 0, 0);
+        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        listeAttendue.add(Evenement.PRIORITE);
+        Assert.assertEquals(listeAttendue, liste);
+    }
+
+    @Test
+    public void testEvenementPrio4(){
+        File fichierCarte = new File("src/carte/cartetestevent01.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.WEST, 0, 0);
+        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        listeAttendue.add(Evenement.PRIORITE);
+        Assert.assertEquals(listeAttendue, liste);
+    }
+
+    @Test
+    public void testEvenementPrio11(){
+        File fichierCarte = new File("src/carte/cartetestevent01.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+        List<Evenement> liste = carte.getEvenement(3, 4, PointCardinal.NORTH, 0, 0);
+        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        listeAttendue.add(Evenement.PRIORITE);
+        Assert.assertEquals(listeAttendue, liste);
+    }
+
+    @Test
+    public void testEvenementPrio21(){
+        File fichierCarte = new File("src/carte/cartetestevent01.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+        List<Evenement> liste = carte.getEvenement(3, 4, PointCardinal.SOUTH, 0, 0);
+        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        Assert.assertEquals(listeAttendue, liste);
+    }
+
+    @Test
+    public void testEvenementObjPrio1(){
+        File fichierCarte = new File("src/carte/cartetestevent01.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.NORTH, 1, 2);
+        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        listeAttendue.add(Evenement.OBJECTIF);
+        listeAttendue.add(Evenement.PRIORITE);
+        Assert.assertEquals(listeAttendue, liste);
+    }
+
+    @Test
+    public void testEvenementObjPrio2(){
+        File fichierCarte = new File("src/carte/cartetestevent01.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.SOUTH, 1, 2);
+        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        listeAttendue.add(Evenement.OBJECTIF);
+        listeAttendue.add(Evenement.PRIORITE);
+        Assert.assertEquals(listeAttendue, liste);
+    }
+
+    @Test
+    public void testEvenementObjPrio3(){
+        File fichierCarte = new File("src/carte/cartetestevent01.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.EAST, 1, 2);
+        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        listeAttendue.add(Evenement.OBJECTIF);
+        listeAttendue.add(Evenement.PRIORITE);
+        Assert.assertEquals(listeAttendue, liste);
+    }
+
+    @Test
+    public void testEvenementObjPrio4(){
+        File fichierCarte = new File("src/carte/cartetestevent01.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.WEST, 1, 2);
+        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        listeAttendue.add(Evenement.OBJECTIF);
+        listeAttendue.add(Evenement.PRIORITE);
+        Assert.assertEquals(listeAttendue, liste);
+    }
+
+    @Test
+    public void testEvenementObjPrio11(){
+        File fichierCarte = new File("src/carte/cartetestevent01.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+        List<Evenement> liste = carte.getEvenement(3, 4, PointCardinal.NORTH, 3, 4);
+        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        listeAttendue.add(Evenement.OBJECTIF);
+        listeAttendue.add(Evenement.PRIORITE);
+        Assert.assertEquals(listeAttendue, liste);
+    }
+
+    @Test
+    public void testEvenementObjPrio21(){
+        File fichierCarte = new File("src/carte/cartetestevent01.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+
+        List<Evenement> liste = carte.getEvenement(3, 4, PointCardinal.SOUTH, 3, 4);
+        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        listeAttendue.add(Evenement.OBJECTIF);
+        Assert.assertEquals(listeAttendue, liste);
+    }
+
 
 }
