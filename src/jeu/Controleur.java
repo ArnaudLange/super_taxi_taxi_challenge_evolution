@@ -45,7 +45,7 @@ public class Controleur implements Observer {
             joueur.setPosY(posX);
             joueur.setNbPoints(Constante.STARTPOINTS);
             //joueur.setDirection(PointCardinal.SOUTH);
-            joueur.setVitesse(1);
+            joueur.setVitesse(0);
 
             System.out.println("\nInitialisation du joueur : "+joueur.getNom());
             System.out.println("\tpos : " + joueur.getPosX() + "," + joueur.getPosY());
@@ -73,7 +73,9 @@ public class Controleur implements Observer {
 
                 for (ConnexionClient c : listeConnexionClient)
                 {
-                    jeu.getCarte().gestionDeplacements(c.getJoueur());
+                    if (c.getJoueur().getDirection() != null){
+                        jeu.getCarte().gestionDeplacements(c.getJoueur());
+                    }
                     System.out.println("\nTour du joueur : " + c.getJoueur().getNom());
                     System.out.println("\tpos : " + c.getJoueur().getPosX() + "," + c.getJoueur().getPosY());
                     System.out.println("\tdirection : "+c.getJoueur().getDirection());
