@@ -52,7 +52,7 @@ public class ClientReception extends Thread
             switch (Commande.getCommande(messageEntrant))
             {
                 case NOM:
-                    System.out.println("Entrez votre nom :");
+                    System.out.println("Pour spécifier votre nom, tapez \"Nom:\" suivi de votre nom (sans espace)");
                     break;
                 case GAMENOTWIN:
                     System.out.println("Vous avez perdu, un autre joueur a atteint l'objectif avant vous.");
@@ -82,18 +82,18 @@ public class ClientReception extends Thread
 
                         if (messageEntrant.startsWith("pos:"))
                         {
-                            tmp = messageEntrant.substring("pos:".length(), messageEntrant.length()).split(",");
+                            tmp = messageEntrant.substring("pos:".length()).split(",");
                             posX = Integer.parseInt(tmp[0]);
                             posY = Integer.parseInt(tmp[1]);
                         }
                         else if (messageEntrant.startsWith("dir:"))
-                            direction = PointCardinal.getPointCardinal(messageEntrant.substring("dir:".length(), messageEntrant.length()));
+                            direction = PointCardinal.getPointCardinal(messageEntrant.substring("dir:".length()));
 
                         else if (messageEntrant.startsWith("vit:"))
-                            vitesse = Integer.parseInt(messageEntrant.substring("vit:".length(), messageEntrant.length()));
+                            vitesse = Integer.parseInt(messageEntrant.substring("vit:".length()));
 
                         else if (messageEntrant.startsWith("nbp:"))
-                            nbPoint = Integer.parseInt(messageEntrant.substring("nbp:".length(), messageEntrant.length()));
+                            nbPoint = Integer.parseInt(messageEntrant.substring("nbp:".length()));
 
                         else
                             System.out.println(messageEntrant);

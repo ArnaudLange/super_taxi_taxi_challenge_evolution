@@ -74,13 +74,9 @@ public class ConnexionClient extends Thread
             System.out.println("Le client numéro " + joueur.getId() + " est connecté !");
             envoyerMessage("Connexion avec le serveur établie");
 
-            // Traitement
+            // Demande du nom
             out.println(Commande.NOM.toString());
             out.flush();
-
-            lireLigneBuffer();
-            joueur.setNom(readLine);
-            System.out.println("Nom joueur (côté serveur) : " + joueur.getNom());
 
             while(!gameOver && !Thread.currentThread().isInterrupted())
             {
@@ -109,7 +105,13 @@ public class ConnexionClient extends Thread
                     case AUCUNE_ACTION:
                         break;
                     default:
-                        envoyerMessage(Commande.ERREUR_ACTION.toString());
+                        if (readLine.toLowerCase().startsWith("nom:"))
+                        {
+                            joueur.setNom(readLine.substring("nom:".length()));
+                            envoyerMessage("Votre nom a bien été mis à jour : " + joueur.getNom());
+                        }
+                        else
+                            envoyerMessage(Commande.ERREUR_ACTION.toString());
                 }
             }
 

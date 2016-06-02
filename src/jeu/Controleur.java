@@ -21,9 +21,7 @@ public class Controleur implements Observer {
     private Jeu jeu;
 
     public Controleur() {
-
-
-        File fichierCarte = new File("src/carte/carte2.txt"); // on initialise le fichier texte de la carte
+        File fichierCarte = new File("src/carte/cartetest.txt"); // on initialise le fichier texte de la carte
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
         assert carte != null;
@@ -53,7 +51,6 @@ public class Controleur implements Observer {
             joueur.setPosX(posY);
             joueur.setPosY(posX);
             joueur.setNbPoints(Constante.STARTPOINTS);
-            //joueur.setDirection(PointCardinal.SOUTH);
             joueur.setVitesse(0);
 
             System.out.println("\nInitialisation du joueur : "+joueur.getNom());
@@ -64,7 +61,6 @@ public class Controleur implements Observer {
 
             i++;
         }
-
 
 
         int nbTour=1;
@@ -89,7 +85,7 @@ public class Controleur implements Observer {
                     if (c.getJoueur().getDirection() != null){
                         jeu.getCarte().gestionDeplacements(c.getJoueur());
                     }
-                    System.out.println("\nTour du joueur : " + c.getJoueur().getNom());
+
                     System.out.println("\tpos : " + c.getJoueur().getPosX() + "," + c.getJoueur().getPosY());
                     System.out.println("\tdirection : " + c.getJoueur().getDirection());
                     System.out.println("\tvitesse : " + c.getJoueur().getVitesse());
@@ -223,7 +219,7 @@ public class Controleur implements Observer {
                 }
 
             }
-            if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
+            else if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
                 System.out.println("Joueur mort.");
                 ((Joueur) obj).setEtatMarche(false);
             }
@@ -247,12 +243,10 @@ public class Controleur implements Observer {
                 System.out.println("Priorite a droite.");
                 //Si vitesse du joueur est de 3, perte de majorinf points
                 if(((Joueur) obj).getVitesse()>2){
-                	System.out.println("vitesse > 2, joueur trop rapide, perde de MAJORINF");
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
                 }
                 //Si vitesse du joueur égale à 2, perte de minorinf points
                 else if(((Joueur) obj).getVitesse()==2){
-                	System.out.println("vitesse == 2, joueur trop rapide, perde de MINORINF");
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MINORINF);
                 }
             }
