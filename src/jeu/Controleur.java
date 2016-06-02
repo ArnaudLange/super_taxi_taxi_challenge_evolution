@@ -21,6 +21,7 @@ public class Controleur implements Observer {
         File fichierCarte = new File("src/carte/cartetest.txt"); // on initialise le fichier texte de la carte
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
+        assert carte != null;
         carte.addObserver(this);
 
         List<Joueur> listJoueurs = new ArrayList<>();
@@ -129,7 +130,7 @@ public class Controleur implements Observer {
                     }
 
                     // Un joueur a gagné
-                    if (joueurActuel.getNbPoints() == Constante.MAXPOINTS)
+                    if (joueurActuel.getNbPoints() >= Constante.MAXPOINTS)
                     {
                         System.out.println("Partie gagnée !");
                         jeu.setGagnant(joueurActuel);
