@@ -708,5 +708,4 @@ public class CarteTest {
         Assert.assertEquals(listeAttendue, liste);
     }
 
-
 }
