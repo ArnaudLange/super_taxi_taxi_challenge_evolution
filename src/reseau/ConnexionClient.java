@@ -44,9 +44,7 @@ public class ConnexionClient extends Thread
     {
         // Début de tour
         if (s.equals(Commande.NEXT_ACTION.toString()))
-        {
             derniereAction = null;
-        }
 
         out.println(s);
         out.flush();
@@ -147,7 +145,7 @@ public class ConnexionClient extends Thread
         }
 
         derniereAction = d;
-        derniereDirection= joueur.getDirection();
+        derniereDirection = joueur.getDirection();
         joueur.setDirection(PointCardinal.getPointCardinal(d.toString()));
     }
 
@@ -187,7 +185,8 @@ public class ConnexionClient extends Thread
                     derniereAction = Commande.ACCELERER;
                     envoyerMessage("Vous accélerez : vitesse = " + joueur.getVitesse());
                 }
-            } else if (c.equals(Commande.RALENTIR))
+            }
+            else if (c.equals(Commande.RALENTIR))
             {
                 if (Commande.ACCELERER.equals(derniereAction))
                 {

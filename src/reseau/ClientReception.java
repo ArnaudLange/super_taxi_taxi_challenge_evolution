@@ -1,5 +1,6 @@
 package reseau;
 
+import carte.PointCardinal;
 import jeu.Commande;
 import jeu.Constante;
 
@@ -14,6 +15,12 @@ public class ClientReception extends Thread
     private boolean gameOver;
     private int nbTour;
     private String messageEntrant;
+
+    private int posX;
+    private int posY;
+    private PointCardinal direction;
+    private int vitesse;
+    private int nbPoint;
 
     public ClientReception(InputStream in)
     {
@@ -70,7 +77,27 @@ public class ClientReception extends Thread
                     if (messageEntrant.equals(Commande.ERREUR_ACTION.toString()))
                         System.err.println("Mauvaise commande");
                     else
-                        System.out.println(messageEntrant);
+                    {
+                        String tmp[];
+
+                        if (messageEntrant.startsWith("pos:"))
+                        {
+                            tmp = messageEntrant.substring("pos:".length(), messageEntrant.length()).split(",");
+                            posX = Integer.parseInt(tmp[0]);
+                            posY = Integer.parseInt(tmp[1]);
+                        }
+                        else if (messageEntrant.startsWith("dir:"))
+                            direction = PointCardinal.getPointCardinal(messageEntrant.substring("dir:".length(), messageEntrant.length()));
+
+                        else if (messageEntrant.startsWith("vit:"))
+                            vitesse = Integer.parseInt(messageEntrant.substring("vit:".length(), messageEntrant.length()));
+
+                        else if (messageEntrant.startsWith("nbp:"))
+                            nbPoint = Integer.parseInt(messageEntrant.substring("nbp:".length(), messageEntrant.length()));
+
+                        else
+                            System.out.println(messageEntrant);
+                    }
                     break;
                 default:
                     System.err.println("Erreur de connexion avec le serveur");
