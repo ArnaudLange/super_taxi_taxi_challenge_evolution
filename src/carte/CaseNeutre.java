@@ -6,4 +6,8 @@ package carte;
 public class CaseNeutre extends Case
 {
     public CaseNeutre() {}
+
+    public String toString(){
+        return "N";
+    }
 }

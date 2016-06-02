@@ -5,8 +5,20 @@ import java.awt.*;
 import java.util.HashMap;
 
 public class AffichageCarte {
+    private static JFrame affichage;
+
+    public static JFrame getJFrame(){
+        if(affichage==null){
+            return new JFrame();
+        }else{
+            return affichage;
+        }
+    }
+
     public static void affichageCarte(Case[][] map, int posX, int posY, PointCardinal p){
-        JFrame affichage = new JFrame();
+        affichage = getJFrame();
+        affichage.dispose();
+        affichage = new JFrame();
         affichage.setLayout(new GridLayout(map.length, map[0].length));
         int i, j, k=0, somme;
         Case current;
@@ -136,14 +148,15 @@ public class AffichageCarte {
 
                 panels.get("instance"+k).setLayout(new BorderLayout());
                 panels.get("instance"+k).add(images.get("instance"+k), BorderLayout.CENTER);
-                /*if(i==map.length/2 && j == map[0].length/2){
+                if(i==map.length/2 && j == map[0].length/2){
                     panels.get("instance"+k).add(imageJoueur, BorderLayout.CENTER);
-                }*/
+                }
                 affichage.add(panels.get("instance"+k));
                 k++;
             }
             affichage.setVisible(true);
             affichage.pack();
+
         }
     }
 

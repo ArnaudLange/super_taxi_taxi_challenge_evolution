@@ -20,4 +20,8 @@ public class Route extends Case
     {
         return this.directions;
     }
+
+    public String toString(){
+        return "R";
+    }
 }

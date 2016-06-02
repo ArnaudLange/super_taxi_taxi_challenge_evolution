@@ -58,8 +58,14 @@ public class Controleur implements Observer {
 
             i++;
         }
+        int x, y;
 
-
+        /*for(x=0;x<carte.getLargeur();x++){
+            for(y=0;y<carte.getLongueur();y++){
+                System.out.print(carte.getTableau()[x][y]+",");
+            }
+            System.out.println("");
+        }*/
 
         int nbTour=1;
         boolean jeuFini = false;
@@ -93,7 +99,9 @@ public class Controleur implements Observer {
                     c.envoyerMessage("dir:" + c.getJoueur().getDirection());
                     c.envoyerMessage("vit:" + c.getJoueur().getVitesse());
                     c.envoyerMessage("nbp:" + c.getJoueur().getNbPoints());
-
+                    if("test".equals(c.getJoueur().getNom())) {
+                        AffichageCarte.affichageCarte(carte.GetVision(c.getJoueur().getPosY(), c.getJoueur().getPosX(), c.getJoueur()), c.getJoueur().getPosY(), c.getJoueur().getPosX(), c.getJoueur().getDirection());
+                    }
                 }
 
                 // Boucle sur la liste des clients connectés
