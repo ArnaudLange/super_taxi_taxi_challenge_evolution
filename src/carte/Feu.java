@@ -50,10 +50,10 @@ public class Feu extends Route implements Observer {
 	}
 
 	public void setFeux(int NORDSUD, int OUESTEST){
-		feux.replace(PointCardinal.NORD, NORDSUD);
-		feux.replace(PointCardinal.EST, OUESTEST);
-		feux.replace(PointCardinal.SUD, NORDSUD);
-		feux.replace(PointCardinal.OUEST, OUESTEST);
+		feux.put(PointCardinal.NORD, NORDSUD);
+		feux.put(PointCardinal.EST, OUESTEST);
+		feux.put(PointCardinal.SUD, NORDSUD);
+		feux.put(PointCardinal.OUEST, OUESTEST);
 
 	}
 

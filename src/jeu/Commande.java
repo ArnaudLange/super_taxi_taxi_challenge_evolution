@@ -27,7 +27,6 @@ public enum Commande
     GAMEWINLASTPLAYER("gamewinlastplayer");
 
 
-
     private final String text;
 
     Commande(final String text)

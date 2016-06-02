@@ -48,7 +48,8 @@ public class Serveur
                     // débloque le accept du socket
                     listeningSocket.setSoTimeout(Constante.TIMEOUTCONNECTION - (int)(System.currentTimeMillis() - startTimeOut));
                     timeout = true;
-                    for (ConnexionClient c: listeConnexionClient){
+                    for (ConnexionClient c: listeConnexionClient)
+                    {
                         c.envoyerMessage("2 joueurs sont arrivés, la partie va commencer dans "+ Constante.TIMEOUTCONNECTION/1000+ "secondes ");
                     }
                 }
