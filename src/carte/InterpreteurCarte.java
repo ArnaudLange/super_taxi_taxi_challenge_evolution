@@ -64,14 +64,14 @@ public class InterpreteurCarte {
 
                             if (i > 0)
                                 if (tableau[i - 1][j] instanceof Route) {
-                                    ((Route) tableau[i][j]).getDirections().add(PointCardinal.NORTH);
-                                    ((Route) tableau[i - 1][j]).getDirections().add(PointCardinal.SOUTH);
+                                    ((Route) tableau[i][j]).getDirections().add(PointCardinal.NORD);
+                                    ((Route) tableau[i - 1][j]).getDirections().add(PointCardinal.SUD);
                                 }
 
                             if (j > 0)
                                 if (tableau[i][j - 1] instanceof Route) {
-                                    ((Route) tableau[i][j]).getDirections().add(PointCardinal.WEST);
-                                    ((Route) tableau[i][j - 1]).getDirections().add(PointCardinal.EAST);
+                                    ((Route) tableau[i][j]).getDirections().add(PointCardinal.OUEST);
+                                    ((Route) tableau[i][j - 1]).getDirections().add(PointCardinal.EST);
                                 }
                             j++;
                             break;
@@ -81,14 +81,14 @@ public class InterpreteurCarte {
 
                             if (i > 0)
                                 if (tableau[i - 1][j] instanceof Route) {
-                                    ((Route) tableau[i][j]).getDirections().add(PointCardinal.NORTH);
-                                    ((Route) tableau[i - 1][j]).getDirections().add(PointCardinal.SOUTH);
+                                    ((Route) tableau[i][j]).getDirections().add(PointCardinal.NORD);
+                                    ((Route) tableau[i - 1][j]).getDirections().add(PointCardinal.SUD);
                                 }
 
                             if (j > 0)
                                 if (tableau[i][j - 1] instanceof Route) {
-                                    ((Route) tableau[i][j]).getDirections().add(PointCardinal.WEST);
-                                    ((Route) tableau[i][j - 1]).getDirections().add(PointCardinal.EAST);
+                                    ((Route) tableau[i][j]).getDirections().add(PointCardinal.OUEST);
+                                    ((Route) tableau[i][j - 1]).getDirections().add(PointCardinal.EST);
                                 }
                             j++;
                             break;

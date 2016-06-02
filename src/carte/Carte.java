@@ -147,15 +147,16 @@ public class Carte extends Observable  {
 
         List<PointCardinal> directionCases;
 
-
-        List<PointCardinal> directionCases = new ArrayList<>();
-        directionCases = ((Route)tableau[j.getPosY()][j.getPosX()]).getDirections();
-        if(j.getVitesse()==0){
-        	if (directionCases.size()>2){
-            	setChanged();
-        		notifyObservers(j);
+        if (tableau[j.getPosY()][j.getPosX()] instanceof Route) {
+            directionCases = ((Route) tableau[j.getPosY()][j.getPosX()]).getDirections();
+            if(j.getVitesse()==0){
+                if (directionCases.size()>2){
+                    setChanged();
+                    notifyObservers(j);
+                }
             }
         }
+
 
 
 
@@ -301,13 +302,13 @@ public class Carte extends Observable  {
     	Case current;
     	JLabel imageJoueur;
     	
-    	if(PointCardinal.NORD.equals(player.getDirection()){
+    	if(PointCardinal.NORD.equals(player.getDirection())){
     		ImageIcon joueur = new ImageIcon("./src/images/voitureBasHaut.png");
     		imageJoueur = new JLabel(joueur);
-		}else if(PointCardinal.EST.equals(player.getDirection()){
+		}else if(PointCardinal.EST.equals(player.getDirection())){
 			ImageIcon joueur = new ImageIcon("./src/images/voitureGaucheDroite.png");
 			imageJoueur = new JLabel(joueur);
-		}else if(PointCardinal.SUD.equals(player.getDirection()){
+		}else if(PointCardinal.SUD.equals(player.getDirection())){
 			ImageIcon joueur = new ImageIcon("./src/images/voitureHautBas.png");
 			imageJoueur = new JLabel(joueur);
 		}else{

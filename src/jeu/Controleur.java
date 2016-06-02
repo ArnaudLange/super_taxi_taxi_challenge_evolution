@@ -21,7 +21,9 @@ public class Controleur implements Observer {
     private Jeu jeu;
 
     public Controleur() {
-        File fichierCarte = new File("src/carte/cartetest.txt"); // on initialise le fichier texte de la carte
+
+
+        File fichierCarte = new File("src/carte/carte2.txt"); // on initialise le fichier texte de la carte
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
         assert carte != null;
@@ -51,6 +53,7 @@ public class Controleur implements Observer {
             joueur.setPosX(posY);
             joueur.setPosY(posX);
             joueur.setNbPoints(Constante.STARTPOINTS);
+            //joueur.setDirection(PointCardinal.SOUTH);
             joueur.setVitesse(0);
 
             System.out.println("\nInitialisation du joueur : "+joueur.getNom());
@@ -61,6 +64,7 @@ public class Controleur implements Observer {
 
             i++;
         }
+
 
 
         int nbTour=1;

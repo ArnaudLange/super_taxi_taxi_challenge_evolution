@@ -11,64 +11,50 @@ public class Feu extends Route implements Observer {
 	private HashMap<PointCardinal, Integer> feux;
 	private static int cycle;
 
-	Integer couleurNorthSouth;
-	Integer couleurWestEast;
+	private Integer couleurNORDSUD;
+	private Integer couleurOUESTEST;
 	public Feu(int posx, int posy, List<PointCardinal> directions) {
 		super(posx, posy, directions);
 		cycle = 0;
-		feux = new HashMap<PointCardinal, Integer>();
-		
+		feux = new HashMap<>();
+
 	}
-	
+
 	public void initFeu(){
-		//System.out.println(directions.size());
 		if (directions.size()>=3){
 			double a = Math.random();
 			if(a<0.5){
-				couleurNorthSouth = 0;
-				couleurWestEast = 2;
+				couleurNORDSUD = 0;
+				couleurOUESTEST = 2;
 			}else{
-				couleurNorthSouth = 2;
-				couleurWestEast = 0;
+				couleurNORDSUD = 2;
+				couleurOUESTEST = 0;
 			}
 			for (PointCardinal pc:directions){
-				
-				if(pc==PointCardinal.NORTH){
-					feux.put(PointCardinal.NORTH, couleurNorthSouth);
-				}else if(pc==PointCardinal.EAST){
-					feux.put(PointCardinal.EAST, couleurWestEast);
-				}else if(pc==PointCardinal.SOUTH){
-					feux.put(PointCardinal.SOUTH, couleurNorthSouth);
+
+				if(pc==PointCardinal.NORD){
+					feux.put(PointCardinal.NORD, couleurNORDSUD);
+				}else if(pc==PointCardinal.EST){
+					feux.put(PointCardinal.EST, couleurOUESTEST);
+				}else if(pc==PointCardinal.SUD){
+					feux.put(PointCardinal.SUD, couleurNORDSUD);
 				}else{
-					feux.put(PointCardinal.WEST, couleurWestEast);
+					feux.put(PointCardinal.OUEST, couleurOUESTEST);
 				}
 			}
 		}
-		System.out.println("feu créé : ns = "+couleurNorthSouth+", ew = "+couleurWestEast);
-		System.out.println("Feu nord/sud = "+feux.get(PointCardinal.SOUTH));
-		System.out.println("Feu ouest/est = "+feux.get(PointCardinal.EAST));
 	}
-	
+
 	public static void nextCycle(){
 		cycle = (cycle+1)%6;
-		System.out.println(cycle);
 	}
-	
-	public void setFeux(int northSouth, int westEast){
-		System.out.println("update feux "+cycle);
-		
-		feux.replace(PointCardinal.NORTH, northSouth);
-		feux.replace(PointCardinal.EAST, westEast);
-		feux.replace(PointCardinal.SOUTH, northSouth);
-		feux.replace(PointCardinal.WEST, westEast);
-		PointCardinal current;
-		Set<PointCardinal> cles = feux.keySet();
-		Iterator<PointCardinal> it = cles.iterator();
-		while (it.hasNext()){
-			current = it.next();
-			System.out.println("Feu "+current+" = "+feux.get(current));
-		}
-		
+
+	public void setFeux(int NORDSUD, int OUESTEST){
+		feux.replace(PointCardinal.NORD, NORDSUD);
+		feux.replace(PointCardinal.EST, OUESTEST);
+		feux.replace(PointCardinal.SUD, NORDSUD);
+		feux.replace(PointCardinal.OUEST, OUESTEST);
+
 	}
 
 	@Override
@@ -77,39 +63,39 @@ public class Feu extends Route implements Observer {
 		if("feu".equals(arg)){
 			switch(cycle){
 			case 0:
-				setFeux((couleurNorthSouth)%3 , (couleurWestEast)%3);
+				setFeux((couleurNORDSUD)%3 , (couleurOUESTEST)%3);
 				break;
-			
+
 			case 1:
-				setFeux((couleurNorthSouth)%3 , (couleurWestEast)%3);
+				setFeux((couleurNORDSUD)%3 , (couleurOUESTEST)%3);
 				break;
-				
+
 			case 2:
-				if(couleurNorthSouth==2){
-					setFeux((couleurNorthSouth)%3 , (couleurWestEast+1)%3);
+				if(couleurNORDSUD==2){
+					setFeux((couleurNORDSUD)%3 , (couleurOUESTEST+1)%3);
 				}else{
-					setFeux((couleurNorthSouth+1)%3 , (couleurWestEast)%3);
+					setFeux((couleurNORDSUD+1)%3 , (couleurOUESTEST)%3);
 				}
 				break;
-				
+
 			case 3:
-				if(couleurNorthSouth==2){
-					setFeux((couleurNorthSouth+1)%3 , (couleurWestEast+2)%3);
+				if(couleurNORDSUD==2){
+					setFeux((couleurNORDSUD+1)%3 , (couleurOUESTEST+2)%3);
 				}else{
-					setFeux((couleurNorthSouth+2)%3 , (couleurWestEast+1)%3);
+					setFeux((couleurNORDSUD+2)%3 , (couleurOUESTEST+1)%3);
 				}
 				break;
-				
+
 			case 4:
-				if(couleurNorthSouth==2){
-					setFeux((couleurNorthSouth+1)%3 , (couleurWestEast+2)%3);
+				if(couleurNORDSUD==2){
+					setFeux((couleurNORDSUD+1)%3 , (couleurOUESTEST+2)%3);
 				}else{
-					setFeux((couleurNorthSouth+2)%3 , (couleurWestEast+1)%3);
+					setFeux((couleurNORDSUD+2)%3 , (couleurOUESTEST+1)%3);
 				}
 				break;
-				
+
 			case 5:
-				setFeux((couleurNorthSouth+2)%3, (couleurWestEast+2)%3);
+				setFeux((couleurNORDSUD+2)%3, (couleurOUESTEST+2)%3);
 				break;
 			}
 		}
