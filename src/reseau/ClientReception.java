@@ -72,11 +72,11 @@ public class ClientReception extends Thread
                     break;
                 case NEXT_ACTION:
                     System.out.println("-------------------------------------");
-                    System.out.println("Tour n°" + ++nbTour);
+                    System.out.println("\tTour n°" + ++nbTour);
                     System.out.println("Points : "+nbPoint);
                     System.out.println("Vitesse : "+ vitesse);
                     System.out.println("Direction : "+ direction);
-                    System.out.println("Prochaine action ?");
+                    System.out.println("Prochaine action ? ( accelerer, ralentir, droite, gauche )");
 
                     break;
                 case ERREUR_ACTION:
