@@ -62,15 +62,9 @@ public class ConnexionClient extends Thread
             if ((readLine = in.readLine()) == null)
                 Thread.currentThread().interrupt();
         }
-        catch (SocketException se)
-        {
-            Thread.currentThread().interrupt();
-            se.printStackTrace();
-        }
         catch (IOException e)
         {
             Thread.currentThread().interrupt();
-            e.printStackTrace();
         }
     }
 
@@ -137,7 +131,7 @@ public class ConnexionClient extends Thread
         }
         catch (InterruptedException e)
         {
-            e.printStackTrace();
+            System.err.println("Erreur de connexion avec le client");
         }
 
         // On ferme le socket à la fin de la connexion
@@ -146,7 +140,7 @@ public class ConnexionClient extends Thread
             socket.close();
         } catch (IOException e)
         {
-            e.printStackTrace();
+            System.err.println("Erreur socket déjà fermé");
         }
     }
 
