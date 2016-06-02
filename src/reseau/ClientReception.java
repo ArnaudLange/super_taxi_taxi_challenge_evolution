@@ -1,6 +1,7 @@
 package reseau;
 
 import jeu.Commande;
+import jeu.Constante;
 
 import java.io.*;
 
@@ -54,8 +55,12 @@ public class ClientReception extends Thread
                     System.out.println("Vous avez perdu");
                     gameOver = true;
                     break;
-                case GAMEWIN:
-                    System.out.println("Vous avez gagné");
+                case GAMEWINOBJ:
+                    System.out.println("Vous avez gagné car vous avez obtenu "+ Constante.MAXPOINTS+ "points ! ");
+                    gameOver = true;
+                    break;
+                case GAMEWINLASTPLAYER:
+                    System.out.println("Vous avez gagné car vous êtes le dernier joueur en vie ! ");
                     gameOver = true;
                     break;
                 case NEXT_ACTION:

@@ -133,7 +133,7 @@ public class Controleur implements Observer {
                         for (ConnexionClient cC : listeConnexionClient)
                         {
                             if (jeu.getGagnant().equals(cC.getJoueur()))
-                                cC.envoyerMessage(Commande.GAMEWIN.toString());
+                                cC.envoyerMessage(Commande.GAMEWINOBJ.toString());
                             else
                             {
                                 cC.envoyerMessage("Joueur " + joueurActuel.getId() + " a gagné la partie !");
@@ -149,8 +149,7 @@ public class Controleur implements Observer {
                         jeuFini = true;
                         if (listJoueurs.size() == 1)
                         {
-                            c.envoyerMessage("Vous gagnez par forfait !");
-                            c.envoyerMessage(Commande.GAMEWIN.toString());
+                            c.envoyerMessage(Commande.GAMEWINLASTPLAYER.toString());
                         }
                     }
 

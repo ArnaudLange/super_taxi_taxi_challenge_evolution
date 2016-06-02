@@ -17,7 +17,8 @@ public enum Commande
     RALENTIR("ralentir"),
     GAMENOTWIN("gamenotwin"),
     GAMEOVER("gameover"),
-    GAMEWIN("gamewin");
+    GAMEWINOBJ("gamewinobj"),
+    GAMEWINLASTPLAYER("gamewinlastplayer");
 
     private final String text;
 
@@ -53,9 +54,11 @@ public enum Commande
             case "gameover":
                 return GAMEOVER;
             case "gamewin":
-                return GAMEWIN;
+                return GAMEWINOBJ;
             case "nom":
                 return NOM;
+            case "gamewinlastplayer":
+                return GAMEWINLASTPLAYER;
             case "":
                 return AUCUNE_ACTION;
             default:
