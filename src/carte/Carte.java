@@ -64,9 +64,9 @@ public class Carte extends Observable  {
 
     //Fonction utilisée pour récupérer le type d'événement : soit on a atteint l'objectif, soit il y a une priorité à droite, soit il y a une courbe.
     public List<Evenement> getEvenement(int posX, int posY, PointCardinal direction, int posXObjectif, int posYObjectif){
-        List<PointCardinal> directionCase = new ArrayList<>();
+        List<PointCardinal> directionCase;
         List<Evenement> evenements = new ArrayList<>();
-        directionCase = ((List<PointCardinal>)((Route)tableau[posY][posX]).getDirections());
+        directionCase = ((Route)tableau[posY][posX]).getDirections();
 
 
         //Si on est sur l'objectif
@@ -110,7 +110,7 @@ public class Carte extends Observable  {
     //Fonction qui gère le déplacement d'un joueur j
     public void gestionDeplacements(Joueur j){
 
-        List<PointCardinal> directionCases = new ArrayList<>();
+        List<PointCardinal> directionCases;
 
 
         //on va effectuer l'algorithme x fois avec x la vitesse
@@ -118,7 +118,7 @@ public class Carte extends Observable  {
             // La carte est codée de façon : tableau[ligne][colonne] donc on inverse posX et posY
             if (tableau[j.getPosY()][j.getPosX()] instanceof Route){
                 //Si c'est une case route on récupère les points cardinaux
-                directionCases = ((List<PointCardinal>)((Route)tableau[j.getPosY()][j.getPosX()]).getDirections());
+                directionCases = ((Route)tableau[j.getPosY()][j.getPosX()]).getDirections();
             }
             else {
                 //Sinon ce n'est pas une route, on a un accident, retourne null
