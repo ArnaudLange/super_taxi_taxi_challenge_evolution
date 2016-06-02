@@ -34,7 +34,6 @@ public class Client
             }
 
         }
-        System.out.println("Connexion avec le serveur établie");
 
         try
         {
