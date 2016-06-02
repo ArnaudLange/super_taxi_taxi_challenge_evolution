@@ -62,12 +62,47 @@ public class Carte extends Observable  {
         this.tableau = tableau;
     }
 
+    public void initFeux(){
+    	for(Case[] colonne:tableau){
+    		for(Case ligne:colonne){
+            	if(ligne instanceof Feu){
+            		((Feu)ligne).initFeu();
+            		addObserver((Feu)ligne);
+            	}
+            }
+        }
+    }
+
+    public void updateFeux(){
+    	Feu.nextCycle();
+    	setChanged();
+    	notifyObservers("feu");
+    }
+
+    public void initStops(){
+    	for(Case[] colonne:tableau){
+    		for(Case ligne:colonne){
+            	if(ligne instanceof Stop){
+            		((Stop)ligne).initStop();
+            	}
+            }
+        }
+    }
+
     //Fonction utilisée pour récupérer le type d'événement : soit on a atteint l'objectif, soit il y a une priorité à droite, soit il y a une courbe.
     public List<Evenement> getEvenement(int posX, int posY, PointCardinal direction, int posXObjectif, int posYObjectif){
         List<PointCardinal> directionCase;
         List<Evenement> evenements = new ArrayList<>();
         directionCase = ((Route)tableau[posY][posX]).getDirections();
 
+
+        if(tableau[posY][posX] instanceof Feu){
+        	evenements.add(Evenement.FEU);
+        }
+
+        if(tableau[posY][posX] instanceof Stop){
+        	evenements.add(Evenement.STOP);
+        }
 
         //Si on est sur l'objectif
         if(posXObjectif == posX && posY == posYObjectif){
@@ -111,6 +146,17 @@ public class Carte extends Observable  {
     public void gestionDeplacements(Joueur j){
 
         List<PointCardinal> directionCases;
+
+
+        List<PointCardinal> directionCases = new ArrayList<>();
+        directionCases = ((Route)tableau[j.getPosY()][j.getPosX()]).getDirections();
+        if(j.getVitesse()==0){
+        	if (directionCases.size()>2){
+            	setChanged();
+        		notifyObservers(j);
+            }
+        }
+
 
 
         //on va effectuer l'algorithme x fois avec x la vitesse
@@ -170,6 +216,10 @@ public class Carte extends Observable  {
                     }
                 }
             }
+            else if (directionCases.size()>2){
+                setChanged();
+        		notifyObservers(j);
+            }
 
             //Ensuite on effectue les tests pour chaque direction du joueur.
             if (PointCardinal.SUD.equals(j.getDirection())) {
@@ -216,12 +266,11 @@ public class Carte extends Observable  {
                     return;
                 }
             }
-
-            //On appelle le controleur qui va vérifier la présence ou non d'événements sur cette case et agir en conséquence.
-            setChanged();
-            notifyObservers(j);
+            else {
+                System.out.println("\n ERREUR DIRECTION DU JOUEUR " + j.getNom() +" = NULL \n");
+            }
+            System.out.println("Position : "+j.getPosX()+","+j.getPosY());
         }
-
     }
     
     public Case[][] GetVision(int posX, int posY, Joueur player){
@@ -246,23 +295,23 @@ public class Carte extends Observable  {
     }
     
     public void affichageCarte(Case[][] map, Joueur player){
-    	JFrame frame = new JFrame();
-    	frame.setLayout(new GridLayout(map.length, map[0].length));
+    	JFrame affichage = new JFrame();
+    	affichage.setLayout(new GridLayout(map.length, map[0].length));
     	int i, j, k=0, somme;
     	Case current;
     	JLabel imageJoueur;
     	
-    	if(PointCardinal.NORD.equals(player.getDirection())){
-    		ImageIcon joueur = new ImageIcon("E:/Cours/projet java/projet voiture/voitureBasHaut.png");
+    	if(PointCardinal.NORD.equals(player.getDirection()){
+    		ImageIcon joueur = new ImageIcon("./src/images/voitureBasHaut.png");
     		imageJoueur = new JLabel(joueur);
-		}else if(PointCardinal.EST.equals(player.getDirection())){
-			ImageIcon joueur = new ImageIcon("E:/Cours/projet java/projet voiture/voitureGaucheDroite.png");
+		}else if(PointCardinal.EST.equals(player.getDirection()){
+			ImageIcon joueur = new ImageIcon("./src/images/voitureGaucheDroite.png");
 			imageJoueur = new JLabel(joueur);
-		}else if(PointCardinal.SUD.equals(player.getDirection())){
-			ImageIcon joueur = new ImageIcon("E:/Cours/projet java/projet voiture/voitureHautBas.png");
+		}else if(PointCardinal.SUD.equals(player.getDirection()){
+			ImageIcon joueur = new ImageIcon("./src/images/voitureHautBas.png");
 			imageJoueur = new JLabel(joueur);
 		}else{
-			ImageIcon joueur = new ImageIcon("E:/Cours/projet java/projet voiture/voitureDroiteGauche.png");
+			ImageIcon joueur = new ImageIcon("./src/images/voitureDroiteGauche.png");
 			imageJoueur = new JLabel(joueur);
 		}
     	
@@ -292,83 +341,83 @@ public class Carte extends Observable  {
     			switch(somme){
     				//0000 neutre
     			case 0:
-    				images.put("instance"+k, new JLabel(new ImageIcon("E:/Cours/projet java/projet voiture/neutre.png")));
+    				images.put("instance"+k, new JLabel(new ImageIcon("./src/images/neutre.png")));
     				break;
     				
     				//0001 nord
     			case 1:
-    				images.put("instance"+k, new JLabel(new ImageIcon("E:/Cours/projet java/projet voiture/routeN.png")));
+    				images.put("instance"+k, new JLabel(new ImageIcon("./src/images/routeN.png")));
     				break;
     				
     				//0010 est
     			case 2:
-    				images.put("instance"+k, new JLabel(new ImageIcon("E:/Cours/projet java/projet voiture/routeE.png")));
+    				images.put("instance"+k, new JLabel(new ImageIcon("./src/images/routeE.png")));
     				break;
     				
     				//0011 est+nord
     			case 3:
 
-        			images.put("instance"+k, new JLabel(new ImageIcon("E:/Cours/projet java/projet voiture/routeHautDroite.png"))); 
+        			images.put("instance"+k, new JLabel(new ImageIcon("./src/images/routeHautDroite.png")));
     				break;
     				
     				//0100 sud
     			case 4:
-    				images.put("instance"+k, new JLabel(new ImageIcon("E:/Cours/projet java/projet voiture/routeS.png")));
+    				images.put("instance"+k, new JLabel(new ImageIcon("./src/images/routeS.png")));
     				break;
     				
     				//0101 sud+nord
     			case 5:
-    				images.put("instance"+k, new JLabel(new ImageIcon("E:/Cours/projet java/projet voiture/routeHautBas.png")));
+    				images.put("instance"+k, new JLabel(new ImageIcon("./src/images/routeHautBas.png")));
     				break;
     				
     				//0110 sud+est
     			case 6:
-    				images.put("instance"+k, new JLabel(new ImageIcon("E:/Cours/projet java/projet voiture/routeBasDroite.png")));
+    				images.put("instance"+k, new JLabel(new ImageIcon("./src/images/routeBasDroite.png")));
     				break;
     				
     				//0111 sud+est+nord
     			case 7:
-    				images.put("instance"+k, new JLabel(new ImageIcon("E:/Cours/projet java/projet voiture/enTDroite.png")));
+    				images.put("instance"+k, new JLabel(new ImageIcon("./src/images/enTDroite.png")));
     				break;
     				
     				//1000 ouest
     			case 8:
-    				images.put("instance"+k, new JLabel(new ImageIcon("E:/Cours/projet java/projet voiture/routeW.png")));
+    				images.put("instance"+k, new JLabel(new ImageIcon("./src/images/routeW.png")));
     				break;
     				
     				//1001 ouest+nord
     			case 9:
-    				images.put("instance"+k, new JLabel(new ImageIcon("E:/Cours/projet java/projet voiture/routeHautGauche.png")));
+    				images.put("instance"+k, new JLabel(new ImageIcon("./src/images/routeHautGauche.png")));
     				break;
     				
     				//1010 ouest+est
     			case 10:
-    				images.put("instance"+k, new JLabel(new ImageIcon("E:/Cours/projet java/projet voiture/routeGaucheDroite.png")));
+    				images.put("instance"+k, new JLabel(new ImageIcon("./src/images/routeGaucheDroite.png")));
     				break;
     				
     				//1011 ouest+est+nord
     			case 11:
-    				images.put("instance"+k, new JLabel(new ImageIcon("E:/Cours/projet java/projet voiture/enTHaut.png")));
+    				images.put("instance"+k, new JLabel(new ImageIcon("./src/images/enTHaut.png")));
     				break;
     				
     				//1100 ouest+sud
     			case 12:
-    				images.put("instance"+k, new JLabel(new ImageIcon("E:/Cours/projet java/projet voiture/routeBasGauche.png")));
+    				images.put("instance"+k, new JLabel(new ImageIcon("./src/images/routeBasGauche.png")));
     				break;
     				
     				//1101 ouest+sud+nord
     			case 13:
-    				images.put("instance"+k, new JLabel(new ImageIcon("E:/Cours/projet java/projet voiture/enTGauche.png")));
+    				images.put("instance"+k, new JLabel(new ImageIcon("./src/images/enTGauche.png")));
     				break;
     				
     				//1110 ouest+sud+est
     			case 14:
-    				images.put("instance"+k, new JLabel(new ImageIcon("E:/Cours/projet java/projet voiture/enTBas.png")));
+    				images.put("instance"+k, new JLabel(new ImageIcon("./src/images/enTBas.png")));
     				break;
     				
     				//1111 ouest+sud+est+nord
     			case 15:
-    				images.put("instance"+k, new JLabel(new ImageIcon("E:/Cours/projet java/projet voiture/croisement.png")));
+    				images.put("instance"+k, new JLabel(new ImageIcon("./src/images/croisement.png")));
     				break;
     			}
     			
@@ -379,13 +428,11 @@ public class Carte extends Observable  {
     			if(i==map.length/2 && j == map[0].length/2){
     				panels.get("instance"+k).add(imageJoueur, BorderLayout.CENTER);
     			}
-    			frame.add(panels.get("instance"+k));
+    			affichage.add(panels.get("instance"+k));
     			k++;
     		}
-    		frame.getContentPane().setBackground(Color.green);
-    		frame.setVisible(true);
-    		frame.pack();
+    		affichage.setVisible(true);
+    		affichage.pack();
     	}
-    	
     }
 }

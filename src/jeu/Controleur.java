@@ -2,8 +2,11 @@ package jeu;
 
 import carte.Carte;
 import carte.Evenement;
+import carte.Feu;
 import carte.InterpreteurCarte;
 import carte.PointCardinal;
+import carte.Route;
+import carte.Stop;
 import reseau.ConnexionClient;
 import reseau.Serveur;
 
@@ -18,7 +21,9 @@ public class Controleur implements Observer {
     private Jeu jeu;
 
     public Controleur() {
-        File fichierCarte = new File("src/carte/cartetest.txt"); // on initialise le fichier texte de la carte
+
+
+        File fichierCarte = new File("src/carte/carte2.txt"); // on initialise le fichier texte de la carte
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
         assert carte != null;
@@ -28,8 +33,11 @@ public class Controleur implements Observer {
         jeu = new Jeu(listJoueurs, carte);
         jeu.setPosXObjectif(Constante.OBJECTIFCELL[0]);
         jeu.setPosYObjectif(Constante.OBJECTIFCELL[1]);
-        List<ConnexionClient> listeConnexionClient = new ArrayList();
-        List<ConnexionClient> listeConnexionClientPerdu = new ArrayList();
+        jeu.getCarte().initFeux();
+        jeu.getCarte().initStops();
+        jeu.getCarte().addObserver(this);
+        List<ConnexionClient> listeConnexionClient = new ArrayList<>();
+        List<ConnexionClient> listeConnexionClientPerdu = new ArrayList<>();
         Serveur.creerServeur(jeu.getListeJoueurs(), listeConnexionClient);
         Vector positionDepart = InterpreteurCarte.trouverPositionDepart(carte);
 
@@ -45,7 +53,7 @@ public class Controleur implements Observer {
             joueur.setPosX(posY);
             joueur.setPosY(posX);
             joueur.setNbPoints(Constante.STARTPOINTS);
-            //joueur.setDirection(PointCardinal.SUD);
+            //joueur.setDirection(PointCardinal.SOUTH);
             joueur.setVitesse(0);
 
             System.out.println("\nInitialisation du joueur : "+joueur.getNom());
@@ -56,6 +64,7 @@ public class Controleur implements Observer {
 
             i++;
         }
+
 
 
         int nbTour=1;
@@ -80,7 +89,7 @@ public class Controleur implements Observer {
                     if (c.getJoueur().getDirection() != null){
                         jeu.getCarte().gestionDeplacements(c.getJoueur());
                     }
-
+                    System.out.println("\nTour du joueur : " + c.getJoueur().getNom());
                     System.out.println("\tpos : " + c.getJoueur().getPosX() + "," + c.getJoueur().getPosY());
                     System.out.println("\tdirection : " + c.getJoueur().getDirection());
                     System.out.println("\tvitesse : " + c.getJoueur().getVitesse());
@@ -121,12 +130,14 @@ public class Controleur implements Observer {
                             continue;
                         if (joueurActuel.getPosX() == k.getPosX() && joueurActuel.getPosY() == k.getPosY())
                         {
-                            System.out.println("Colision entre le joueur " + joueurActuel.getId() + " et le joueur " + k.getId());
-                            System.out.println("Le joueur " + joueurActuel.getId() + " a perdu.");
-                            System.out.println("Le joueur " + k.getId() + " a perdu.");
+                        	if(k.getVitesse()>1 || joueurActuel.getVitesse()>1){
+	                            System.out.println("Colision entre le joueur " + joueurActuel.getId() + " et le joueur " + k.getId());
+	                            System.out.println("Le joueur " + joueurActuel.getId() + " a perdu.");
+	                            System.out.println("Le joueur " + k.getId() + " a perdu.");
 
-                            joueurActuel.setNbPoints(0);
-                            k.setNbPoints(0);
+	                            joueurActuel.setNbPoints(0);
+	                            k.setNbPoints(0);
+                        	}
                         }
                     }
 
@@ -179,7 +190,9 @@ public class Controleur implements Observer {
                     listeConnexionClient.remove(c);
 
                 listeConnexionClientPerdu.clear();
+                jeu.getCarte().updateFeux();
             }
+
         }
 
         if (jeu.getGagnant() != null)
@@ -210,18 +223,36 @@ public class Controleur implements Observer {
                 }
 
             }
-            else if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
+            if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
                 System.out.println("Joueur mort.");
                 ((Joueur) obj).setEtatMarche(false);
             }
-            else if(infra.contains(Evenement.PRIORITE)){
+            if(infra.contains(Evenement.FEU)){
+            	if(((Feu)jeu.getCarte().getTableau()[((Joueur) obj).getPosY()][((Joueur) obj).getPosX()]).getCouleurFeu(((Joueur) obj).getDirection())){
+            		((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
+            	}
+            }else if(infra.contains(Evenement.STOP)){
+            	if(((Stop)jeu.getCarte().getTableau()[((Joueur) obj).getPosY()][((Joueur) obj).getPosX()]).isAStopDirection(((Joueur) obj).getDirection())){
+            		if(((Joueur) obj).getVitesse()==0){
+            			((Joueur) obj).setHasStoped(true);
+            		}else{
+            			if(((Joueur) obj).getHasStoped()){
+            				((Joueur) obj).setHasStoped(false);
+            			}else{
+            				((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
+            			}
+            		}
+            	}
+            }else if(infra.contains(Evenement.PRIORITE)){
                 System.out.println("Priorite a droite.");
                 //Si vitesse du joueur est de 3, perte de majorinf points
                 if(((Joueur) obj).getVitesse()>2){
+                	System.out.println("vitesse > 2, joueur trop rapide, perde de MAJORINF");
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
                 }
                 //Si vitesse du joueur égale à 2, perte de minorinf points
                 else if(((Joueur) obj).getVitesse()==2){
+                	System.out.println("vitesse == 2, joueur trop rapide, perde de MINORINF");
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MINORINF);
                 }
             }

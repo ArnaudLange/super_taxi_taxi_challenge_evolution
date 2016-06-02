@@ -23,7 +23,7 @@ public class InterpreteurCarte {
         try {
             fichier = new FileInputStream(new File(String.valueOf(fichierCarte)));
             cartebuf = new BufferedInputStream(new FileInputStream(new File(String.valueOf(fichierCarte))));
-            // avec un buffer : gain de vitesse de lecture conséquent
+            // avec un buffer : gain de vitesse de lecture consÃ©quent
             tableau = new Case[30][30];
 
             byte[] buf = new byte[8];
@@ -34,7 +34,7 @@ public class InterpreteurCarte {
                 for (byte bit : buf) {
                     char c = (char)bit;
 
-
+                    //System.out.println(c);
 
                     switch(c) {
                         case 'r':
@@ -58,23 +58,63 @@ public class InterpreteurCarte {
                             tableau[i][j] = new CaseNeutre();
                             j++;
                             break;
+                            
+                        case 'f':
+                        	tableau[i][j] = new Feu(i, j, new ArrayList<PointCardinal>());
+
+                            if (i > 0)
+                                if (tableau[i - 1][j] instanceof Route) {
+                                    ((Route) tableau[i][j]).getDirections().add(PointCardinal.NORTH);
+                                    ((Route) tableau[i - 1][j]).getDirections().add(PointCardinal.SOUTH);
+                                }
+
+                            if (j > 0)
+                                if (tableau[i][j - 1] instanceof Route) {
+                                    ((Route) tableau[i][j]).getDirections().add(PointCardinal.WEST);
+                                    ((Route) tableau[i][j - 1]).getDirections().add(PointCardinal.EAST);
+                                }
+                            j++;
+                            break;
+                            
+                        case 's':
+                        	tableau[i][j] = new Stop(i, j, new ArrayList<PointCardinal>());
+
+                            if (i > 0)
+                                if (tableau[i - 1][j] instanceof Route) {
+                                    ((Route) tableau[i][j]).getDirections().add(PointCardinal.NORTH);
+                                    ((Route) tableau[i - 1][j]).getDirections().add(PointCardinal.SOUTH);
+                                }
+
+                            if (j > 0)
+                                if (tableau[i][j - 1] instanceof Route) {
+                                    ((Route) tableau[i][j]).getDirections().add(PointCardinal.WEST);
+                                    ((Route) tableau[i][j - 1]).getDirections().add(PointCardinal.EAST);
+                                }
+                            j++;
+                            break;
 
                         case '\n':
                             i++;
                             j = 0;
                             break;
+                            
+                        default :
+                        	//System.out.println("error");
+                        	break;
                     }
                 }
                 buf = new byte[8];
             }
 
-            //On ferme nos flux de données
+            //On ferme nos flux de donnÃ©es
             fichier.close();
             cartebuf.close();
 
             carte = new Carte(i+1,j);
             carte.setTableau(tableau);
-
+            
+            
+            
             return carte;
 
 
@@ -83,7 +123,7 @@ public class InterpreteurCarte {
             System.out.println(carte.getLongueur());
 
 
-            // on parcourt la carte et on regarde si elle a bien été initalisée en regardant chaque case
+            // on parcourt la carte et on regarde si elle a bien Ã©tÃ© initalisÃ©e en regardant chaque case
             for (i = 0; i < carte.getLargeur(); i++)
                 for (j = 0; j < carte.getLongueur(); j++)
                 {
@@ -113,49 +153,49 @@ public class InterpreteurCarte {
 
                         switch (sommeChemin) {
                             case 7:
-                                System.out.print("│");
+                                System.out.print("â”‚");
                                 break;
                             case 19:
-                                System.out.print("│");
+                                System.out.print("â”‚");
                                 break;
                             case 37:
-                                System.out.print("─");
+                                System.out.print("â”€");
                                 break;
                             case 53:
-                                System.out.print("─");
+                                System.out.print("â”€");
                                 break;
                             case 26:
-                                System.out.print("│");
+                                System.out.print("â”‚");
                                 break;
                             case 44:
-                                System.out.print("└");
+                                System.out.print("â””");
                                 break;
                             case 60:
-                                System.out.print("┘");
+                                System.out.print("â”˜");
                                 break;
                             case 56:
-                                System.out.print("┌");
+                                System.out.print("â”Œ");
                                 break;
                             case 72:
-                                System.out.print("┐");
+                                System.out.print("â”�");
                                 break;
                             case 90:
-                                System.out.print("─");
+                                System.out.print("â”€");
                                 break;
                             case 63:
-                                System.out.print("├");
+                                System.out.print("â”œ");
                                 break;
                             case 79:
-                                System.out.print("┤");
+                                System.out.print("â”¤");
                                 break;
                             case 97:
-                                System.out.print("┴");
+                                System.out.print("â”´");
                                 break;
                             case 109:
-                                System.out.print("┬");
+                                System.out.print("â”¬");
                                 break;
                             case 116:
-                                System.out.print("┼");
+                                System.out.print("â”¼");
                                 break;
                         }
                         sommeChemin = 0;
@@ -165,7 +205,7 @@ public class InterpreteurCarte {
                 System.out.println("");
             }
 
-            // ─ │   └ ┐ ┘ ┌   ┤ ┴ ┬ ├    ┼
+            // â”€ â”‚   â”” â”� â”˜ â”Œ   â”¤ â”´ â”¬ â”œ    â”¼
            */
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -195,8 +235,8 @@ public class InterpreteurCarte {
     public static int[] choisirPositionDepart(Vector positionDepart){
         int indiceAuHasard =(int) (Math.random() * (positionDepart.size() - 1)) ;
         int[] position = (int[]) positionDepart.get(indiceAuHasard);
-        positionDepart.remove(indiceAuHasard); // on l'enlève de la liste pour éviter
-        // que 2 joueurs se retrouvent au même endroit
+        positionDepart.remove(indiceAuHasard); // on l'enlÃ¨ve de la liste pour Ã©viter
+        // que 2 joueurs se retrouvent au mÃªme endroit
         System.out.println("New position : (" + position[0] + "," + position[1] +")");
         return position;
     }
