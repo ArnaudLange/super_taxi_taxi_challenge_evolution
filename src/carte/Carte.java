@@ -111,6 +111,11 @@ public class Carte extends Observable  {
     // la direction du joueur
     public void gestionDeplacements(Joueur j){
 
+        if(j.getDirection().equals(null)){
+            System.out.println("Pas de direction, ça a aucun sens mais bon...");
+            return;
+        }
+
         boolean prioPossible;
         List<PointCardinal> directionCases = new ArrayList<>();
 
