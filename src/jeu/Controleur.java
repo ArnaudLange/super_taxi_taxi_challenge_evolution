@@ -68,6 +68,7 @@ public class Controleur implements Observer {
                     jeu.getCarte().gestionDeplacements(c.getJoueur());
                     System.out.println("La vitesse du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getVitesse());
                     System.out.println("La direction du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getDirection());
+                    System.out.println("Le nombre de points du joueur " + c.getJoueur().getNom() + " est " + c.getJoueur().getDirection());
                     System.out.println("La position en X du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getPosX());
                     System.out.println("La position en Y du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getPosY());
                 }
