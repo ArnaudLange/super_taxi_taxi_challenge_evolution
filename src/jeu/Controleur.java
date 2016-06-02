@@ -206,11 +206,11 @@ public class Controleur implements Observer {
                 jeu.setPosYObjectif(newPositionObj[1]);
 
             }
-            else if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
+            if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
                 System.out.println("Joueur mort.");
                 ((Joueur) obj).setNbPoints(0);
             }
-            if(infra.contains(Evenement.FEU)){
+            else if(infra.contains(Evenement.FEU)){
             	if(((Feu)jeu.getCarte().getTableau()[((Joueur) obj).getPosY()][((Joueur) obj).getPosX()]).getCouleurFeu(((Joueur) obj).getDirection())){
             		((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
             	}
