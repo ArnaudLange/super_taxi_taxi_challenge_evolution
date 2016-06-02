@@ -192,7 +192,6 @@ public class Controleur implements Observer {
 
     @Override
     public void update(Observable obv, Object obj) {
-        System.out.println("ici");
 
         if(obj instanceof Joueur){
             List<Evenement> infra = jeu.getCarte().getEvenement(((Joueur) obj).getPosX(),((Joueur) obj).getPosY(), ((Joueur) obj).getDirection(), jeu.getPosXObjectif(), jeu.getPosYObjectif());
