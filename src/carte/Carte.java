@@ -68,6 +68,7 @@ public class Carte extends Observable  {
         List<Evenement> evenements = new ArrayList<>();
         directionCase = ((List<PointCardinal>)((Route)tableau[posY][posX]).getDirections());
 
+
         //Si on est sur l'objectif
         if(posXObjectif == posX && posY == posYObjectif){
             evenements.add(Evenement.OBJECTIF);
@@ -109,13 +110,8 @@ public class Carte extends Observable  {
     //Fonction qui gère le déplacement d'un joueur j
     public void gestionDeplacements(Joueur j){
 
-        //Si la direction du joueur est nulle, on quitte directement la fonction
-        if(j.getDirection().equals(null)){
-            System.out.println("Pas de direction, ça a aucun sens mais bon...");
-            return;
-        }
-
         List<PointCardinal> directionCases = new ArrayList<>();
+
 
         //on va effectuer l'algorithme x fois avec x la vitesse
         for (int i = 0; i < j.getVitesse() ; i++) {
@@ -123,6 +119,7 @@ public class Carte extends Observable  {
             if (tableau[j.getPosY()][j.getPosX()] instanceof Route){
                 //Si c'est une case route on récupère les points cardinaux
                 directionCases = ((List<PointCardinal>)((Route)tableau[j.getPosY()][j.getPosX()]).getDirections());
+                System.out.println(directionCases);
             }
             else {
                 //Sinon ce n'est pas une route, on a un accident, retourne null
@@ -131,7 +128,7 @@ public class Carte extends Observable  {
                 return;
             }
 
-
+            System.out.println(j.getDirection());
             //Si la route n'a que deux points cardinaux
             if(directionCases.size()==2){
                 //Si ce n'est pas une route droite
@@ -146,29 +143,34 @@ public class Carte extends Observable  {
                     //Parcours des deux points cardinaux de la case
                     for (PointCardinal dir:directionCases) {
                         //Si le joueur va vers l'est
-                        if(j.getDirection().equals(PointCardinal.EAST)){
+                        if(PointCardinal.EAST.equals(j.getDirection())){
                             //Si la direction qu'on regarde n'est pas celle d'où l'on vient
-                            if (dir!=PointCardinal.WEST){
+                            if (!PointCardinal.WEST.equals(dir)){
                                 j.setDirection(dir);
+                                break;
                             }
                         }
                         //Sinon, de même avec autres directions
-                        else if(j.getDirection().equals(PointCardinal.NORTH)){
-                            if (dir!=PointCardinal.SOUTH){
+                        else if(PointCardinal.NORTH.equals(j.getDirection())){
+                            if (!PointCardinal.SOUTH.equals(dir)){
                                 j.setDirection(dir);
+                                break;
                             }
                         }
-                        if(j.getDirection().equals(PointCardinal.SOUTH)){
-                            if (dir!=PointCardinal.NORTH){
+                        else if(PointCardinal.SOUTH.equals(j.getDirection())){
+                            if (!PointCardinal.NORTH.equals(dir)){
                                 j.setDirection(dir);
+                                break;
                             }
                         }
-                        if(j.getDirection().equals(PointCardinal.WEST)){
-                            if (dir!=PointCardinal.EAST){
+                        else if(PointCardinal.WEST.equals(j.getDirection())){
+                            if (!PointCardinal.EAST.equals(dir)){
                                 j.setDirection(dir);
+                                break;
                             }
                         }
                     }
+                    System.out.println(j.getDirection());
                 }
             }
 

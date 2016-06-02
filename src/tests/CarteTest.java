@@ -256,6 +256,124 @@ public class CarteTest {
         Assert.assertEquals(0, j.getNbPoints());
     }
 
+    //test si le joueur a une direction nulle
+    @Test
+    public void testDeplacementNull() {
+        File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+        Joueur j = new Joueur();
+
+        j.setPosX(0);
+        j.setPosY(0);
+        j.setNbPoints(Constante.STARTPOINTS);
+        j.setVitesse(2);
+
+        carte.gestionDeplacements(j);
+        Assert.assertEquals(0, j.getPosX());
+        Assert.assertEquals(0, j.getPosY());
+        Assert.assertEquals(30, j.getNbPoints());
+    }
+
+    //test si le joueur est déjà sur une case neutre
+    @Test
+    public void testDeplacementNeutre() {
+        File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+        Joueur j = new Joueur();
+
+        j.setPosX(1);
+        j.setPosY(1);
+        j.setNbPoints(Constante.STARTPOINTS);
+        j.setDirection(PointCardinal.SOUTH);
+        j.setVitesse(2);
+
+        carte.gestionDeplacements(j);
+        Assert.assertEquals(1, j.getPosX());
+        Assert.assertEquals(1, j.getPosY());
+        Assert.assertEquals(0, j.getNbPoints());
+    }
+
+    //test si le joueur prend une courbe => changement de direction
+    @Test
+    public void testDeplacementCourbeEast() {
+        File fichierCarte = new File("src/carte/carte_test_courbe.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+        Joueur j = new Joueur();
+
+        j.setPosX(1);
+        j.setPosY(0);
+        j.setNbPoints(Constante.STARTPOINTS);
+        j.setDirection(PointCardinal.EAST);
+        j.setVitesse(2);
+
+        carte.gestionDeplacements(j);
+        Assert.assertEquals(2, j.getPosX());
+        Assert.assertEquals(1, j.getPosY());
+        Assert.assertEquals(30, j.getNbPoints());
+        Assert.assertEquals(PointCardinal.SOUTH, j.getDirection());
+    }
+
+    //si le joueur roule trop vite dans une courbe = accident
+    @Test
+    public void testDeplacementCourbeEast2() {
+        File fichierCarte = new File("src/carte/carte_test_courbe.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+        Joueur j = new Joueur();
+
+        j.setPosX(1);
+        j.setPosY(0);
+        j.setNbPoints(Constante.STARTPOINTS);
+        j.setDirection(PointCardinal.EAST);
+        j.setVitesse(3);
+
+        carte.gestionDeplacements(j);
+        Assert.assertEquals(2, j.getPosX());
+        Assert.assertEquals(0, j.getPosY());
+        Assert.assertEquals(0, j.getNbPoints());
+        Assert.assertEquals(PointCardinal.EAST, j.getDirection());
+    }
+
+    @Test
+    public void testDeplacementCourbeNord() {
+        System.out.println("test");
+        File fichierCarte = new File("src/carte/carte_test_courbe.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+        Joueur j = new Joueur();
+
+        j.setPosX(2);
+        j.setPosY(1);
+        j.setNbPoints(Constante.STARTPOINTS);
+        j.setDirection(PointCardinal.NORTH);
+        j.setVitesse(2);
+
+        carte.gestionDeplacements(j);
+        Assert.assertEquals(1, j.getPosX());
+        Assert.assertEquals(0, j.getPosY());
+        Assert.assertEquals(30, j.getNbPoints());
+        Assert.assertEquals(PointCardinal.WEST, j.getDirection());
+    }
+
+    //si le joueur roule trop vite dans une courbe = accident
+    @Test
+    public void testDeplacementCourbeNord2() {
+        System.out.println("allo");
+        File fichierCarte = new File("src/carte/carte_test_courbe.txt");
+        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+        Joueur j = new Joueur();
+
+        j.setPosX(2);
+        j.setPosY(1);
+        j.setNbPoints(Constante.STARTPOINTS);
+        j.setDirection(PointCardinal.NORTH);
+        j.setVitesse(3);
+
+        carte.gestionDeplacements(j);
+        Assert.assertEquals(2, j.getPosX());
+        Assert.assertEquals(0, j.getPosY());
+        Assert.assertEquals(0, j.getNbPoints());
+        Assert.assertEquals(PointCardinal.NORTH, j.getDirection());
+    }
+
     @Test
     public void testEvenementRien(){
         File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
