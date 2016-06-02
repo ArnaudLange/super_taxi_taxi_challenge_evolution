@@ -13,31 +13,33 @@ import java.util.*;
 public class Controleur implements Observer {
 
     private Jeu jeu;
+    private final String pathFichierCarte = "src/carte/carte2.txt";
+    private Carte carte;
+    private List<Joueur> listJoueurs;
+    private List<ConnexionClient> listeConnexionClient;
+    private List<ConnexionClient> listeConnexionClientPerdu;
 
-    public Controleur() {
 
-
-        File fichierCarte = new File("src/carte/carte2.txt"); // on initialise le fichier texte de la carte
-        Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
-
+    public Controleur()
+    {
+        this.carte = InterpreteurCarte.Interpreter(new File(pathFichierCarte));
         assert carte != null;
-        carte.addObserver(this);
+        this.carte.addObserver(this);
+        this.listJoueurs = new ArrayList<>();
+        this.jeu = new Jeu(listJoueurs, carte);
+        this.jeu.setPosXObjectif(Constante.OBJECTIFCELL[0]);
+        this.jeu.setPosYObjectif(Constante.OBJECTIFCELL[1]);
+        this.jeu.getCarte().initFeux();
+        this.jeu.getCarte().initStops();
+        this.jeu.getCarte().addObserver(this);
+        this.listeConnexionClient = new ArrayList<>();
+        this.listeConnexionClientPerdu = new ArrayList<>();
+    }
 
-        List<Joueur> listJoueurs = new ArrayList<>();
-        jeu = new Jeu(listJoueurs, carte);
-        jeu.setPosXObjectif(Constante.OBJECTIFCELL[0]);
-        jeu.setPosYObjectif(Constante.OBJECTIFCELL[1]);
-        jeu.getCarte().initFeux();
-        jeu.getCarte().initStops();
-        jeu.getCarte().addObserver(this);
-        List<ConnexionClient> listeConnexionClient = new ArrayList<>();
-        List<ConnexionClient> listeConnexionClientPerdu = new ArrayList<>();
+    public void lancerJeu()
+    {
         Serveur.creerServeur(jeu.getListeJoueurs(), listeConnexionClient);
         Vector positionDepart = InterpreteurCarte.trouverPositionDepart(carte);
-
-        //System.out.println("Nom joueur 1 : "+ listJoueurs.get(0).getNom());
-        //System.out.println("Nom joueur 2 : "+ listJoueurs.get(1).getNom());
-
 
         int i = 1;
         for (Joueur joueur : listJoueurs)
@@ -175,9 +177,9 @@ public class Controleur implements Observer {
 
                 // Suppression des clients déconnectés
                 for (ConnexionClient c : listeConnexionClientPerdu)
-                    listeConnexionClient.remove(c);
+                    if (listeConnexionClient.contains(c))
+                        listeConnexionClient.remove(c);
 
-                listeConnexionClientPerdu.clear();
                 jeu.getCarte().updateFeux();
             }
 

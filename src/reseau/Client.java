@@ -13,18 +13,14 @@ public class Client
     {
         ClientEnvoie clientEnvoie;
         ClientReception clientReception;
-        OutputStream out;
-        InputStream in;
 
         try
         {
             Socket socket = new Socket("localhost", 2009);
-            out = socket.getOutputStream();
-            in = socket.getInputStream();
 
-            clientReception = new ClientReception(in);
+            clientReception = new ClientReception(socket.getInputStream());
             clientReception.start();
-            clientEnvoie = new ClientEnvoie(out);
+            clientEnvoie = new ClientEnvoie(socket.getOutputStream());
             clientEnvoie.start();
 
             while(clientReception.isAlive())
