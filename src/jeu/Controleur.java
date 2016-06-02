@@ -208,7 +208,7 @@ public class Controleur implements Observer {
             }
             else if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
                 System.out.println("Joueur mort.");
-                ((Joueur) obj).setEtatMarche(false);
+                ((Joueur) obj).setNbPoints(0);
             }
             if(infra.contains(Evenement.FEU)){
             	if(((Feu)jeu.getCarte().getTableau()[((Joueur) obj).getPosY()][((Joueur) obj).getPosX()]).getCouleurFeu(((Joueur) obj).getDirection())){
