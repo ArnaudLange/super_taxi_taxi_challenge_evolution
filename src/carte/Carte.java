@@ -110,6 +110,7 @@ public class Carte extends Observable  {
     // la position en X et en Y du joueur
     // la direction du joueur
     public void gestionDeplacements(Joueur j){
+
         boolean prioPossible;
         List<PointCardinal> directionCases = new ArrayList<>();
 
@@ -123,7 +124,8 @@ public class Carte extends Observable  {
             }
             else {
                 //Sinon ce n'est pas une route, on a un accident, retourne null
-                System.out.println("Not a Route case.");
+                System.out.println("Pas une case route => accident.");
+                j.setNbPoints(0);
                 return;
             }
 
@@ -212,6 +214,9 @@ public class Carte extends Observable  {
                     j.setNbPoints(0);
                     return;
                 }
+            }
+            else {
+                System.out.println("\n ERREUR DIRECTION DU JOUEUR " + j.getNom() +" = NULL \n");
             }
             System.out.println("Position : "+j.getPosX()+","+j.getPosY());
 

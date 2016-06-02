@@ -15,13 +15,13 @@ public class Constante {
     public final static int STARTDELAY=30;
 
     /* Nombre de points avec lesquels les joueurs commencent la partie */
-    public final static int STARTPOINTS=6;
+    public final static int STARTPOINTS=30;
 
     /* Nombre de points gagnés lorsque l'on atteint l'objectif */
     public final static int OBJPOINTS=10;
 
     /* Nombre de points à atteindre pour remporter la partie */
-    public final static int MAXPOINTS=18;
+    public final static int MAXPOINTS=40;
 
     /* Distance (en cases) à laquelle les joueurs peuvent voir */
     public final static int FOV=3;

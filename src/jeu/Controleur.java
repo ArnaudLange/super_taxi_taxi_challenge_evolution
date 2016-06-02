@@ -41,10 +41,18 @@ public class Controleur implements Observer {
             int[] position = InterpreteurCarte.choisirPositionDepart(positionDepart);
             int posX = position[0];
             int posY = position[1];
-            System.out.println("La position en X du joueur "+ i + " est " + posX);
-            System.out.println("La position en Y du joueur "+ i + " est " + posY);
-            joueur.setPosX(posX);
-            joueur.setPosY(posY);
+            joueur.setPosX(posY);
+            joueur.setPosY(posX);
+            joueur.setNbPoints(Constante.STARTPOINTS);
+            joueur.setDirection(PointCardinal.SOUTH);
+            joueur.setVitesse(1);
+
+            System.out.println("\nInitialisation du joueur : "+joueur.getNom());
+            System.out.println("\tpos : " + joueur.getPosX() + "," + joueur.getPosY());
+            System.out.println("\tdirection : "+joueur.getDirection());
+            System.out.println("\tvitesse : "+joueur.getVitesse());
+            System.out.println("\tnb points : "+joueur.getNbPoints());
+
             i++;
         }
 
@@ -66,11 +74,18 @@ public class Controleur implements Observer {
                 for (ConnexionClient c : listeConnexionClient)
                 {
                     jeu.getCarte().gestionDeplacements(c.getJoueur());
+                    System.out.println("\nTour du joueur : " + c.getJoueur().getNom());
+                    System.out.println("\tpos : " + c.getJoueur().getPosX() + "," + c.getJoueur().getPosY());
+                    System.out.println("\tdirection : "+c.getJoueur().getDirection());
+                    System.out.println("\tvitesse : "+c.getJoueur().getVitesse());
+                    System.out.println("\tnb points : "+c.getJoueur().getNbPoints());
+                    /*
                     System.out.println("La vitesse du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getVitesse());
                     System.out.println("La direction du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getDirection());
-                    System.out.println("Le nombre de points du joueur " + c.getJoueur().getNom() + " est " + c.getJoueur().getDirection());
+                    System.out.println("Le nombre de points du joueur " + c.getJoueur().getNom() + " est " + c.getJoueur().getNbPoints());
                     System.out.println("La position en X du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getPosX());
                     System.out.println("La position en Y du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getPosY());
+                    */
                 }
 
                 // Boucle sur la liste des clients connectés
