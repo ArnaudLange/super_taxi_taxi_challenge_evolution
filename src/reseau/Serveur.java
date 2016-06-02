@@ -38,12 +38,8 @@ public class Serveur
                 //ne sont pas encore été définis par les ConnexionClient, on met le code suivant
                 //qui va attendre trois secondes afin d'être sur que le nom a bien été initialisé
 
-                /*if (taille > 0)
-                    if (listJoueurs.isEmpty())
-                        sleep(3000);*/
 
                 if (taille >= 2)
-
                 //TODO Gérer le cas ou le client 2 disconnect avant le début de la partie
                 {
                     if (!timeout)
