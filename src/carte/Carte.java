@@ -119,7 +119,6 @@ public class Carte extends Observable  {
             if (tableau[j.getPosY()][j.getPosX()] instanceof Route){
                 //Si c'est une case route on récupère les points cardinaux
                 directionCases = ((List<PointCardinal>)((Route)tableau[j.getPosY()][j.getPosX()]).getDirections());
-                System.out.println(directionCases);
             }
             else {
                 //Sinon ce n'est pas une route, on a un accident, retourne null
@@ -128,7 +127,6 @@ public class Carte extends Observable  {
                 return;
             }
 
-            System.out.println(j.getDirection());
             //Si la route n'a que deux points cardinaux
             if(directionCases.size()==2){
                 //Si ce n'est pas une route droite
@@ -170,7 +168,6 @@ public class Carte extends Observable  {
                             }
                         }
                     }
-                    System.out.println(j.getDirection());
                 }
             }
 
