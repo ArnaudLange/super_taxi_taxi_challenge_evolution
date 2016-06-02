@@ -45,10 +45,8 @@ public class Controleur implements Observer {
         for (Joueur joueur : listJoueurs)
         {
             int[] position = InterpreteurCarte.choisirPositionDepart(positionDepart);
-            int posX = position[0];
-            int posY = position[1];
-            joueur.setPosX(posY);
-            joueur.setPosY(posX);
+            joueur.setPosX(position[0]);
+            joueur.setPosY(position[1]);
             joueur.setNbPoints(Constante.STARTPOINTS);
             //joueur.setDirection(PointCardinal.SOUTH);
             joueur.setVitesse(0);
