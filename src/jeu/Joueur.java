@@ -18,11 +18,12 @@ public class Joueur
     private boolean etatMarche;
     private int posX ;
     private int posY;
-    private PointCardinal direction; // N S E W pour représenter chaque point cardinal
-
+    private PointCardinal direction; // N S E W pour reprÃ©senter chaque point cardinal
+    private boolean hasStoped;
 
     public Joueur()
     {
+    	this.hasStoped=false;
         this.id = next_id++;
         this.nom = null;
         this.nbPoints = 10;
@@ -31,7 +32,9 @@ public class Joueur
         this.direction = null;
     }
 
-    public int getPosX() {
+    
+
+	public int getPosX() {
         return posX;
     }
 
@@ -116,10 +119,18 @@ public class Joueur
     {
         this.vitesse = vitesse;
     }
+    
+    public boolean getHasStoped() {
+		return hasStoped;
+	}
+
+	public void setHasStoped(boolean hasStoped) {
+		this.hasStoped = hasStoped;
+	}
 
     public void updatePos(List<Integer> position){
         this.setPosX(position.get(0));
         this.setPosY(position.get(1));
-        System.out.println("Position du joueur : " + this.nom + "updatée à : "+posX+","+posY);
+        System.out.println("Position du joueur : " + this.nom + "updatÃ©e Ã  : "+posX+","+posY);
     }
 }
