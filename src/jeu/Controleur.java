@@ -24,7 +24,6 @@ public class Controleur implements Observer {
     {
         this.carte = InterpreteurCarte.Interpreter(new File(pathFichierCarte));
         assert carte != null;
-        this.carte.addObserver(this);
         this.listJoueurs = new ArrayList<>();
         this.jeu = new Jeu(listJoueurs, carte);
         this.jeu.setPosXObjectif(Constante.OBJECTIFCELL[0]);
@@ -193,10 +192,11 @@ public class Controleur implements Observer {
 
     @Override
     public void update(Observable obv, Object obj) {
+        System.out.println("ici");
 
         if(obj instanceof Joueur){
             List<Evenement> infra = jeu.getCarte().getEvenement(((Joueur) obj).getPosX(),((Joueur) obj).getPosY(), ((Joueur) obj).getDirection(), jeu.getPosXObjectif(), jeu.getPosYObjectif());
-
+            System.out.println(infra);
             if(infra.contains(Evenement.OBJECTIF)){
                 ((Joueur)obj).setNbPoints( ((Joueur)obj).getNbPoints() + Constante.OBJPOINTS );
 
