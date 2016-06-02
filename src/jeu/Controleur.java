@@ -200,15 +200,10 @@ public class Controleur implements Observer {
             if(infra.contains(Evenement.OBJECTIF)){
                 ((Joueur)obj).setNbPoints( ((Joueur)obj).getNbPoints() + Constante.OBJPOINTS );
 
-                if(((Joueur)obj).getNbPoints() >= Constante.MAXPOINTS){
-                    System.out.println("Joueur a récupéré l'objectif.");
-                    ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()+Constante.OBJPOINTS);
-                } else{
-                    Vector positionDispo = InterpreteurCarte.trouverPositionDepart(jeu.getCarte());
-                    int[] newPositionObj = InterpreteurCarte.choisirPositionDepart(positionDispo);
-                    jeu.setPosXObjectif(newPositionObj[0]);
-                    jeu.setPosYObjectif(newPositionObj[1]);
-                }
+                Vector positionDispo = InterpreteurCarte.trouverPositionDepart(jeu.getCarte());
+                int[] newPositionObj = InterpreteurCarte.choisirPositionDepart(positionDispo);
+                jeu.setPosXObjectif(newPositionObj[0]);
+                jeu.setPosYObjectif(newPositionObj[1]);
 
             }
             else if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
