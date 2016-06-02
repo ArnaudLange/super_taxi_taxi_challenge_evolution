@@ -63,12 +63,12 @@ public class ClientReception extends Thread
                     break;
                 case ERREUR_ACTION:
                     if (messageEntrant.equals(Commande.ERREUR_ACTION.toString()))
-                        System.out.println("Mauvaise commande");
+                        System.err.println("Mauvaise commande");
                     else
                         System.out.println(messageEntrant);
                     break;
                 default:
-                    System.out.println("Erreur de connexion avec le serveur");
+                    System.err.println("Erreur de connexion avec le serveur");
             }
         }
 
