@@ -42,7 +42,7 @@ public class CarteTest {
 
     //Tests de gestionDeplacement() est
     @Test
-    public void testDeplacementEast1() {
+    public void testDeplacementEST1() {
         File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
         Joueur j = new Joueur();
@@ -50,16 +50,17 @@ public class CarteTest {
         j.setPosX(0);
         j.setPosY(0);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.EAST);
+        j.setDirection(PointCardinal.EST);
         j.setVitesse(0);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(0, j.getPosX());
         Assert.assertEquals(0, j.getPosY());
         Assert.assertEquals(30, j.getNbPoints());
     }
     @Test
-    public void testDeplacementEast2() {
+    public void testDeplacementEST2() {
         File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
         Joueur j = new Joueur();
@@ -67,7 +68,7 @@ public class CarteTest {
         j.setPosX(0);
         j.setPosY(0);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.EAST);
+        j.setDirection(PointCardinal.EST);
         j.setVitesse(1);
 
         carte.gestionDeplacements(j);
@@ -77,7 +78,7 @@ public class CarteTest {
     }
 
     @Test
-    public void testDeplacementEast3() {
+    public void testDeplacementEST3() {
         File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
         Joueur j = new Joueur();
@@ -85,9 +86,10 @@ public class CarteTest {
         j.setPosX(0);
         j.setPosY(0);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.EAST);
+        j.setDirection(PointCardinal.EST);
         j.setVitesse(2);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(1, j.getPosX());
         Assert.assertEquals(0, j.getPosY());
@@ -104,9 +106,10 @@ public class CarteTest {
         j.setPosX(1);
         j.setPosY(0);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.WEST);
+        j.setDirection(PointCardinal.OUEST);
         j.setVitesse(0);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(1, j.getPosX());
         Assert.assertEquals(0, j.getPosY());
@@ -121,9 +124,10 @@ public class CarteTest {
         j.setPosX(1);
         j.setPosY(0);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.WEST);
+        j.setDirection(PointCardinal.OUEST);
         j.setVitesse(1);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(0, j.getPosX());
         Assert.assertEquals(0, j.getPosY());
@@ -139,9 +143,10 @@ public class CarteTest {
         j.setPosX(1);
         j.setPosY(0);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.WEST);
+        j.setDirection(PointCardinal.OUEST);
         j.setVitesse(2);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(0, j.getPosX());
         Assert.assertEquals(0, j.getPosY());
@@ -158,9 +163,10 @@ public class CarteTest {
         j.setPosX(0);
         j.setPosY(3);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.NORTH);
+        j.setDirection(PointCardinal.NORD);
         j.setVitesse(0);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(0, j.getPosX());
         Assert.assertEquals(3, j.getPosY());
@@ -175,9 +181,10 @@ public class CarteTest {
         j.setPosX(0);
         j.setPosY(3);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.NORTH);
+        j.setDirection(PointCardinal.NORD);
         j.setVitesse(1);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(0, j.getPosX());
         Assert.assertEquals(2, j.getPosY());
@@ -193,9 +200,10 @@ public class CarteTest {
         j.setPosX(0);
         j.setPosY(3);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.NORTH);
+        j.setDirection(PointCardinal.NORD);
         j.setVitesse(2);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(0, j.getPosX());
         Assert.assertEquals(2, j.getPosY());
@@ -212,9 +220,10 @@ public class CarteTest {
         j.setPosX(0);
         j.setPosY(2);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.SOUTH);
+        j.setDirection(PointCardinal.SUD);
         j.setVitesse(0);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(0, j.getPosX());
         Assert.assertEquals(2, j.getPosY());
@@ -229,9 +238,10 @@ public class CarteTest {
         j.setPosX(0);
         j.setPosY(2);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.SOUTH);
+        j.setDirection(PointCardinal.SUD);
         j.setVitesse(1);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(0, j.getPosX());
         Assert.assertEquals(3, j.getPosY());
@@ -247,9 +257,10 @@ public class CarteTest {
         j.setPosX(0);
         j.setPosY(2);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.SOUTH);
+        j.setDirection(PointCardinal.SUD);
         j.setVitesse(2);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(0, j.getPosX());
         Assert.assertEquals(3, j.getPosY());
@@ -268,6 +279,7 @@ public class CarteTest {
         j.setNbPoints(Constante.STARTPOINTS);
         j.setVitesse(2);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(0, j.getPosX());
         Assert.assertEquals(0, j.getPosY());
@@ -284,9 +296,10 @@ public class CarteTest {
         j.setPosX(1);
         j.setPosY(1);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.SOUTH);
+        j.setDirection(PointCardinal.SUD);
         j.setVitesse(2);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(1, j.getPosX());
         Assert.assertEquals(1, j.getPosY());
@@ -295,7 +308,7 @@ public class CarteTest {
 
     //test si le joueur prend une courbe => changement de direction
     @Test
-    public void testDeplacementCourbeEast() {
+    public void testDeplacementCourbeEST() {
         File fichierCarte = new File("src/carte/carte_test_courbe.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
         Joueur j = new Joueur();
@@ -303,19 +316,20 @@ public class CarteTest {
         j.setPosX(1);
         j.setPosY(0);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.EAST);
+        j.setDirection(PointCardinal.EST);
         j.setVitesse(2);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(2, j.getPosX());
         Assert.assertEquals(1, j.getPosY());
         Assert.assertEquals(30, j.getNbPoints());
-        Assert.assertEquals(PointCardinal.SOUTH, j.getDirection());
+        Assert.assertEquals(PointCardinal.SUD, j.getDirection());
     }
 
     //si le joueur roule trop vite dans une courbe = accident
     @Test
-    public void testDeplacementCourbeEast2() {
+    public void testDeplacementCourbeEST2() {
         File fichierCarte = new File("src/carte/carte_test_courbe.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
         Joueur j = new Joueur();
@@ -323,18 +337,19 @@ public class CarteTest {
         j.setPosX(1);
         j.setPosY(0);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.EAST);
+        j.setDirection(PointCardinal.EST);
         j.setVitesse(3);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(2, j.getPosX());
         Assert.assertEquals(0, j.getPosY());
         Assert.assertEquals(0, j.getNbPoints());
-        Assert.assertEquals(PointCardinal.EAST, j.getDirection());
+        Assert.assertEquals(PointCardinal.EST, j.getDirection());
     }
 
     @Test
-    public void testDeplacementCourbeEast3() {
+    public void testDeplacementCourbeEST3() {
         File fichierCarte = new File("src/carte/carte_test_courbe.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
         Joueur j = new Joueur();
@@ -342,19 +357,20 @@ public class CarteTest {
         j.setPosX(5);
         j.setPosY(6);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.EAST);
+        j.setDirection(PointCardinal.EST);
         j.setVitesse(2);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(6, j.getPosX());
         Assert.assertEquals(5, j.getPosY());
         Assert.assertEquals(30, j.getNbPoints());
-        Assert.assertEquals(PointCardinal.NORTH, j.getDirection());
+        Assert.assertEquals(PointCardinal.NORD, j.getDirection());
     }
 
     //si le joueur roule trop vite dans une courbe = accident
     @Test
-    public void testDeplacementCourbeEast4() {
+    public void testDeplacementCourbeEST4() {
         File fichierCarte = new File("src/carte/carte_test_courbe.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
         Joueur j = new Joueur();
@@ -362,14 +378,15 @@ public class CarteTest {
         j.setPosX(5);
         j.setPosY(6);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.EAST);
+        j.setDirection(PointCardinal.EST);
         j.setVitesse(3);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(6, j.getPosX());
         Assert.assertEquals(6, j.getPosY());
         Assert.assertEquals(0, j.getNbPoints());
-        Assert.assertEquals(PointCardinal.EAST, j.getDirection());
+        Assert.assertEquals(PointCardinal.EST, j.getDirection());
     }
 
     @Test
@@ -381,14 +398,15 @@ public class CarteTest {
         j.setPosX(2);
         j.setPosY(1);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.NORTH);
+        j.setDirection(PointCardinal.NORD);
         j.setVitesse(2);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(1, j.getPosX());
         Assert.assertEquals(0, j.getPosY());
         Assert.assertEquals(30, j.getNbPoints());
-        Assert.assertEquals(PointCardinal.WEST, j.getDirection());
+        Assert.assertEquals(PointCardinal.OUEST, j.getDirection());
     }
 
     //si le joueur roule trop vite dans une courbe = accident
@@ -401,14 +419,15 @@ public class CarteTest {
         j.setPosX(2);
         j.setPosY(1);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.NORTH);
+        j.setDirection(PointCardinal.NORD);
         j.setVitesse(3);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(2, j.getPosX());
         Assert.assertEquals(0, j.getPosY());
         Assert.assertEquals(0, j.getNbPoints());
-        Assert.assertEquals(PointCardinal.NORTH, j.getDirection());
+        Assert.assertEquals(PointCardinal.NORD, j.getDirection());
     }
 
     @Test
@@ -420,14 +439,15 @@ public class CarteTest {
         j.setPosX(0);
         j.setPosY(5);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.NORTH);
+        j.setDirection(PointCardinal.NORD);
         j.setVitesse(2);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(1, j.getPosX());
         Assert.assertEquals(4, j.getPosY());
         Assert.assertEquals(30, j.getNbPoints());
-        Assert.assertEquals(PointCardinal.EAST, j.getDirection());
+        Assert.assertEquals(PointCardinal.EST, j.getDirection());
     }
 
     //si le joueur roule trop vite dans une courbe = accident
@@ -440,14 +460,15 @@ public class CarteTest {
         j.setPosX(0);
         j.setPosY(5);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.NORTH);
+        j.setDirection(PointCardinal.NORD);
         j.setVitesse(3);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(0, j.getPosX());
         Assert.assertEquals(4, j.getPosY());
         Assert.assertEquals(0, j.getNbPoints());
-        Assert.assertEquals(PointCardinal.NORTH, j.getDirection());
+        Assert.assertEquals(PointCardinal.NORD, j.getDirection());
     }
 
     @Test
@@ -459,14 +480,15 @@ public class CarteTest {
         j.setPosX(6);
         j.setPosY(1);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.SOUTH);
+        j.setDirection(PointCardinal.SUD);
         j.setVitesse(2);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(7, j.getPosX());
         Assert.assertEquals(2, j.getPosY());
         Assert.assertEquals(30, j.getNbPoints());
-        Assert.assertEquals(PointCardinal.EAST, j.getDirection());
+        Assert.assertEquals(PointCardinal.EST, j.getDirection());
     }
 
     //si le joueur roule trop vite dans une courbe = accident
@@ -479,14 +501,15 @@ public class CarteTest {
         j.setPosX(6);
         j.setPosY(1);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.SOUTH);
+        j.setDirection(PointCardinal.SUD);
         j.setVitesse(3);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(6, j.getPosX());
         Assert.assertEquals(2, j.getPosY());
         Assert.assertEquals(0, j.getNbPoints());
-        Assert.assertEquals(PointCardinal.SOUTH, j.getDirection());
+        Assert.assertEquals(PointCardinal.SUD, j.getDirection());
     }
 
     @Test
@@ -498,14 +521,15 @@ public class CarteTest {
         j.setPosX(1);
         j.setPosY(4);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.WEST);
+        j.setDirection(PointCardinal.OUEST);
         j.setVitesse(2);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(0, j.getPosX());
         Assert.assertEquals(5, j.getPosY());
         Assert.assertEquals(30, j.getNbPoints());
-        Assert.assertEquals(PointCardinal.SOUTH, j.getDirection());
+        Assert.assertEquals(PointCardinal.SUD, j.getDirection());
     }
 
     //si le joueur roule trop vite dans une courbe = accident
@@ -518,14 +542,15 @@ public class CarteTest {
         j.setPosX(1);
         j.setPosY(4);
         j.setNbPoints(Constante.STARTPOINTS);
-        j.setDirection(PointCardinal.WEST);
+        j.setDirection(PointCardinal.OUEST);
         j.setVitesse(3);
 
+        assert carte != null;
         carte.gestionDeplacements(j);
         Assert.assertEquals(0, j.getPosX());
         Assert.assertEquals(4, j.getPosY());
         Assert.assertEquals(0, j.getNbPoints());
-        Assert.assertEquals(PointCardinal.WEST, j.getDirection());
+        Assert.assertEquals(PointCardinal.OUEST, j.getDirection());
     }
 
     @Test
@@ -533,8 +558,9 @@ public class CarteTest {
         File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        List<Evenement> liste = carte.getEvenement(0, 0, PointCardinal.EAST, 0, 1);
-        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        assert carte != null;
+        List<Evenement> liste = carte.getEvenement(0, 0, PointCardinal.EST, 0, 1);
+        List<Evenement> listeAttendue = new ArrayList<>();
         Assert.assertEquals(listeAttendue, liste);
     }
 
@@ -543,8 +569,9 @@ public class CarteTest {
         File fichierCarte = new File("src/carte/carte_test_ligne_droite.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        List<Evenement> liste = carte.getEvenement(0, 0, PointCardinal.EAST, 0, 0);
-        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        assert carte != null;
+        List<Evenement> liste = carte.getEvenement(0, 0, PointCardinal.EST, 0, 0);
+        List<Evenement> listeAttendue = new ArrayList<>();
         listeAttendue.add(Evenement.OBJECTIF);
         Assert.assertEquals(listeAttendue, liste);
     }
@@ -554,8 +581,9 @@ public class CarteTest {
         File fichierCarte = new File("src/carte/cartetestevent01.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        List<Evenement> liste = carte.getEvenement(4, 0, PointCardinal.NORTH, 0, 1);
-        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        assert carte != null;
+        List<Evenement> liste = carte.getEvenement(4, 0, PointCardinal.NORD, 0, 1);
+        List<Evenement> listeAttendue = new ArrayList<>();
         listeAttendue.add(Evenement.COURBE);
         Assert.assertEquals(listeAttendue, liste);
     }
@@ -565,8 +593,9 @@ public class CarteTest {
         File fichierCarte = new File("src/carte/cartetestevent01.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        List<Evenement> liste = carte.getEvenement(4, 0, PointCardinal.NORTH, 4, 0);
-        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        assert carte != null;
+        List<Evenement> liste = carte.getEvenement(4, 0, PointCardinal.NORD, 4, 0);
+        List<Evenement> listeAttendue = new ArrayList<>();
         listeAttendue.add(Evenement.OBJECTIF);
         listeAttendue.add(Evenement.COURBE);
         Assert.assertEquals(listeAttendue, liste);
@@ -577,8 +606,9 @@ public class CarteTest {
         File fichierCarte = new File("src/carte/cartetestevent01.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.NORTH, 0, 0);
-        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        assert carte != null;
+        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.NORD, 0, 0);
+        List<Evenement> listeAttendue = new ArrayList<>();
         listeAttendue.add(Evenement.PRIORITE);
         Assert.assertEquals(listeAttendue, liste);
     }
@@ -588,8 +618,9 @@ public class CarteTest {
         File fichierCarte = new File("src/carte/cartetestevent01.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.SOUTH, 0, 0);
-        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        assert carte != null;
+        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.SUD, 0, 0);
+        List<Evenement> listeAttendue = new ArrayList<>();
         listeAttendue.add(Evenement.PRIORITE);
         Assert.assertEquals(listeAttendue, liste);
     }
@@ -599,8 +630,9 @@ public class CarteTest {
         File fichierCarte = new File("src/carte/cartetestevent01.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.EAST, 0, 0);
-        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        assert carte != null;
+        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.EST, 0, 0);
+        List<Evenement> listeAttendue = new ArrayList<>();
         listeAttendue.add(Evenement.PRIORITE);
         Assert.assertEquals(listeAttendue, liste);
     }
@@ -610,8 +642,9 @@ public class CarteTest {
         File fichierCarte = new File("src/carte/cartetestevent01.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.WEST, 0, 0);
-        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        assert carte != null;
+        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.OUEST, 0, 0);
+        List<Evenement> listeAttendue = new ArrayList<>();
         listeAttendue.add(Evenement.PRIORITE);
         Assert.assertEquals(listeAttendue, liste);
     }
@@ -621,8 +654,9 @@ public class CarteTest {
         File fichierCarte = new File("src/carte/cartetestevent01.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        List<Evenement> liste = carte.getEvenement(3, 4, PointCardinal.NORTH, 0, 0);
-        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        assert carte != null;
+        List<Evenement> liste = carte.getEvenement(3, 4, PointCardinal.NORD, 0, 0);
+        List<Evenement> listeAttendue = new ArrayList<>();
         listeAttendue.add(Evenement.PRIORITE);
         Assert.assertEquals(listeAttendue, liste);
     }
@@ -632,8 +666,9 @@ public class CarteTest {
         File fichierCarte = new File("src/carte/cartetestevent01.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        List<Evenement> liste = carte.getEvenement(3, 4, PointCardinal.SOUTH, 0, 0);
-        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        assert carte != null;
+        List<Evenement> liste = carte.getEvenement(3, 4, PointCardinal.SUD, 0, 0);
+        List<Evenement> listeAttendue = new ArrayList<>();
         Assert.assertEquals(listeAttendue, liste);
     }
 
@@ -642,8 +677,9 @@ public class CarteTest {
         File fichierCarte = new File("src/carte/cartetestevent01.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.NORTH, 1, 2);
-        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        assert carte != null;
+        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.NORD, 1, 2);
+        List<Evenement> listeAttendue = new ArrayList<>();
         listeAttendue.add(Evenement.OBJECTIF);
         listeAttendue.add(Evenement.PRIORITE);
         Assert.assertEquals(listeAttendue, liste);
@@ -654,8 +690,9 @@ public class CarteTest {
         File fichierCarte = new File("src/carte/cartetestevent01.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.SOUTH, 1, 2);
-        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        assert carte != null;
+        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.SUD, 1, 2);
+        List<Evenement> listeAttendue = new ArrayList<>();
         listeAttendue.add(Evenement.OBJECTIF);
         listeAttendue.add(Evenement.PRIORITE);
         Assert.assertEquals(listeAttendue, liste);
@@ -666,8 +703,9 @@ public class CarteTest {
         File fichierCarte = new File("src/carte/cartetestevent01.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.EAST, 1, 2);
-        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        assert carte != null;
+        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.EST, 1, 2);
+        List<Evenement> listeAttendue = new ArrayList<>();
         listeAttendue.add(Evenement.OBJECTIF);
         listeAttendue.add(Evenement.PRIORITE);
         Assert.assertEquals(listeAttendue, liste);
@@ -678,8 +716,9 @@ public class CarteTest {
         File fichierCarte = new File("src/carte/cartetestevent01.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.WEST, 1, 2);
-        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        assert carte != null;
+        List<Evenement> liste = carte.getEvenement(1, 2, PointCardinal.OUEST, 1, 2);
+        List<Evenement> listeAttendue = new ArrayList<>();
         listeAttendue.add(Evenement.OBJECTIF);
         listeAttendue.add(Evenement.PRIORITE);
         Assert.assertEquals(listeAttendue, liste);
@@ -690,8 +729,9 @@ public class CarteTest {
         File fichierCarte = new File("src/carte/cartetestevent01.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        List<Evenement> liste = carte.getEvenement(3, 4, PointCardinal.NORTH, 3, 4);
-        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        assert carte != null;
+        List<Evenement> liste = carte.getEvenement(3, 4, PointCardinal.NORD, 3, 4);
+        List<Evenement> listeAttendue = new ArrayList<>();
         listeAttendue.add(Evenement.OBJECTIF);
         listeAttendue.add(Evenement.PRIORITE);
         Assert.assertEquals(listeAttendue, liste);
@@ -702,8 +742,9 @@ public class CarteTest {
         File fichierCarte = new File("src/carte/cartetestevent01.txt");
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
 
-        List<Evenement> liste = carte.getEvenement(3, 4, PointCardinal.SOUTH, 3, 4);
-        List<Evenement> listeAttendue = new ArrayList<Evenement>();
+        assert carte != null;
+        List<Evenement> liste = carte.getEvenement(3, 4, PointCardinal.SUD, 3, 4);
+        List<Evenement> listeAttendue = new ArrayList<>();
         listeAttendue.add(Evenement.OBJECTIF);
         Assert.assertEquals(listeAttendue, liste);
     }

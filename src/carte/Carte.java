@@ -266,8 +266,8 @@ public class Carte extends Observable  {
 			imageJoueur = new JLabel(joueur);
 		}
     	
-    	HashMap<String, JLabel> images = new HashMap<String, JLabel>();
-    	HashMap<String, JPanel> panels = new HashMap<String, JPanel>();
+    	HashMap<String, JLabel> images = new HashMap<>();
+    	HashMap<String, JPanel> panels = new HashMap<>();
     	 
     	for (i=0;i<map.length;i++){
     		for(j=0;j<map[0].length;j++){
