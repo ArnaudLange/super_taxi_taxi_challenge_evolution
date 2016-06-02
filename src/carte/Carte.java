@@ -292,7 +292,7 @@ public class Carte extends Observable  {
     }
     
     public void affichageCarte(Case[][] map, Joueur player){
-    	affichage = new JFrame();
+    	JFrame affichage = new JFrame();
     	affichage.setLayout(new GridLayout(map.length, map[0].length));
     	int i, j, k=0, somme;
     	Case current;
