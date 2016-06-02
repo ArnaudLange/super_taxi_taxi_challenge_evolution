@@ -2,8 +2,11 @@ package jeu;
 
 import carte.Carte;
 import carte.Evenement;
+import carte.Feu;
 import carte.InterpreteurCarte;
 import carte.PointCardinal;
+import carte.Route;
+import carte.Stop;
 import reseau.ConnexionClient;
 import reseau.Serveur;
 
@@ -18,20 +21,27 @@ public class Controleur implements Observer {
     private Jeu jeu;
 
     public Controleur() {
-        File fichierCarte = new File("src/carte/cartetest.txt"); // on initialise le fichier texte de la carte
+    	 
+
+        File fichierCarte = new File("src/carte/carte2.txt"); // on initialise le fichier texte de la carte
         Carte carte = InterpreteurCarte.Interpreter(fichierCarte);
+        
 
-        carte.addObserver(this);
-
+       
+        
+        
         List<Joueur> listJoueurs = new ArrayList<>();
         jeu = new Jeu(listJoueurs, carte);
         jeu.setPosXObjectif(Constante.OBJECTIFCELL[0]);
         jeu.setPosYObjectif(Constante.OBJECTIFCELL[1]);
-        List<ConnexionClient> listeConnexionClient = new ArrayList();
-        List<ConnexionClient> listeConnexionClientPerdu = new ArrayList();
+        jeu.getCarte().initFeux();
+        jeu.getCarte().initStops();
+        jeu.getCarte().addObserver(this);
+        List<ConnexionClient> listeConnexionClient = new ArrayList<>();
+        List<ConnexionClient> listeConnexionClientPerdu = new ArrayList<>();
         Serveur.creerServeur(jeu.getListeJoueurs(), listeConnexionClient);
         Vector positionDepart = InterpreteurCarte.trouverPositionDepart(carte);
-
+        
         //System.out.println("Nom joueur 1 : "+ listJoueurs.get(0).getNom());
         //System.out.println("Nom joueur 2 : "+ listJoueurs.get(1).getNom());
 
@@ -44,22 +54,23 @@ public class Controleur implements Observer {
             joueur.setPosX(posY);
             joueur.setPosY(posX);
             joueur.setNbPoints(Constante.STARTPOINTS);
-            //joueur.setDirection(PointCardinal.SOUTH);
+            joueur.setDirection(PointCardinal.SOUTH);
             joueur.setVitesse(0);
-
+			
             System.out.println("\nInitialisation du joueur : "+joueur.getNom());
             System.out.println("\tpos : " + joueur.getPosX() + "," + joueur.getPosY());
             System.out.println("\tdirection : "+joueur.getDirection());
             System.out.println("\tvitesse : "+joueur.getVitesse());
             System.out.println("\tnb points : "+joueur.getNbPoints());
-
+         	
             i++;
         }
 
-
+      
+        
         int nbTour=1;
         boolean jeuFini = false;
-        long tempsTour = 5000;
+        long tempsTour = 10000;
         long tempsDebutTour = System.currentTimeMillis();
         Joueur joueurActuel;
 
@@ -70,7 +81,6 @@ public class Controleur implements Observer {
             {
                 System.out.println("Tour " + nbTour++);
                 tempsDebutTour = System.currentTimeMillis();
-
                 for (ConnexionClient c : listeConnexionClient)
                 {
                     if (c.getJoueur().getDirection() != null){
@@ -81,24 +91,24 @@ public class Controleur implements Observer {
                     System.out.println("\tdirection : "+c.getJoueur().getDirection());
                     System.out.println("\tvitesse : "+c.getJoueur().getVitesse());
                     System.out.println("\tnb points : "+c.getJoueur().getNbPoints());
-                    /*
+                    
                     System.out.println("La vitesse du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getVitesse());
                     System.out.println("La direction du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getDirection());
                     System.out.println("Le nombre de points du joueur " + c.getJoueur().getNom() + " est " + c.getJoueur().getNbPoints());
                     System.out.println("La position en X du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getPosX());
                     System.out.println("La position en Y du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getPosY());
-                    */
+                    
                 }
-
-                // Boucle sur la liste des clients connectés
+                
+                // Boucle sur la liste des clients connectÃ©s
                 for (ConnexionClient c : listeConnexionClient)
                 {
                     joueurActuel = c.getJoueur();
 
-                    // Gestion déconnexion
+                    // Gestion dÃ©connexion
                     if (!c.isAlive())
                     {
-                        System.out.println("Le joueur " + joueurActuel.getId() + " s'est déconnecté.");
+                        System.out.println("Le joueur " + joueurActuel.getId() + " s'est dÃ©connectÃ©.");
                         listJoueurs.remove(joueurActuel);
                         listeConnexionClientPerdu.add(c);
                         continue;
@@ -111,16 +121,18 @@ public class Controleur implements Observer {
                             continue;
                         if (joueurActuel.getPosX() == k.getPosX() && joueurActuel.getPosY() == k.getPosY())
                         {
-                            System.out.println("Colision entre le joueur " + joueurActuel.getId() + " et le joueur " + k.getId());
-                            System.out.println("Le joueur " + joueurActuel.getId() + " a perdu.");
-                            System.out.println("Le joueur " + k.getId() + " a perdu.");
-
-                            joueurActuel.setNbPoints(0);
-                            k.setNbPoints(0);
+                        	if(k.getVitesse()>1 || joueurActuel.getVitesse()>1){
+	                            System.out.println("Colision entre le joueur " + joueurActuel.getId() + " et le joueur " + k.getId());
+	                            System.out.println("Le joueur " + joueurActuel.getId() + " a perdu.");
+	                            System.out.println("Le joueur " + k.getId() + " a perdu.");
+	
+	                            joueurActuel.setNbPoints(0);
+	                            k.setNbPoints(0);
+                        	}
                         }
                     }
 
-                    // Un joueur a gagné
+                    // Un joueur a gagnÃ©
                     if ((((joueurActuel.getPosX() == jeu.getPosXObjectif()) && (joueurActuel.getPosY() == jeu.getPosYObjectif()))))
                     {
                         System.out.println("Objectif atteint !");
@@ -133,14 +145,14 @@ public class Controleur implements Observer {
                                 cC.envoyerMessage(Commande.GAMEWIN.toString());
                             else
                             {
-                                cC.envoyerMessage("Joueur " + joueurActuel.getId() + " a gagné la partie !");
+                                cC.envoyerMessage("Joueur " + joueurActuel.getId() + " a gagnÃ© la partie !");
                                 cC.envoyerMessage(Commande.GAMENOTWIN.toString());
                             }
                         }
                         break;
                     }
 
-                    // Un joueur gagne par défaut
+                    // Un joueur gagne par dÃ©faut
                     if (listJoueurs.size() <=1)
                     {
                         jeuFini = true;
@@ -165,16 +177,18 @@ public class Controleur implements Observer {
                         c.envoyerMessage("action");
                 }
 
-                // Suppression des clients déconnectés
+                // Suppression des clients dÃ©connectÃ©s
                 for (ConnexionClient c : listeConnexionClientPerdu)
                     listeConnexionClient.remove(c);
 
                 listeConnexionClientPerdu.clear();
+                jeu.getCarte().updateFeux();
             }
+            
         }
 
         if (jeu.getGagnant() != null)
-            System.out.println("Le joueur " + jeu.getGagnant().getId() + " a gagné la partie !");
+            System.out.println("Le joueur " + jeu.getGagnant().getId() + " a gagnÃ© la partie !");
         else if (listJoueurs.size() == 1)
             System.out.println("Le joueur " + listJoueurs.get(0).getId() + " gagne par forfait !");
         else
@@ -183,15 +197,14 @@ public class Controleur implements Observer {
 
     @Override
     public void update(Observable obv, Object obj) {
-
         if(obj instanceof Joueur){
             List<Evenement> infra = jeu.getCarte().getEvenement(((Joueur) obj).getPosX(),((Joueur) obj).getPosY(), ((Joueur) obj).getDirection(), jeu.getPosXObjectif(), jeu.getPosYObjectif());
-
+            
             if(infra.contains(Evenement.OBJECTIF)){
                 ((Joueur)obj).setNbPoints( ((Joueur)obj).getNbPoints() + Constante.OBJPOINTS );
 
                 if(((Joueur)obj).getNbPoints() >= Constante.MAXPOINTS){
-                    System.out.println("Joueur a récupéré l'objectif.");
+                    System.out.println("Joueur a recupere l'objectif.");
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()+Constante.OBJPOINTS);
                 } else{
                     Vector positionDispo = InterpreteurCarte.trouverPositionDepart(jeu.getCarte());
@@ -201,23 +214,44 @@ public class Controleur implements Observer {
                 }
 
             }
-            else if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
+            if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
                 System.out.println("Joueur mort.");
                 ((Joueur) obj).setEtatMarche(false);
             }
-            else if(infra.contains(Evenement.PRIORITE)){
+            if(infra.contains(Evenement.FEU)){
+            	if(((Feu)jeu.getCarte().getTableau()[((Joueur) obj).getPosY()][((Joueur) obj).getPosX()]).getCouleurFeu(((Joueur) obj).getDirection())){
+            		((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
+            	}
+            }else if(infra.contains(Evenement.STOP)){
+            	if(((Stop)jeu.getCarte().getTableau()[((Joueur) obj).getPosY()][((Joueur) obj).getPosX()]).isAStopDirection(((Joueur) obj).getDirection())){
+            		if(((Joueur) obj).getVitesse()==0){
+            			((Joueur) obj).setHasStoped(true);
+            		}else{
+            			if(((Joueur) obj).getHasStoped()){
+            				((Joueur) obj).setHasStoped(false);
+            			}else{
+            				((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
+            			}
+            		}
+            	}
+            }else if(infra.contains(Evenement.PRIORITE)){
                 System.out.println("Priorite a droite.");
                 //Si vitesse du joueur est de 3, perte de majorinf points
                 if(((Joueur) obj).getVitesse()>2){
+                	System.out.println("vitesse > 2, joueur trop rapide, perde de MAJORINF");
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
                 }
-                //Si vitesse du joueur égale à 2, perte de minorinf points
+                //Si vitesse du joueur Ã©gale Ã  2, perte de minorinf points
                 else if(((Joueur) obj).getVitesse()==2){
+                	System.out.println("vitesse == 2, joueur trop rapide, perde de MINORINF");
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MINORINF);
                 }
             }
+            
+            
+            
             if(infra.size()==0){
-                System.out.println("Pas d'événement.");
+                System.out.println("Pas d'Ã©vÃ©nement.");
             }
 
         }
