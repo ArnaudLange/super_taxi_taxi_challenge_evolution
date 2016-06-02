@@ -58,7 +58,7 @@ public class ClientReception extends Thread
                     System.out.println("Pour spécifier votre nom, tapez \"Nom:\" suivi de votre nom (sans espace)");
                     break;
                 case GAMENOTWIN:
-                    System.out.println("Vous avez perdu, un autre joueur a atteint l'objectif avant vous.");
+                    System.out.println("Vous avez perdu, un autre joueur a atteint le score maximum avant vous.");
                     gameOver = true;
                     break;
                 case GAMEOVER:
