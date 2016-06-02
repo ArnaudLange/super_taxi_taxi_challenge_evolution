@@ -1,9 +1,11 @@
 package reseau;
 
+import carte.Case;
 import carte.PointCardinal;
 import jeu.Commande;
 import jeu.Constante;
 
+import javax.swing.text.Position;
 import java.io.*;
 
 /**
@@ -21,6 +23,7 @@ public class ClientReception extends Thread
     private PointCardinal direction;
     private int vitesse;
     private int nbPoint;
+    private Case[][] vision;
 
     public ClientReception(InputStream in)
     {
@@ -73,6 +76,8 @@ public class ClientReception extends Thread
                 case NEXT_ACTION:
                     System.out.println("-------------------------------------");
                     System.out.println("\tTour n°" + ++nbTour);
+                    System.out.println("Position en X : "+posX);
+                    System.out.println("Position en Y : "+posY);
                     System.out.println("Points : "+nbPoint);
                     System.out.println("Vitesse : "+ vitesse);
                     System.out.println("Direction : "+ direction);
@@ -100,7 +105,7 @@ public class ClientReception extends Thread
 
                         else if (messageEntrant.startsWith("nbp:"))
                             nbPoint = Integer.parseInt(messageEntrant.substring("nbp:".length()));
-
+                        
                         else
                             System.out.println(messageEntrant);
                     }

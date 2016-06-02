@@ -13,7 +13,7 @@ import java.util.*;
 public class Controleur implements Observer {
 
     private Jeu jeu;
-    private final String pathFichierCarte = "src/carte/carte2.txt";
+    private final String pathFichierCarte = "src/carte/cartetest.txt";
     private Carte carte;
     private List<Joueur> listJoueurs;
     private List<ConnexionClient> listeConnexionClient;
@@ -80,7 +80,7 @@ public class Controleur implements Observer {
 
                 for (ConnexionClient c : listeConnexionClient)
                 {
-                    System.out.println("\nTour du joueur : " + c.getJoueur().getNom());
+                    System.out.println("\nNom du joueur : " + c.getJoueur().getNom());
                     if (c.getJoueur().getDirection() != null){
                         jeu.getCarte().gestionDeplacements(c.getJoueur());
                     }
