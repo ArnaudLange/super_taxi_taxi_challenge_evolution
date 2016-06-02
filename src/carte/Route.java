@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class Route extends Case
 {
-    private List<PointCardinal> directions;
+    protected List<PointCardinal> directions;
 
     public Route(int posx, int posy, List<PointCardinal> directions)
     {
