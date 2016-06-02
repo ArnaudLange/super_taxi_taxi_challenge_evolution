@@ -158,8 +158,6 @@ public class Carte extends Observable  {
         }
 
 
-
-
         //on va effectuer l'algorithme x fois avec x la vitesse
         for (int i = 0; i < j.getVitesse() ; i++) {
             // La carte est codée de façon : tableau[ligne][colonne] donc on inverse posX et posY

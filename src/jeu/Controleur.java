@@ -100,13 +100,6 @@ public class Controleur implements Observer {
                     c.envoyerMessage("vit:" + c.getJoueur().getVitesse());
                     c.envoyerMessage("nbp:" + c.getJoueur().getNbPoints());
 
-                    /*
-                    System.out.println("La vitesse du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getVitesse());
-                    System.out.println("La direction du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getDirection());
-                    System.out.println("Le nombre de points du joueur " + c.getJoueur().getNom() + " est " + c.getJoueur().getNbPoints());
-                    System.out.println("La position en X du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getPosX());
-                    System.out.println("La position en Y du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getPosY());
-                    */
                 }
 
                 // Boucle sur la liste des clients connectés
