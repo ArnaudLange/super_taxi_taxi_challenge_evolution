@@ -68,15 +68,18 @@ public class Controleur implements Observer {
             // Temps du tour atteint
             if (System.currentTimeMillis() - tempsDebutTour > tempsTour)
             {
+                System.out.println("\n----------------------------------");
                 System.out.println("Tour " + nbTour++);
+                System.out.println("----------------------------------");
                 tempsDebutTour = System.currentTimeMillis();
 
                 for (ConnexionClient c : listeConnexionClient)
                 {
+                    System.out.println("\nTour du joueur : " + c.getJoueur().getNom());
                     if (c.getJoueur().getDirection() != null){
                         jeu.getCarte().gestionDeplacements(c.getJoueur());
                     }
-                    System.out.println("\nTour du joueur : " + c.getJoueur().getNom());
+
                     System.out.println("\tpos : " + c.getJoueur().getPosX() + "," + c.getJoueur().getPosY());
                     System.out.println("\tdirection : "+c.getJoueur().getDirection());
                     System.out.println("\tvitesse : "+c.getJoueur().getVitesse());

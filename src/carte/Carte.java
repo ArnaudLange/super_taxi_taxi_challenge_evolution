@@ -62,23 +62,23 @@ public class Carte extends Observable  {
         this.tableau = tableau;
     }
 
+    //Fonction utilisée pour récupérer le type d'événement : soit on a atteint l'objectif, soit il y a une priorité à droite, soit il y a une courbe.
     public List<Evenement> getEvenement(int posX, int posY, PointCardinal direction, int posXObjectif, int posYObjectif){
         List<PointCardinal> directionCase = new ArrayList<>();
         List<Evenement> evenements = new ArrayList<>();
         directionCase = ((List<PointCardinal>)((Route)tableau[posY][posX]).getDirections());
 
-        //System.out.println(direction);
-        //System.out.println(directionCase);
-
-
+        //Si on est sur l'objectif
         if(posXObjectif == posX && posY == posYObjectif){
             evenements.add(Evenement.OBJECTIF);
         }
 
+        //Si il y a une courbe
         if (directionCase.size()==2 && !directionCase.contains(direction)){
             evenements.add(Evenement.COURBE);
         }
 
+        //Si il y a une priorité
         if (directionCase.size()>2) {
             switch (direction){
                 case NORTH:
@@ -106,22 +106,19 @@ public class Carte extends Observable  {
         return evenements;
     }
 
-    // Prend en paramètre : la vitesse du joueur (pour savoir sur combien de case appliquer la direction,
-    // la position en X et en Y du joueur
-    // la direction du joueur
+    //Fonction qui gère le déplacement d'un joueur j
     public void gestionDeplacements(Joueur j){
 
+        //Si la direction du joueur est nulle, on quitte directement la fonction
         if(j.getDirection().equals(null)){
             System.out.println("Pas de direction, ça a aucun sens mais bon...");
             return;
         }
 
-        boolean prioPossible;
         List<PointCardinal> directionCases = new ArrayList<>();
 
         //on va effectuer l'algorithme x fois avec x la vitesse
         for (int i = 0; i < j.getVitesse() ; i++) {
-            prioPossible=false;
             // La carte est codée de façon : tableau[ligne][colonne] donc on inverse posX et posY
             if (tableau[j.getPosY()][j.getPosX()] instanceof Route){
                 //Si c'est une case route on récupère les points cardinaux
@@ -134,15 +131,18 @@ public class Carte extends Observable  {
                 return;
             }
 
+
             //Si la route n'a que deux points cardinaux
             if(directionCases.size()==2){
                 //Si ce n'est pas une route droite
                 if(!directionCases.contains(j.getDirection())){
                     //Si la vitesse est supérieure à 2
                     if(j.getVitesse()>2){
-                        j.setEtatMarche(false);
+                        System.out.println("Le joueur : " + j.getNom() + " roule trop vite dans un virage et a un accident.");
+                        j.setNbPoints(0);
                         return;
                     }
+                    //Changement de direction du joueur si c'est une courbe et qu'il va a une vitesse acceptée.
                     //Parcours des deux points cardinaux de la case
                     for (PointCardinal dir:directionCases) {
                         //Si le joueur va vers l'est
@@ -171,59 +171,52 @@ public class Carte extends Observable  {
                     }
                 }
             }
-            else if (directionCases.size()>2){
-                prioPossible=true;
-            }
 
             //Ensuite on effectue les tests pour chaque direction du joueur.
-            if (j.getDirection().equals(PointCardinal.SOUTH)) {
+            if (PointCardinal.SOUTH.equals(j.getDirection())) {
                 if (directionCases.contains(PointCardinal.SOUTH)){
                     System.out.println("Déplacement vers le sud effectué.");
                     j.setPosY(j.getPosY()+1);
 
                 } else {
-                    System.out.println("Impossible d'aller dans cette direction.");
+                    System.out.println("Le joueur : " + j.getNom() + " essaye d'aller sur une case neutre et a un accident.");
                     j.setNbPoints(0);
                     return;
                 }
             }
-            else if (j.getDirection().equals(PointCardinal.NORTH)){
+            else if (PointCardinal.NORTH.equals(j.getDirection())){
                 if (directionCases.contains(PointCardinal.NORTH)){
                     System.out.println("Déplacement vers le nord effectué.");
                     j.setPosY(j.getPosY()-1);
 
                 } else {
-                    System.out.println("Impossible d'aller dans cette direction.");
+                    System.out.println("Le joueur : " + j.getNom() + " essaye d'aller sur une case neutre et a un accident.");
                     j.setNbPoints(0);
                     return;
                 }
             }
-            else if (j.getDirection().equals(PointCardinal.EAST)){
+            else if (PointCardinal.EAST.equals(j.getDirection())){
                 if (directionCases.contains(PointCardinal.EAST)){
                     System.out.println("Déplacement vers l'est effectué.");
                     j.setPosX(j.getPosX()+1);
 
                 } else {
-                    System.out.println("Impossible d'aller dans cette direction.");
+                    System.out.println("Le joueur : " + j.getNom() + " essaye d'aller sur une case neutre et a un accident.");
                     j.setNbPoints(0);
                     return;
                 }
             }
-            else if (j.getDirection().equals(PointCardinal.WEST)){
+            else if (PointCardinal.WEST.equals(j.getDirection())){
                 if (directionCases.contains(PointCardinal.WEST)){
                     System.out.println("Déplacement vers l'ouest effectué.");
                     j.setPosX(j.getPosX()-1);
 
                 } else {
-                    System.out.println("Impossible d'aller dans cette direction.");
+                    System.out.println("Le joueur : " + j.getNom() + " essaye d'aller sur une case neutre et a un accident.");
                     j.setNbPoints(0);
                     return;
                 }
             }
-            else {
-                System.out.println("\n ERREUR DIRECTION DU JOUEUR " + j.getNom() +" = NULL \n");
-            }
-            System.out.println("Position : "+j.getPosX()+","+j.getPosY());
 
             //On appelle le controleur qui va vérifier la présence ou non d'événements sur cette case et agir en conséquence.
             setChanged();
@@ -261,13 +254,13 @@ public class Carte extends Observable  {
     	Case current;
     	JLabel imageJoueur;
     	
-    	if(player.getDirection().equals(PointCardinal.NORTH)){
+    	if(PointCardinal.NORTH.equals(player.getDirection())){
     		ImageIcon joueur = new ImageIcon("E:/Cours/projet java/projet voiture/voitureBasHaut.png");
     		imageJoueur = new JLabel(joueur);
-		}else if(player.getDirection().equals(PointCardinal.EAST)){
+		}else if(PointCardinal.EAST.equals(player.getDirection())){
 			ImageIcon joueur = new ImageIcon("E:/Cours/projet java/projet voiture/voitureGaucheDroite.png");
 			imageJoueur = new JLabel(joueur);
-		}else if(player.getDirection().equals(PointCardinal.SOUTH)){
+		}else if(PointCardinal.SOUTH.equals(player.getDirection())){
 			ImageIcon joueur = new ImageIcon("E:/Cours/projet java/projet voiture/voitureHautBas.png");
 			imageJoueur = new JLabel(joueur);
 		}else{
