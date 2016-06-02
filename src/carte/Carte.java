@@ -216,7 +216,6 @@ public class Carte extends Observable  {
                 }
             }
             else if (directionCases.size()>2){
-                System.out.println("oui");
                 setChanged();
         		notifyObservers(j);
             }
