@@ -13,7 +13,7 @@ import java.util.*;
 public class Controleur implements Observer {
 
     private Jeu jeu;
-    private final String pathFichierCarte = "src/carte/cartetest.txt";
+    private final String pathFichierCarte = "src/carte/cartesTests/carte_test_priorite.txt";
     private Carte carte;
     private List<Joueur> listJoueurs;
     private List<ConnexionClient> listeConnexionClient;
@@ -44,8 +44,8 @@ public class Controleur implements Observer {
         for (Joueur joueur : listJoueurs)
         {
             int[] position = InterpreteurCarte.choisirPositionDepart(positionDepart);
-            joueur.setPosX(position[0]);
-            joueur.setPosY(position[1]);
+            joueur.setPosX(position[1]);
+            joueur.setPosY(position[0]);
             joueur.setNbPoints(Constante.STARTPOINTS);
             //joueur.setDirection(PointCardinal.SOUTH);
             joueur.setVitesse(0);

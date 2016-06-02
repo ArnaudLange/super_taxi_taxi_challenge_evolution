@@ -94,8 +94,8 @@ public class ClientReception extends Thread
                         if (messageEntrant.startsWith("pos:"))
                         {
                             tmp = messageEntrant.substring("pos:".length()).split(",");
-                            posY = Integer.parseInt(tmp[0]);
-                            posX = Integer.parseInt(tmp[1]);
+                            posX = Integer.parseInt(tmp[0]);
+                            posY = Integer.parseInt(tmp[1]);
                         }
                         else if (messageEntrant.startsWith("dir:"))
                             direction = PointCardinal.getPointCardinal(messageEntrant.substring("dir:".length()));
