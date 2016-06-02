@@ -242,7 +242,6 @@ public class Carte extends Observable  {
     			}
     		}
     	}
-    	
     	return vision;
     }
     
