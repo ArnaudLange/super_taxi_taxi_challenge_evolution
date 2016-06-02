@@ -81,9 +81,15 @@ public class Controleur implements Observer {
                     }
 
                     System.out.println("\tpos : " + c.getJoueur().getPosX() + "," + c.getJoueur().getPosY());
-                    System.out.println("\tdirection : "+c.getJoueur().getDirection());
-                    System.out.println("\tvitesse : "+c.getJoueur().getVitesse());
-                    System.out.println("\tnb points : "+c.getJoueur().getNbPoints());
+                    System.out.println("\tdirection : " + c.getJoueur().getDirection());
+                    System.out.println("\tvitesse : " + c.getJoueur().getVitesse());
+                    System.out.println("\tnb points : " + c.getJoueur().getNbPoints());
+
+                    c.envoyerMessage("pos:" + c.getJoueur().getPosX() + "," + c.getJoueur().getPosY());
+                    c.envoyerMessage("dir:" + c.getJoueur().getDirection());
+                    c.envoyerMessage("vit:" + c.getJoueur().getVitesse());
+                    c.envoyerMessage("nbp:" + c.getJoueur().getNbPoints());
+
                     /*
                     System.out.println("La vitesse du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getVitesse());
                     System.out.println("La direction du joueur "+ c.getJoueur().getNom() + " est " + c.getJoueur().getDirection());
