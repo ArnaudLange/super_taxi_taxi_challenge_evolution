@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.SocketException;
 
 /**
  * Created by swag on 14/05/16.
@@ -22,18 +21,19 @@ public class ConnexionClient extends Thread
     private Joueur joueur;
     private PrintWriter out;
     private BufferedReader in;
-    private boolean changementVitesse;
     private String readLine;
+    private Commande dernierChangementVitesse;
+    private int nbTour;
     private boolean gameOver;
 
-    public ConnexionClient(Socket s, Joueur joueur) throws IOException
+    ConnexionClient(Socket s, Joueur joueur) throws IOException
     {
         this.socket = s;
         this.joueur = joueur;
         this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         this.out = new PrintWriter(this.socket.getOutputStream());
-        this.changementVitesse = false;
         this.gameOver = false;
+        this.nbTour = 0;
     }
 
     public void setGameOver(boolean b)
@@ -45,7 +45,10 @@ public class ConnexionClient extends Thread
     {
         // Début de tour
         if (s.equals(Commande.NEXT_ACTION.toString()))
-            this.changementVitesse = false;
+        {
+            this.dernierChangementVitesse = null;
+            this.nbTour++;
+        }
 
         out.println(s);
         out.flush();
@@ -55,7 +58,7 @@ public class ConnexionClient extends Thread
      * Check si la connexion au client a été perdue en lisant la ligne
      * Interromp le thread si c'est le cas
      */
-    public void lireLigneBuffer()
+    private void lireLigneBuffer()
     {
         try
         {
@@ -89,37 +92,22 @@ public class ConnexionClient extends Thread
                 switch (Commande.getCommande(readLine))
                 {
                     case NORD:
-                        this.joueur.setDirection(PointCardinal.NORTH);
+                        changerDirection(PointCardinal.NORTH);
                         break;
                     case SUD:
-                        this.joueur.setDirection(PointCardinal.SOUTH);
+                        changerDirection(PointCardinal.SOUTH);
                         break;
                     case EST:
-                        this.joueur.setDirection(PointCardinal.EAST);
+                        changerDirection(PointCardinal.EAST);
                         break;
                     case OUEST:
-                        this.joueur.setDirection(PointCardinal.WEST);
+                        changerDirection(PointCardinal.WEST);
                         break;
                     case ACCELERER:
-                        if (!this.changementVitesse)
-                        {
-                            if(this.joueur.getDirection()==null){
-                                envoyerMessage("Choisissez d'abord une direction.");
-                            }
-                            else {
-                                this.changementVitesse = true;
-                                this.joueur.accelerer();
-                                //this.joueur.setDirection(null);//TODO Quentin?
-                            }
-                        }
+                        changerVitesse(Commande.ACCELERER);
                         break;
                     case RALENTIR:
-                        if (!this.changementVitesse)
-                        {
-                            this.changementVitesse = true;
-                            this.joueur.ralentir();
-                            //this.joueur.setDirection(null);//TODO Quentin ?
-                        }
+                        changerVitesse(Commande.RALENTIR);
                         break;
                     case AUCUNE_ACTION:
                         break;
@@ -141,6 +129,33 @@ public class ConnexionClient extends Thread
         } catch (IOException e)
         {
             System.err.println("Erreur socket déjà fermé");
+        }
+    }
+
+    private void changerDirection(PointCardinal d)
+    {
+        if(dernierChangementVitesse != null)
+        {
+            changerVitesse(dernierChangementVitesse);
+            dernierChangementVitesse = null;
+        }
+        joueur.setDirection(d);
+    }
+
+    private void changerVitesse(Commande c)
+    {
+        if (nbTour == 1)
+            joueur.setDirection(null);
+
+        if (c.equals(Commande.ACCELERER))
+        {
+            joueur.accelerer();
+            dernierChangementVitesse = Commande.ACCELERER;
+        }
+        else if (c.equals(Commande.RALENTIR))
+        {
+            joueur.ralentir();
+            dernierChangementVitesse = Commande.RALENTIR;
         }
     }
 
