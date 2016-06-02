@@ -59,7 +59,7 @@ public class Controleur implements Observer {
 
         int nbTour=1;
         boolean jeuFini = false;
-        long tempsTour = 5000;
+        long tempsTour = 10000;
         long tempsDebutTour = System.currentTimeMillis();
         Joueur joueurActuel;
 

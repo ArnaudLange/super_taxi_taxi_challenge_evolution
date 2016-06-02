@@ -136,7 +136,10 @@ public class ConnexionClient extends Thread
     {
         if(dernierChangementVitesse != null)
         {
-            changerVitesse(dernierChangementVitesse);
+            if (Commande.ACCELERER.equals(dernierChangementVitesse))
+                joueur.ralentir();
+            else if (Commande.RALENTIR.equals(dernierChangementVitesse))
+                joueur.accelerer();
             dernierChangementVitesse = null;
         }
         joueur.setDirection(d);
@@ -147,15 +150,15 @@ public class ConnexionClient extends Thread
         if (nbTour == 1)
             joueur.setDirection(null);
 
-        if (c.equals(Commande.ACCELERER))
+        if (dernierChangementVitesse == null)
         {
-            joueur.accelerer();
-            dernierChangementVitesse = Commande.ACCELERER;
-        }
-        else if (c.equals(Commande.RALENTIR))
-        {
-            joueur.ralentir();
-            dernierChangementVitesse = Commande.RALENTIR;
+            if (c.equals(Commande.ACCELERER)) {
+                joueur.accelerer();
+                dernierChangementVitesse = Commande.ACCELERER;
+            } else if (c.equals(Commande.RALENTIR)) {
+                joueur.ralentir();
+                dernierChangementVitesse = Commande.RALENTIR;
+            }
         }
     }
 

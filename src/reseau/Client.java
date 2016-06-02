@@ -35,7 +35,7 @@ public class Client
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            System.err.println("Erreur de connexion avec le serveur");
         } catch (InterruptedException e)
         {
             e.printStackTrace();
