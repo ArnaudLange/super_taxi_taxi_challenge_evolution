@@ -23,6 +23,7 @@ public class ConnexionClient extends Thread
     private BufferedReader in;
     private String readLine;
     private Commande derniereAction;
+    private PointCardinal derniereDirection;
     private boolean gameOver;
 
     ConnexionClient(Socket s, Joueur joueur) throws IOException
@@ -44,7 +45,6 @@ public class ConnexionClient extends Thread
         // Début de tour
         if (s.equals(Commande.NEXT_ACTION.toString()))
         {
-            derniereAction = null;
             derniereAction = null;
         }
 
@@ -146,6 +146,7 @@ public class ConnexionClient extends Thread
         }
 
         derniereAction = d;
+        derniereDirection= joueur.getDirection();
         joueur.setDirection(PointCardinal.getPointCardinal(d.toString()));
     }
 
@@ -153,14 +154,17 @@ public class ConnexionClient extends Thread
     {
         if (joueur.getDirection() == null)
             envoyerMessage("Vous devez d'abord choisir une direction avant de changer votre vitesse");
-
+        else if (derniereAction != null && PointCardinal.getPointCardinal(derniereAction.toString()) != null && derniereDirection == null)
+        {
+            envoyerMessage("Impossible de changer de vitesse et de direction dans le même tour");
+        }
         else
         {
             // S'il a déjà changer de direction on remets le joueur dans sa derniere direction possible
             if (derniereAction != null && PointCardinal.getPointCardinal(derniereAction.toString()) != null)
             {
-                envoyerMessage("Annulation du changement de direction : direction = " + derniereAction.toString());
-                joueur.setDirection(PointCardinal.getPointCardinal(derniereAction.toString()));
+                envoyerMessage("Annulation du changement de direction : direction = " + derniereDirection);
+                joueur.setDirection(derniereDirection);
             }
 
             if (c.equals(Commande.ACCELERER))
