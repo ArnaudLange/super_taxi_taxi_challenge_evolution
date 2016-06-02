@@ -178,7 +178,7 @@ public class Controleur implements Observer {
         if (jeu.getGagnant() != null)
             System.out.println("Le joueur " + jeu.getGagnant().getId() + " a gagné la partie !");
         else if (listJoueurs.size() == 1)
-            System.out.println("Le joueur " + listJoueurs.get(0).getId() + " gagne par forfait !");
+            System.out.println("Le joueur " + listJoueurs.get(0).getId() + " gagne car c'est le dernier joueur en vie  !");
         else
             System.out.println("Match nul !");
     }
