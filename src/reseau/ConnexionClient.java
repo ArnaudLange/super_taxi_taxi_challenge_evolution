@@ -72,7 +72,6 @@ public class ConnexionClient extends Thread
         try
         {
             System.out.println("Le client numéro " + joueur.getId() + " est connecté !");
-            envoyerMessage("Connexion avec le serveur établie");
 
             // Demande du nom
             out.println(Commande.NOM.toString());
