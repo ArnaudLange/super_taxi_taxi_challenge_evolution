@@ -5,7 +5,6 @@ import carte.PointCardinal;
 import jeu.Commande;
 import jeu.Constante;
 
-import javax.swing.text.Position;
 import java.io.*;
 
 /**
@@ -66,7 +65,7 @@ public class ClientReception extends Thread
                     gameOver = true;
                     break;
                 case GAMEWINOBJ:
-                    System.out.println("Vous avez gagné car vous avez obtenu "+ Constante.MAXPOINTS+ "points ! ");
+                    System.out.println("Vous avez gagné car vous avez obtenu " + Constante.MAXPOINTS + " points ! ");
                     gameOver = true;
                     break;
                 case GAMEWINLASTPLAYER:
@@ -76,11 +75,11 @@ public class ClientReception extends Thread
                 case NEXT_ACTION:
                     System.out.println("-------------------------------------");
                     System.out.println("\tTour n°" + ++nbTour);
-                    System.out.println("Position en X : "+posX);
-                    System.out.println("Position en Y : "+posY);
-                    System.out.println("Points : "+nbPoint);
-                    System.out.println("Vitesse : "+ vitesse);
-                    System.out.println("Direction : "+ direction);
+                    System.out.println("Position en X : " + posX);
+                    System.out.println("Position en Y : " + posY);
+                    System.out.println("Points : " + nbPoint);
+                    System.out.println("Vitesse : " + vitesse);
+                    System.out.println("Direction : " + direction);
                     System.out.println("Prochaine action ? ( accelerer, ralentir, droite, gauche )");
 
                     break;
