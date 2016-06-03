@@ -24,6 +24,7 @@ public class ConnexionClient extends Thread
     private String readLine;
     private Commande derniereAction;
     private PointCardinal derniereDirection;
+    private PointCardinal directionDernierTour;
     private boolean gameOver;
 
     ConnexionClient(Socket s, Joueur joueur) throws IOException
@@ -43,8 +44,11 @@ public class ConnexionClient extends Thread
     public void envoyerMessage(String s)
     {
         // Début de tour
-        if (s.equals(Commande.NEXT_ACTION.toString()))
+        if (s.equals(Commande.NEXT_ACTION.toString())) {
             derniereAction = null;
+            derniereDirection=null;
+            directionDernierTour = joueur.getDirection();
+        }
 
         out.println(s);
         out.flush();
@@ -159,6 +163,10 @@ public class ConnexionClient extends Thread
                 if (Commande.GAUCHE.equals(d) || Commande.DROITE.equals(d)) {
                     return false;
                 }
+            }else if(directionDernierTour==null) {
+                if (Commande.GAUCHE.equals(d) || Commande.DROITE.equals(d)) {
+                    return false;
+                }
             }else{
                 if (Commande.GAUCHE.equals(d) || Commande.DROITE.equals(d)) {
                     return true;
@@ -177,7 +185,7 @@ public class ConnexionClient extends Thread
         boolean actionValide = actionValide(d);
         //envoyerMessage("ACTION VALIDE ? "+actionValide);
         if(!actionValide){
-            //envoyerMessage("Commande invalide");
+            envoyerMessage("Commande invalide");
             return;
         }
 
@@ -189,6 +197,7 @@ public class ConnexionClient extends Thread
 
         if (Commande.NORD.equals(d) || Commande.EST.equals(d) || Commande.SUD.equals(d) || Commande.OUEST.equals(d)) {
             nouvelleDirection=PointCardinal.getPointCardinal(d.toString());
+
             //envoyerMessage("NOUVELLE DIRECTION (nord/sud/est/ouest) = "+d.toString());
         }else{
 
@@ -242,6 +251,7 @@ public class ConnexionClient extends Thread
         //envoyerMessage("SUCCESS NOUVELLE DIRECTION");
         joueur.setDirection(nouvelleDirection);
         derniereAction=d;
+
         //envoyerMessage("FIN \n NOUVELLE DIRECTION = "+nouvelleDirection);
         //envoyerMessage("DERNIERE ACTION = "+derniereAction);
         envoyerMessage("Vous avez changé votre direction vers " + nouvelleDirection.toString());
@@ -272,67 +282,46 @@ public class ConnexionClient extends Thread
         }
     }
 
-    private void changerVitesse(Commande c)
-    {
-        if (joueur.getDirection() == null)
+    private void changerVitesse(Commande c) {
+
+        if (joueur.getDirection() == null) {
             envoyerMessage("Vous devez d'abord choisir une direction avant de changer votre vitesse");
-        else if (derniereAction != null && PointCardinal.getPointCardinal(derniereAction.toString()) != null && derniereDirection == null)
-        {
+            return;
+        } else if (derniereAction != null && derniereDirection != null) {
             envoyerMessage("Impossible de changer de vitesse et de direction dans le même tour");
-        }
-        else
-        {
             // S'il a déjà changer de direction on remets le joueur dans sa derniere direction possible
-            if (derniereAction != null && PointCardinal.getPointCardinal(derniereAction.toString()) != null)
-            {
-                envoyerMessage("Annulation du changement de direction : direction = " + derniereDirection);
-                joueur.setDirection(derniereDirection);
-                derniereAction=null;
+            if (derniereAction != null) {
+                envoyerMessage("Annulation du changement de direction : direction = " + directionDernierTour);
+                joueur.setDirection(directionDernierTour);
+                derniereAction = null;
+                derniereDirection = null;
             }
 
-            if (c.equals(Commande.ACCELERER))
-            {
-                if (Commande.RALENTIR.equals(derniereAction))
-                {
-                    joueur.accelerer();
-                    joueur.accelerer();
-                    derniereAction = Commande.ACCELERER;
-                    envoyerMessage("Annulation du changement de vitesse et accélération : vitesse = " + joueur.getVitesse());
-                }
-                else if (Commande.ACCELERER.equals(derniereAction))
-                {
-                    envoyerMessage("Vous avez déjà accéleré à pendant ce tour");
-                }
-                else
-                {
-                    joueur.accelerer();
-                    derniereAction = Commande.ACCELERER;
-                    envoyerMessage("Vous accélerez : vitesse = " + joueur.getVitesse());
-                }
+        } else if (derniereAction != null && derniereDirection == null) {
+            if (Commande.RALENTIR.equals(derniereAction)) {
+                joueur.accelerer();
+                envoyerMessage("Annulation du changement de vitesse : vitesse = " + joueur.getVitesse());
+            } else if (Commande.ACCELERER.equals(derniereAction)) {
+                joueur.ralentir();
+                envoyerMessage("Annulation du changement de vitesse : vitesse = " + joueur.getVitesse());
             }
-            else if (c.equals(Commande.RALENTIR))
-            {
-                if (Commande.ACCELERER.equals(derniereAction))
-                {
-                    joueur.ralentir();
-                    joueur.ralentir();
-                    derniereAction = Commande.RALENTIR;
-                    envoyerMessage("Annulation du changement de vitesse et ralentissement : vitesse = " + joueur.getVitesse());
-                }
-                else if (Commande.RALENTIR.equals(derniereAction))
-                {
-                    envoyerMessage("Vous avez déjà ralenti pendant ce tour");
-                }
-                else
-                {
-                    joueur.ralentir();
-                    derniereAction = Commande.RALENTIR;
-                    envoyerMessage("Vous ralentissez : vitesse = " + joueur.getVitesse());
-                }
+        }
+
+        if (c.equals(Commande.ACCELERER)) {
+            joueur.accelerer();
+            derniereAction = Commande.ACCELERER;
+            envoyerMessage("Vous accélerez : vitesse = " + joueur.getVitesse());
+        } else if (c.equals(Commande.RALENTIR)) {
+
+            if (joueur.getVitesse() == 0) {
+                envoyerMessage("Vous ne pouvez pas ralentir car vous êtes déjà a 0.");
+            } else {
+                joueur.ralentir();
+                derniereAction = Commande.RALENTIR;
+                envoyerMessage("Vous ralentissez : vitesse = " + joueur.getVitesse());
             }
         }
     }
-
     public Joueur getJoueur()
     {
         return joueur;

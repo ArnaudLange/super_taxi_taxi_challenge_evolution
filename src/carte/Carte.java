@@ -107,7 +107,6 @@ public class Carte extends Observable  {
         }
 
         //Si on est sur l'objectif
-        System.out.println("posX="+posX+"posY="+posY+"objeX="+posXObjectif+"objeY="+posYObjectif);
         if(posYObjectif == posX && posY == posXObjectif){
             evenements.add(Evenement.OBJECTIF);
         }
@@ -155,6 +154,10 @@ public class Carte extends Observable  {
             directionCases = ((Route) tableau[j.getPosY()][j.getPosX()]).getDirections();
             if(j.getVitesse()==0){
                 if (directionCases.size()>2){
+                    setChanged();
+                    notifyObservers(j);
+                }
+                if(j.getPosY()==posXO && j.getPosX()==posYO){
                     setChanged();
                     notifyObservers(j);
                 }
@@ -272,8 +275,6 @@ public class Carte extends Observable  {
             else {
                 System.out.println("\n ERREUR DIRECTION DU JOUEUR " + j.getNom() +" = NULL \n");
             }
-            System.out.println("Position : "+j.getPosX()+","+j.getPosY());
-            System.out.println("joueur ="+j.getPosX()+", "+j.getPosY()+", obj="+posXO+","+posYO);
             if(j.getPosY()==posXO && j.getPosX()==posYO){
                 setChanged();
                 notifyObservers(j);

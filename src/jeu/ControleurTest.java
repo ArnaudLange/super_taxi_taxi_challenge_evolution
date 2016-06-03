@@ -91,9 +91,7 @@ public class ControleurTest implements Observer {
                     c.envoyerMessage("dir:" + c.getJoueur().getDirection());
                     c.envoyerMessage("vit:" + c.getJoueur().getVitesse());
                     c.envoyerMessage("nbp:" + c.getJoueur().getNbPoints());
-                    if("test".equals(c.getJoueur().getNom())) {
-                        AffichageCarte.affichageCarte(carte.GetVision(c.getJoueur().getPosY(), c.getJoueur().getPosX(), c.getJoueur()), c.getJoueur().getPosY(), c.getJoueur().getPosX(), c.getJoueur().getDirection());
-                    }
+
                 }
 
                 // Boucle sur la liste des clients connectés

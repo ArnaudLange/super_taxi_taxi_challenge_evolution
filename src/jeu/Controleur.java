@@ -13,7 +13,7 @@ import java.util.*;
 public class Controleur implements Observer {
 
     private Jeu jeu;
-    private final String pathFichierCarte = "src/carte/cartesTests/carte_test_priorite.txt";
+    private final String pathFichierCarte = "src/carte/cartetest.txt";
     private Carte carte;
     private List<Joueur> listJoueurs;
     private List<ConnexionClient> listeConnexionClient;
@@ -30,7 +30,7 @@ public class Controleur implements Observer {
         int[] position = InterpreteurCarte.choisirPositionDepart(positionDispo);
         this.jeu.setPosXObjectif(position[0]);
         this.jeu.setPosYObjectif(position[1]);
-        //System.out.println("x="+jeu.getPosXObjectif()+"y="+jeu.getPosYObjectif());
+        System.out.println("x="+jeu.getPosXObjectif()+"y="+jeu.getPosYObjectif());
         carte.posXO=jeu.getPosXObjectif();
         carte.posYO=jeu.getPosYObjectif();
 
@@ -78,7 +78,7 @@ public class Controleur implements Observer {
                 System.out.println("Tour " + nbTour++);
                 System.out.println("----------------------------------");
                 tempsDebutTour = System.currentTimeMillis();
-
+                System.out.println("Position Objectif : "+jeu.getPosYObjectif()+", "+jeu.getPosXObjectif()+"\n");
                 for (ConnexionClient c : listeConnexionClient)
                 {
                     System.out.println("\nNom du joueur : " + c.getJoueur().getNom());

@@ -2,6 +2,7 @@ package reseau;
 
 import carte.Case;
 import carte.PointCardinal;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import jeu.Commande;
 import jeu.Constante;
 
@@ -21,6 +22,8 @@ public class ClientReception extends Thread
 
     private int posX;
     private int posY;
+    private int posXObjectif;
+    private int posYObjectif;
     private PointCardinal direction;
     private int vitesse;
     private int nbPoint;
@@ -77,6 +80,8 @@ public class ClientReception extends Thread
                 case NEXT_ACTION:
                     System.out.println("-------------------------------------");
                     System.out.println("\tTour n°" + ++nbTour);
+                    System.out.println(vision);
+                    System.out.println("Position objectif : "+posXObjectif+", "+posYObjectif);
                     System.out.println("Position en X : "+posX);
                     System.out.println("Position en Y : "+posY);
                     System.out.println("Points : "+nbPoint);
@@ -107,15 +112,27 @@ public class ClientReception extends Thread
                             String carte;
                             carte=messageEntrant.substring("carte:".length());
                             int i;
+                            int nbLignes,nbColonnes;
+                            nbLignes=0;
+                            nbColonnes=0;
                             vision = "";
                             for (i = 0; i < carte.length(); i++) {
                                 if (carte.charAt(i)==';') {
                                     vision = vision + "\n";
+                                    nbLignes++;
+                                    nbColonnes=0;
+                                }else if(carte.charAt(i)=='X'){
+                                    posXObjectif=nbColonnes;
+                                    posYObjectif=nbLignes;
+                                    vision = vision + carte.charAt(i);
                                 } else {
+                                    if(carte.charAt(i)==','){
+                                        nbColonnes++;
+                                    }
                                     vision = vision + carte.charAt(i);
                                 }
                             }
-                                System.out.println(vision);
+
                             } else {
                                 System.out.println(messageEntrant);
                             }
