@@ -91,7 +91,7 @@ public class ControleurTest implements Observer {
                 {
                     System.out.println("\nNom du joueur : " + c.getJoueur().getNom());
                     if (c.getJoueur().getDirection() != null){
-                        jeu.getCarte().gestionDeplacements(c.getJoueur());
+                        jeu.getCarte().gestionDeplacements(c.getJoueur(),jeu.getListeJoueurs());
                     }
 
                     System.out.println("\tpos : " + c.getJoueur().getPosX() + "," + c.getJoueur().getPosY());
