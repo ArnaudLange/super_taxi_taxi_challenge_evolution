@@ -53,4 +53,20 @@ public class Stop extends Route {
 			}
 		}
 	}
+
+	public String toString(){
+		String desc = "S";
+		for (PointCardinal pc : listeStops) {
+			if (PointCardinal.NORD.equals(pc)) {
+				desc = desc + "n";
+			} else if (PointCardinal.EST.equals(pc)) {
+				desc = desc + "e";
+			} else if (PointCardinal.SUD.equals(pc)) {
+				desc = desc + "s";
+			} else if (PointCardinal.OUEST.equals(pc)) {
+				desc = desc + "o";
+			}
+		}
+		return desc;
+	}
 }

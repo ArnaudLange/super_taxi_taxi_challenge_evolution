@@ -40,7 +40,6 @@ public class Controleur implements Observer {
         Serveur.creerServeur(jeu.getListeJoueurs(), listeConnexionClient);
         Vector positionDepart = InterpreteurCarte.trouverPositionDepart(carte);
 
-        int i = 1;
         for (Joueur joueur : listJoueurs)
         {
             int[] position = InterpreteurCarte.choisirPositionDepart(positionDepart);
@@ -56,10 +55,9 @@ public class Controleur implements Observer {
             System.out.println("\tvitesse : "+joueur.getVitesse());
             System.out.println("\tnb points : "+joueur.getNbPoints());
 
-            i++;
+            joueur.setPosX(2);
+            joueur.setPosY(0);
         }
-
-
 
         int nbTour=1;
         boolean jeuFini = false;
@@ -93,7 +91,9 @@ public class Controleur implements Observer {
                     c.envoyerMessage("dir:" + c.getJoueur().getDirection());
                     c.envoyerMessage("vit:" + c.getJoueur().getVitesse());
                     c.envoyerMessage("nbp:" + c.getJoueur().getNbPoints());
-
+                    if("test".equals(c.getJoueur().getNom())) {
+                        AffichageCarte.affichageCarte(carte.GetVision(c.getJoueur().getPosY(), c.getJoueur().getPosX(), c.getJoueur()), c.getJoueur().getPosY(), c.getJoueur().getPosX(), c.getJoueur().getDirection());
+                    }
                 }
 
                 // Boucle sur la liste des clients connectés
