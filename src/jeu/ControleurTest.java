@@ -13,7 +13,7 @@ import java.util.*;
 public class ControleurTest implements Observer {
 
     private Jeu jeu;
-    private final String pathFichierCarte = "src/carte/cartesTests/carte_test_vitesse" + ".txt";
+    private final String pathFichierCarte = "src/carte/cartesTests/carte_test_accident1.txt";
     private Carte carte;
     private List<Joueur> listJoueurs;
     private List<ConnexionClient> listeConnexionClient;
@@ -28,6 +28,10 @@ public class ControleurTest implements Observer {
         this.jeu = new Jeu(listJoueurs, carte);
         this.jeu.setPosXObjectif(2);
         this.jeu.setPosYObjectif(3);
+        System.out.println("x="+jeu.getPosXObjectif()+"y="+jeu.getPosYObjectif());
+        carte.posXO=jeu.getPosXObjectif();
+        carte.posYO=jeu.getPosYObjectif();
+
         this.jeu.getCarte().initFeux();
         this.jeu.getCarte().initStops();
         this.jeu.getCarte().addObserver(this);
@@ -39,12 +43,22 @@ public class ControleurTest implements Observer {
     {
         Serveur.creerServeur(jeu.getListeJoueurs(), listeConnexionClient);
         Vector positionDepart = InterpreteurCarte.trouverPositionDepart(carte);
+        int i = 0;
 
         for (Joueur joueur : listJoueurs)
         {
-            int[] position = InterpreteurCarte.choisirPositionDepart(positionDepart);
-            joueur.setPosX(position[1]);
-            joueur.setPosY(position[0]);
+            //int[] position = InterpreteurCarte.choisirPositionDepart(positionDepart);
+            if(i == 0) {
+                joueur.setPosX(0);
+                joueur.setPosY(2);
+                joueur.setDirection(PointCardinal.EST);
+                i++;
+            } else{
+                joueur.setPosX(9);
+                joueur.setPosY(2);
+                joueur.setDirection(PointCardinal.OUEST);
+            }
+
             joueur.setNbPoints(Constante.STARTPOINTS);
             //joueur.setDirection(PointCardinal.SOUTH);
             joueur.setVitesse(0);
@@ -54,8 +68,6 @@ public class ControleurTest implements Observer {
             System.out.println("\tdirection : "+joueur.getDirection());
             System.out.println("\tvitesse : "+joueur.getVitesse());
             System.out.println("\tnb points : "+joueur.getNbPoints());
-
-
 
         }
 
@@ -74,12 +86,12 @@ public class ControleurTest implements Observer {
                 System.out.println("Tour " + nbTour++);
                 System.out.println("----------------------------------");
                 tempsDebutTour = System.currentTimeMillis();
-
+                System.out.println("Position Objectif : "+jeu.getPosYObjectif()+", "+jeu.getPosXObjectif()+"\n");
                 for (ConnexionClient c : listeConnexionClient)
                 {
                     System.out.println("\nNom du joueur : " + c.getJoueur().getNom());
                     if (c.getJoueur().getDirection() != null){
-                        jeu.getCarte().gestionDeplacements(c.getJoueur());
+                        jeu.getCarte().gestionDeplacements(c.getJoueur(),jeu.getListeJoueurs());
                     }
 
                     System.out.println("\tpos : " + c.getJoueur().getPosX() + "," + c.getJoueur().getPosY());
@@ -92,6 +104,10 @@ public class ControleurTest implements Observer {
                     c.envoyerMessage("vit:" + c.getJoueur().getVitesse());
                     c.envoyerMessage("nbp:" + c.getJoueur().getNbPoints());
 
+                    c.envoyerMessage("carte:"+jeu.getCarte().getVision(c.getJoueur(), (ArrayList<Joueur> )listJoueurs));
+                    /*if("test".equals(c.getJoueur().getNom())) {
+                        AffichageCarte.affichageCarte(carte.GetVision(c.getJoueur().getPosY(), c.getJoueur().getPosX(), c.getJoueur()), c.getJoueur().getPosY(), c.getJoueur().getPosX(), c.getJoueur().getDirection());
+                    }*/
                 }
 
                 // Boucle sur la liste des clients connectés
@@ -115,14 +131,14 @@ public class ControleurTest implements Observer {
                             continue;
                         if (joueurActuel.getPosX() == k.getPosX() && joueurActuel.getPosY() == k.getPosY())
                         {
-                        	if(k.getVitesse()>1 || joueurActuel.getVitesse()>1){
-	                            System.out.println("Colision entre le joueur " + joueurActuel.getId() + " et le joueur " + k.getId());
-	                            System.out.println("Le joueur " + joueurActuel.getId() + " a perdu.");
-	                            System.out.println("Le joueur " + k.getId() + " a perdu.");
+                            if(k.getVitesse()>1 || joueurActuel.getVitesse()>1){
+                                System.out.println("Colision entre le joueur " + joueurActuel.getId() + " et le joueur " + k.getId());
+                                System.out.println("Le joueur " + joueurActuel.getId() + " a perdu.");
+                                System.out.println("Le joueur " + k.getId() + " a perdu.");
 
-	                            joueurActuel.setNbPoints(0);
-	                            k.setNbPoints(0);
-                        	}
+                                joueurActuel.setNbPoints(0);
+                                k.setNbPoints(0);
+                            }
                         }
                     }
 
@@ -147,6 +163,17 @@ public class ControleurTest implements Observer {
                         break;
                     }
 
+
+
+                    // Un joueur a perdu
+                    if (joueurActuel.getNbPoints() == 0)
+                    {
+                        c.setGameOver(true);
+                        listJoueurs.remove(joueurActuel);
+                        listeConnexionClientPerdu.add(c);
+                        c.envoyerMessage(Commande.GAMEOVER.toString());
+                    }
+
                     // Un joueur gagne par défaut
                     if (listJoueurs.size() <=1)
                     {
@@ -158,15 +185,6 @@ public class ControleurTest implements Observer {
                         AffichageCarte.fermerFenetre();
                     }
 
-                    // Un joueur a perdu
-                    if (joueurActuel.getNbPoints() == 0)
-                    {
-                        c.setGameOver(true);
-                        listJoueurs.remove(joueurActuel);
-                        listeConnexionClientPerdu.add(c);
-                        c.envoyerMessage(Commande.GAMEOVER.toString());
-                    }
-
                     // Envoie message joueur
                     if (joueurActuel.getNbPoints() != 0)
                         c.envoyerMessage("action");
@@ -176,8 +194,10 @@ public class ControleurTest implements Observer {
                 for (ConnexionClient c : listeConnexionClientPerdu)
                     if (listeConnexionClient.contains(c))
                         listeConnexionClient.remove(c);
-
-                jeu.getCarte().updateFeux();
+                if(!jeuFini) {
+                    AffichageCarte.affichageCarte(carte.getTableau(), (ArrayList<Joueur>) listJoueurs, jeu.getPosXObjectif(), jeu.getPosYObjectif());
+                    jeu.getCarte().updateFeux();
+                }
             }
 
         }
@@ -195,41 +215,45 @@ public class ControleurTest implements Observer {
 
         if(obj instanceof Joueur){
             List<Evenement> infra = jeu.getCarte().getEvenement(((Joueur) obj).getPosX(),((Joueur) obj).getPosY(), ((Joueur) obj).getDirection(), jeu.getPosXObjectif(), jeu.getPosYObjectif());
-            System.out.println(infra);
+            //System.out.println(infra);
             if(infra.contains(Evenement.OBJECTIF)){
+                //
+                // System.out.println("on est sur l'objectif");
                 ((Joueur)obj).setNbPoints( ((Joueur)obj).getNbPoints() + Constante.OBJPOINTS );
 
-                /* Vector positionDispo = InterpreteurCarte.trouverPositionDepart(jeu.getCarte());
-                int[] newPositionObj = InterpreteurCarte.choisirPositionDepart(positionDispo);
-                */
-                jeu.setPosXObjectif(3);
-                jeu.setPosYObjectif(3);
+                //Vector positionDispo = InterpreteurCarte.trouverPositionDepart(jeu.getCarte());
+                //int[] newPositionObj = InterpreteurCarte.choisirPositionDepart(positionDispo);
+                jeu.setPosXObjectif(2);
+                jeu.setPosYObjectif(4);
                 carte.posXO=jeu.getPosXObjectif();
-                carte.posYO=jeu.getPosXObjectif();
+                carte.posYO=jeu.getPosYObjectif();
+                //System.out.println("NOUVEL OBJECTIF");
+                //System.out.println("obj"+carte.posXO+","+carte.posYO);
 
             }
             if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
-                System.out.println("Joueur mort.");
+                //System.out.println("Joueur mort.");
                 ((Joueur) obj).setNbPoints(0);
             }
-            else if(infra.contains(Evenement.FEU)){
-            	if(((Feu)jeu.getCarte().getTableau()[((Joueur) obj).getPosY()][((Joueur) obj).getPosX()]).getCouleurFeu(((Joueur) obj).getDirection())){
-            		((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
-            	}
+            if(infra.contains(Evenement.FEU)){
+                System.out.println("feu détecté");
+                if(((Feu)jeu.getCarte().getTableau()[((Joueur) obj).getPosY()][((Joueur) obj).getPosX()]).getCouleurFeu(((Joueur) obj).getDirection())){
+                    ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
+                }
             }else if(infra.contains(Evenement.STOP)){
-            	if(((Stop)jeu.getCarte().getTableau()[((Joueur) obj).getPosY()][((Joueur) obj).getPosX()]).isAStopDirection(((Joueur) obj).getDirection())){
-            		if(((Joueur) obj).getVitesse()==0){
-            			((Joueur) obj).setHasStoped(true);
-            		}else{
-            			if(((Joueur) obj).getHasStoped()){
-            				((Joueur) obj).setHasStoped(false);
-            			}else{
-            				((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
-            			}
-            		}
-            	}
+                if(((Stop)jeu.getCarte().getTableau()[((Joueur) obj).getPosY()][((Joueur) obj).getPosX()]).isAStopDirection(((Joueur) obj).getDirection())){
+                    if(((Joueur) obj).getVitesse()==0){
+                        ((Joueur) obj).setHasStoped(true);
+                    }else{
+                        if(((Joueur) obj).getHasStoped()){
+                            ((Joueur) obj).setHasStoped(false);
+                        }else{
+                            ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
+                        }
+                    }
+                }
             }else if(infra.contains(Evenement.PRIORITE)){
-                System.out.println("Priorite a droite.");
+                //System.out.println("Priorite a droite.");
                 //Si vitesse du joueur est de 3, perte de majorinf points
                 if(((Joueur) obj).getVitesse()>2){
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);

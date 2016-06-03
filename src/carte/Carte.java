@@ -145,7 +145,7 @@ public class Carte extends Observable  {
     }
 
     //Fonction qui gère le déplacement d'un joueur j
-    public void gestionDeplacements(Joueur j){
+    public void gestionDeplacements(Joueur j, List<Joueur> listeJoueurs){
 
         List<PointCardinal> directionCases;
 
@@ -278,6 +278,19 @@ public class Carte extends Observable  {
             if(j.getPosY()==posXO && j.getPosX()==posYO){
                 setChanged();
                 notifyObservers(j);
+            }
+
+            //gestion collision
+            for (Joueur player:listeJoueurs) {
+                if(!player.equals(j)){
+                    if(j.getPosX()==(player.getPosX()) && j.getPosY()==(player.getPosY())){
+                        if(j.getVitesse()>1){
+                            player.setNbPoints(0);
+                            j.setNbPoints(0);
+                            break;
+                        }
+                    }
+                }
             }
         }
 

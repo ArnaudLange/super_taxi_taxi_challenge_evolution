@@ -13,7 +13,7 @@ import java.util.*;
 public class Controleur implements Observer {
 
     private Jeu jeu;
-    private final String pathFichierCarte = "src/carte/cartetest.txt";
+    private final String pathFichierCarte = "src/carte/cartesTests/carte_test_accident3.txt";
     private Carte carte;
     private List<Joueur> listJoueurs;
     private List<ConnexionClient> listeConnexionClient;
@@ -86,7 +86,7 @@ public class Controleur implements Observer {
                 {
                     System.out.println("\nNom du joueur : " + c.getJoueur().getNom());
                     if (c.getJoueur().getDirection() != null){
-                        jeu.getCarte().gestionDeplacements(c.getJoueur());
+                        jeu.getCarte().gestionDeplacements(c.getJoueur(),jeu.getListeJoueurs());
                     }
 
                     System.out.println("\tpos : " + c.getJoueur().getPosX() + "," + c.getJoueur().getPosY());
@@ -119,7 +119,7 @@ public class Controleur implements Observer {
                         continue;
                     }
 
-                    // Gestion colision joueur
+                    // Gestion collision joueur
                     for (Joueur k : listJoueurs)
                     {
                         if (k == joueurActuel || k.getNbPoints() == 0)
