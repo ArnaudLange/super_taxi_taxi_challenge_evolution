@@ -13,6 +13,7 @@ import java.io.*;
  */
 public class ClientReception extends Thread
 {
+    private String vision;
     private BufferedReader br;
     private boolean gameOver;
     private int nbTour;
@@ -23,7 +24,7 @@ public class ClientReception extends Thread
     private PointCardinal direction;
     private int vitesse;
     private int nbPoint;
-    private Case[][] vision;
+    //private Case[][] vision;
 
     public ClientReception(InputStream in)
     {
@@ -87,17 +88,13 @@ public class ClientReception extends Thread
                 case ERREUR_ACTION:
                     if (messageEntrant.equals(Commande.ERREUR_ACTION.toString()))
                         System.err.println("Mauvaise commande");
-                    else
-                    {
+                    else {
                         String tmp[];
-
-                        if (messageEntrant.startsWith("pos:"))
-                        {
+                        if (messageEntrant.startsWith("pos:")) {
                             tmp = messageEntrant.substring("pos:".length()).split(",");
                             posX = Integer.parseInt(tmp[0]);
                             posY = Integer.parseInt(tmp[1]);
-                        }
-                        else if (messageEntrant.startsWith("dir:"))
+                        } else if (messageEntrant.startsWith("dir:"))
                             direction = PointCardinal.getPointCardinal(messageEntrant.substring("dir:".length()));
 
                         else if (messageEntrant.startsWith("vit:"))
@@ -105,13 +102,30 @@ public class ClientReception extends Thread
 
                         else if (messageEntrant.startsWith("nbp:"))
                             nbPoint = Integer.parseInt(messageEntrant.substring("nbp:".length()));
-                        
-                        else
-                            System.out.println(messageEntrant);
-                    }
-                    break;
+
+                        else if (messageEntrant.startsWith("carte:")) {
+                            String carte;
+                            carte=messageEntrant.substring("carte:".length());
+                            int i;
+                            vision = "";
+                            for (i = 0; i < carte.length(); i++) {
+                                if (carte.charAt(i)==';') {
+                                    vision = vision + "\n";
+                                } else {
+                                    vision = vision + carte.charAt(i);
+                                }
+                            }
+                                System.out.println(vision);
+                            } else {
+                                System.out.println(messageEntrant);
+                            }
+                        }
+                        break;
                 default:
+
                     System.err.println("Erreur de connexion avec le serveur");
+
+
             }
         }
 

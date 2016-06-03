@@ -7,6 +7,7 @@ import static java.lang.Thread.sleep;
 
 public class Client
 {
+    String carte;
     public static void main (String args[])
     {
         ClientEnvoie clientEnvoie = null;

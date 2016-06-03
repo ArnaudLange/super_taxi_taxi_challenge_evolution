@@ -27,8 +27,13 @@ public class Controleur implements Observer {
         this.listJoueurs = new ArrayList<>();
         this.jeu = new Jeu(listJoueurs, carte);
         Vector positionDispo = InterpreteurCarte.trouverPositionDepart(jeu.getCarte());
-        this.jeu.setPosXObjectif(InterpreteurCarte.choisirPositionDepart(InterpreteurCarte.trouverPositionDepart(jeu.getCarte()))[0]);
-        this.jeu.setPosYObjectif(InterpreteurCarte.choisirPositionDepart(positionDispo)[1]);
+        int[] position = InterpreteurCarte.choisirPositionDepart(positionDispo);
+        this.jeu.setPosXObjectif(position[0]);
+        this.jeu.setPosYObjectif(position[1]);
+        //System.out.println("x="+jeu.getPosXObjectif()+"y="+jeu.getPosYObjectif());
+        carte.posXO=jeu.getPosXObjectif();
+        carte.posYO=jeu.getPosYObjectif();
+
         this.jeu.getCarte().initFeux();
         this.jeu.getCarte().initStops();
         this.jeu.getCarte().addObserver(this);
@@ -55,8 +60,6 @@ public class Controleur implements Observer {
             System.out.println("\tdirection : "+joueur.getDirection());
             System.out.println("\tvitesse : "+joueur.getVitesse());
             System.out.println("\tnb points : "+joueur.getNbPoints());
-
-
 
         }
 
@@ -92,9 +95,11 @@ public class Controleur implements Observer {
                     c.envoyerMessage("dir:" + c.getJoueur().getDirection());
                     c.envoyerMessage("vit:" + c.getJoueur().getVitesse());
                     c.envoyerMessage("nbp:" + c.getJoueur().getNbPoints());
-                    if("test".equals(c.getJoueur().getNom())) {
+
+                    c.envoyerMessage("carte:"+jeu.getCarte().getVision(c.getJoueur(), (ArrayList<Joueur> )listJoueurs));
+                    /*if("test".equals(c.getJoueur().getNom())) {
                         AffichageCarte.affichageCarte(carte.GetVision(c.getJoueur().getPosY(), c.getJoueur().getPosX(), c.getJoueur()), c.getJoueur().getPosY(), c.getJoueur().getPosX(), c.getJoueur().getDirection());
-                    }
+                    }*/
                 }
 
                 // Boucle sur la liste des clients connectés
@@ -150,6 +155,17 @@ public class Controleur implements Observer {
                         break;
                     }
 
+
+
+                    // Un joueur a perdu
+                    if (joueurActuel.getNbPoints() == 0)
+                    {
+                        c.setGameOver(true);
+                        listJoueurs.remove(joueurActuel);
+                        listeConnexionClientPerdu.add(c);
+                        c.envoyerMessage(Commande.GAMEOVER.toString());
+                    }
+
                     // Un joueur gagne par défaut
                     if (listJoueurs.size() <=1)
                     {
@@ -161,15 +177,6 @@ public class Controleur implements Observer {
                         AffichageCarte.fermerFenetre();
                     }
 
-                    // Un joueur a perdu
-                    if (joueurActuel.getNbPoints() == 0)
-                    {
-                        c.setGameOver(true);
-                        listJoueurs.remove(joueurActuel);
-                        listeConnexionClientPerdu.add(c);
-                        c.envoyerMessage(Commande.GAMEOVER.toString());
-                    }
-
                     // Envoie message joueur
                     if (joueurActuel.getNbPoints() != 0)
                         c.envoyerMessage("action");
@@ -179,8 +186,10 @@ public class Controleur implements Observer {
                 for (ConnexionClient c : listeConnexionClientPerdu)
                     if (listeConnexionClient.contains(c))
                         listeConnexionClient.remove(c);
-
-                jeu.getCarte().updateFeux();
+                if(!jeuFini) {
+                    //AffichageCarte.affichageCarte(carte.getTableau(), (ArrayList<Joueur>) listJoueurs, jeu.getPosXObjectif(), jeu.getPosYObjectif());
+                    jeu.getCarte().updateFeux();
+                }
             }
 
         }
@@ -198,8 +207,10 @@ public class Controleur implements Observer {
 
         if(obj instanceof Joueur){
             List<Evenement> infra = jeu.getCarte().getEvenement(((Joueur) obj).getPosX(),((Joueur) obj).getPosY(), ((Joueur) obj).getDirection(), jeu.getPosXObjectif(), jeu.getPosYObjectif());
-            System.out.println(infra);
+            //System.out.println(infra);
             if(infra.contains(Evenement.OBJECTIF)){
+                //
+                // System.out.println("on est sur l'objectif");
                 ((Joueur)obj).setNbPoints( ((Joueur)obj).getNbPoints() + Constante.OBJPOINTS );
 
                 Vector positionDispo = InterpreteurCarte.trouverPositionDepart(jeu.getCarte());
@@ -207,11 +218,13 @@ public class Controleur implements Observer {
                 jeu.setPosXObjectif(newPositionObj[0]);
                 jeu.setPosYObjectif(newPositionObj[1]);
                 carte.posXO=jeu.getPosXObjectif();
-                carte.posYO=jeu.getPosXObjectif();
+                carte.posYO=jeu.getPosYObjectif();
+                //System.out.println("NOUVEL OBJECTIF");
+                //System.out.println("obj"+carte.posXO+","+carte.posYO);
 
             }
             if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
-                System.out.println("Joueur mort.");
+                //System.out.println("Joueur mort.");
                 ((Joueur) obj).setNbPoints(0);
             }
             else if(infra.contains(Evenement.FEU)){
@@ -231,7 +244,7 @@ public class Controleur implements Observer {
             		}
             	}
             }else if(infra.contains(Evenement.PRIORITE)){
-                System.out.println("Priorite a droite.");
+                //System.out.println("Priorite a droite.");
                 //Si vitesse du joueur est de 3, perte de majorinf points
                 if(((Joueur) obj).getVitesse()>2){
                     ((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
@@ -242,7 +255,7 @@ public class Controleur implements Observer {
                 }
             }
             if(infra.size()==0){
-                System.out.println("Pas d'événement.");
+                //System.out.println("Pas d'événement.");
             }
 
         }

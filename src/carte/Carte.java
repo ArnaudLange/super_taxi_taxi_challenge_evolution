@@ -21,8 +21,6 @@ public class Carte extends Observable  {
 
     public Carte (int largeur, int longueur)
     {
-        this.posXO=Constante.OBJECTIFCELL[0];
-        this.posYO=Constante.OBJECTIFCELL[1];
         this.largeur = largeur;
         this.longueur = longueur;
         this.tableau = new Case[this.largeur][this.longueur];
@@ -109,7 +107,8 @@ public class Carte extends Observable  {
         }
 
         //Si on est sur l'objectif
-        if(posXObjectif == posX && posY == posYObjectif){
+        System.out.println("posX="+posX+"posY="+posY+"objeX="+posXObjectif+"objeY="+posYObjectif);
+        if(posYObjectif == posX && posY == posXObjectif){
             evenements.add(Evenement.OBJECTIF);
         }
 
@@ -150,6 +149,7 @@ public class Carte extends Observable  {
     public void gestionDeplacements(Joueur j){
 
         List<PointCardinal> directionCases;
+
 
         if (tableau[j.getPosY()][j.getPosX()] instanceof Route) {
             directionCases = ((Route) tableau[j.getPosY()][j.getPosX()]).getDirections();
@@ -192,26 +192,26 @@ public class Carte extends Observable  {
                         //Si le joueur va vers l'est
                         if(PointCardinal.EST.equals(j.getDirection())){
                             //Si la direction qu'on regarde n'est pas celle d'où l'on vient
-                            if (!PointCardinal.OUEST.equals(dir)){
+                            if (directionCases.contains(PointCardinal.OUEST) && !PointCardinal.OUEST.equals(dir)){
                                 j.setDirection(dir);
                                 break;
                             }
                         }
                         //Sinon, de même avec autres directions
                         else if(PointCardinal.NORD.equals(j.getDirection())){
-                            if (!PointCardinal.SUD.equals(dir)){
+                            if (directionCases.contains(PointCardinal.SUD) && !PointCardinal.SUD.equals(dir)){
                                 j.setDirection(dir);
                                 break;
                             }
                         }
                         else if(PointCardinal.SUD.equals(j.getDirection())){
-                            if (!PointCardinal.NORD.equals(dir)){
+                            if (directionCases.contains(PointCardinal.NORD) && !PointCardinal.NORD.equals(dir)){
                                 j.setDirection(dir);
                                 break;
                             }
                         }
                         else if(PointCardinal.OUEST.equals(j.getDirection())){
-                            if (!PointCardinal.EST.equals(dir)){
+                            if (directionCases.contains(PointCardinal.EST) && !PointCardinal.EST.equals(dir)){
                                 j.setDirection(dir);
                                 break;
                             }
@@ -273,34 +273,65 @@ public class Carte extends Observable  {
                 System.out.println("\n ERREUR DIRECTION DU JOUEUR " + j.getNom() +" = NULL \n");
             }
             System.out.println("Position : "+j.getPosX()+","+j.getPosY());
+            System.out.println("joueur ="+j.getPosX()+", "+j.getPosY()+", obj="+posXO+","+posYO);
+            if(j.getPosY()==posXO && j.getPosX()==posYO){
+                setChanged();
+                notifyObservers(j);
+            }
         }
+
     }
     
-    public Case[][] GetVision(int posX, int posY, Joueur player){
+    public String getVision(Joueur player, ArrayList<Joueur> liste){
     	Case[][] vision;
     	int rayonVision = Constante.DISTANCEVISION;
     	int diametreVision = rayonVision*2+1;
     	int i, j, posXRelative, posYRelative;
-    	vision = new Case[diametreVision][diametreVision];
-    	
-    	for(i=0;i<diametreVision;i++){
-    		for(j=0;j<diametreVision;j++){
-    			posXRelative=(posX+(i-rayonVision));
-    			posYRelative=(posY+(j-rayonVision));
-    			if((posXRelative>=0) && (posYRelative>= 0) && (posXRelative< this.largeur) && (posYRelative< this.longueur)){
-    				vision[i][j]=tableau[posXRelative][posYRelative];
-    			}else{
-    				vision[i][j]=new Brouillard();
-    			}
-                if(posYRelative==posXO && posXRelative==posYO){
-                    if (tableau[posXRelative][posYRelative] instanceof Route) {
-                        vision[i][j]=new Objectif(posXO,posYO,(((Route)tableau[posXRelative][posYRelative]).getDirections()));
-                        System.out.println("objectif");
+    	vision = new Case[largeur][longueur];
+        String carteDesc;
+        carteDesc="";
+
+        for(i=0;i<largeur;i++){
+    		for(j=0;j<longueur;j++){
+
+    			//posXRelative=(player.getPosX()+(i-rayonVision));
+                //System.out.println("POSX relative ="+posXRelative);
+                //posYRelative=(player.getPosY()+(j-rayonVision));
+                //System.out.println("POSY relative ="+posYRelative);
+                if(i==posXO && j==posYO){
+                    if (tableau[i][j] instanceof Route) {
+                        //vision[i][j]=new Objectif(posXO,posYO,(((Route)tableau[i][j]).getDirections()));
+                        carteDesc=carteDesc+"X";
                     }
                 }
+                if(((int)Math.sqrt((Math.pow(j-player.getPosX(), 2))+(Math.pow(i-player.getPosY(), 2))))<=rayonVision){
+
+                    for (Joueur joueur: liste){
+                        if(i==joueur.getPosY() && j==joueur.getPosX() && !(joueur.equals(player))){
+                            carteDesc=carteDesc+"V";
+                        }
+                    }
+                    //vision[i][j] = tableau[j][i];
+                    carteDesc=carteDesc+tableau[i][j];
+
+                    if(j==player.getPosX() && i==player.getPosY()){
+                        carteDesc=carteDesc+"Y";
+                    }
+
+    			}else{
+                    carteDesc = carteDesc + "B";
+
+    				vision[i][j]=new Brouillard();
+    			}
+                if(j<longueur-1) {
+                    carteDesc = carteDesc + ",";
+                }
+
+
     		}
+            carteDesc=carteDesc+";";
     	}
-    	return vision;
+    	return carteDesc;
     }
     
 

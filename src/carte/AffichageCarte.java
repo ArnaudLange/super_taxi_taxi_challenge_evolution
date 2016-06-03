@@ -4,6 +4,7 @@ import jeu.Joueur;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AffichageCarte {
@@ -70,7 +71,6 @@ public class AffichageCarte {
                 switch(somme){
                     case -2:
                         images.put("instance"+k, new JLabel(new ImageIcon("./src/images/objectif.png")));
-                        System.out.println("ajout image objectif");
                         break;
                     case -1:
                         images.put("instance"+k, new JLabel(new ImageIcon("./src/images/brouillard.png")));
@@ -173,8 +173,10 @@ public class AffichageCarte {
         }
     }
 
-    public static void affichageCarte(Case[][] map){
-        JFrame affichage = new JFrame();
+    public static void affichageCarte(Case[][] map, ArrayList<Joueur> liste, int posX, int posY){
+        affichage = getJFrame();
+        affichage.dispose();
+        affichage = new JFrame();
         affichage.setLayout(new GridLayout(map.length, map[0].length));
         int i, j, k=0, somme;
         Case current;
@@ -187,9 +189,10 @@ public class AffichageCarte {
                 panels.put("instance"+k, new JPanel());
                 somme=0;
                 current = map[i][j];
+
                 if(current instanceof Brouillard){
                     somme=-1;
-                }else if(current instanceof Objectif){
+                }else if(current instanceof Objectif||(i==posX&&j==posY)){
                     somme = -2;
                 }else if(current instanceof Route){
                     if(((Route) current).getDirections().contains(PointCardinal.NORD)){
@@ -206,10 +209,31 @@ public class AffichageCarte {
                     }
                 }
 
+                for (Joueur joueur:liste){
+                    if(joueur.getPosY()==i && joueur.getPosX()==j){
+                        ImageIcon ima;
+                        if(PointCardinal.NORD.equals(joueur.getDirection())){
+                            ima = new ImageIcon("./src/images/voitureBasHaut.png");
+                            //imageJoueur = new JLabel(joueur);
+                        }else if(PointCardinal.EST.equals(joueur.getDirection())){
+                            ima = new ImageIcon("./src/images/voitureGaucheDroite.png");
+                            //imageJoueur = new JLabel(joueur);
+                        }else if(PointCardinal.SUD.equals(joueur.getDirection())){
+                            ima = new ImageIcon("./src/images/voitureHautBas.png");
+                            //imageJoueur = new JLabel(joueur);
+                        }else{
+                            ima = new ImageIcon("./src/images/voitureDroiteGauche.png");
+                            //imageJoueur = new JLabel(joueur);
+                        }
+                        images.put("instance"+k, new JLabel(ima));
+                        somme = -4;
+                    }
+
+                }
+
                 switch(somme){
                     case -2:
                         images.put("instance"+k, new JLabel(new ImageIcon("./src/images/objectif.png")));
-                        System.out.println("ajout image objectif");
                         break;
                     case -1:
                         images.put("instance"+k, new JLabel(new ImageIcon("./src/images/brouillard.png")));
@@ -310,11 +334,11 @@ public class AffichageCarte {
             affichage.pack();
         }
     }
-    public void afficherCarteAutourJoueur(Carte carte, Joueur j){
+    /*public void afficherCarteAutourJoueur(Carte carte, Joueur j, ArrayList<Joueur> liste){
         if("test".equals(j.getNom())) {
-            AffichageCarte.affichageCarte(carte.GetVision(j.getPosY(), j.getPosX(), j), j.getPosY(), j.getPosX(), j.getDirection());
+            AffichageCarte.affichageCarte(carte.GetVision(j, liste));
         }
-    }
+    }*/
 
     public static void fermerFenetre(){
         getJFrame().dispose();

@@ -234,6 +234,7 @@ public class InterpreteurCarte {
     }
     public static int[] choisirPositionDepart(Vector positionDepart){
         int indiceAuHasard =(int) (Math.random() * (positionDepart.size() - 1)) ;
+        //System.out.println(((int[])positionDepart.get(indiceAuHasard))[0]+"la"+((int[])positionDepart.get(indiceAuHasard))[1]);
         int[] position = (int[]) positionDepart.get(indiceAuHasard);
         positionDepart.remove(indiceAuHasard); // on l'enlÃ¨ve de la liste pour Ã©viter
         // que 2 joueurs se retrouvent au mÃªme endroit
