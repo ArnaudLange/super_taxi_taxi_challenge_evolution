@@ -23,12 +23,6 @@ public class Constante {
     /* Nombre de points à atteindre pour remporter la partie */
     public final static int MAXPOINTS=40;
 
-    /* Distance (en cases) à laquelle les joueurs peuvent voir */
-    public final static int FOV=3;
-
-    /* Position sur laquelle l'objectif apparait en début de partie */
-    public final static int[] OBJECTIFCELL = {2, 0};
-
     /* Rayon de la vision des joueurs */
     public final static int DISTANCEVISION=6;
 
