@@ -227,8 +227,9 @@ public class Controleur implements Observer {
                 //System.out.println("Joueur mort.");
                 ((Joueur) obj).setNbPoints(0);
             }
-            else if(infra.contains(Evenement.FEU)){
-            	if(((Feu)jeu.getCarte().getTableau()[((Joueur) obj).getPosY()][((Joueur) obj).getPosX()]).getCouleurFeu(((Joueur) obj).getDirection())){
+            if(infra.contains(Evenement.FEU)){
+                System.out.println("feu détecté");
+                if(((Feu)jeu.getCarte().getTableau()[((Joueur) obj).getPosY()][((Joueur) obj).getPosX()]).getCouleurFeu(((Joueur) obj).getDirection())){
             		((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
             	}
             }else if(infra.contains(Evenement.STOP)){
@@ -255,7 +256,7 @@ public class Controleur implements Observer {
                 }
             }
             if(infra.size()==0){
-                //System.out.println("Pas d'événement.");
+                System.out.println("Pas d'événement.");
             }
 
         }

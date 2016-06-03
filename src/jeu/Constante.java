@@ -33,9 +33,9 @@ public class Constante {
     public final static int DISTANCEVISION=6;
 
     /*TimeOut lancé quand 2 joueurs sont connectés*/
-    public final static int TIMEOUTCONNECTION=1000;
+    public final static int TIMEOUTCONNECTION=3000;
 
     /*Temps de tour*/
-    public final static int TOURTIME=10000;
+    public final static int TOURTIME=5000;
 
 }
