@@ -64,7 +64,7 @@ public enum Commande
                 return GAMENOTWIN;
             case "gameover":
                 return GAMEOVER;
-            case "gamewin":
+            case "gamewinobj":
                 return GAMEWINOBJ;
             case "nom":
                 return NOM;

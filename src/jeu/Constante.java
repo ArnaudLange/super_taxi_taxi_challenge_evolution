@@ -35,4 +35,7 @@ public class Constante {
     /*TimeOut lancé quand 2 joueurs sont connectés*/
     public final static int TIMEOUTCONNECTION=5000;
 
+    /*Temps de tour*/
+    public final static int TOURTIME=5000;
+
 }
