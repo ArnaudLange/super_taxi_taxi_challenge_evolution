@@ -293,8 +293,10 @@ public class Carte extends Observable  {
     				vision[i][j]=new Brouillard();
     			}
                 if(posYRelative==posXO && posXRelative==posYO){
-                    vision[i][j]=new Objectif(posXO,posYO,(((Route)tableau[posXRelative][posYRelative]).getDirections()));
-                    System.out.println("objectif");
+                    if (tableau[posXRelative][posYRelative] instanceof Route) {
+                        vision[i][j]=new Objectif(posXO,posYO,(((Route)tableau[posXRelative][posYRelative]).getDirections()));
+                        System.out.println("objectif");
+                    }
                 }
     		}
     	}
