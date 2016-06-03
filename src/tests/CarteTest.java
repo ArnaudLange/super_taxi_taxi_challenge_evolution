@@ -39,7 +39,7 @@ public class CarteTest {
         Assert.assertEquals(0, carte.getLongueur());
     }
 
-
+    /*
     //Tests de gestionDeplacement() est
     @Test
     public void testDeplacementEST1() {
@@ -748,5 +748,6 @@ public class CarteTest {
         listeAttendue.add(Evenement.OBJECTIF);
         Assert.assertEquals(listeAttendue, liste);
     }
+    */
 
 }
