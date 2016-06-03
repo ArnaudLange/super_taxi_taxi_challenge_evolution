@@ -26,8 +26,9 @@ public class Controleur implements Observer {
         assert carte != null;
         this.listJoueurs = new ArrayList<>();
         this.jeu = new Jeu(listJoueurs, carte);
-        this.jeu.setPosXObjectif(Constante.OBJECTIFCELL[0]);
-        this.jeu.setPosYObjectif(Constante.OBJECTIFCELL[1]);
+        Vector positionDispo = InterpreteurCarte.trouverPositionDepart(jeu.getCarte());
+        this.jeu.setPosXObjectif(InterpreteurCarte.choisirPositionDepart(InterpreteurCarte.trouverPositionDepart(jeu.getCarte()))[0]);
+        this.jeu.setPosYObjectif(InterpreteurCarte.choisirPositionDepart(positionDispo)[1]);
         this.jeu.getCarte().initFeux();
         this.jeu.getCarte().initStops();
         this.jeu.getCarte().addObserver(this);
