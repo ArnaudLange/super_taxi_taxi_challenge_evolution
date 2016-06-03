@@ -55,8 +55,8 @@ public class Controleur implements Observer {
             System.out.println("\tvitesse : "+joueur.getVitesse());
             System.out.println("\tnb points : "+joueur.getNbPoints());
 
-            joueur.setPosX(2);
-            joueur.setPosY(0);
+
+
         }
 
         int nbTour=1;
