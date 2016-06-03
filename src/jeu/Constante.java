@@ -18,7 +18,7 @@ public class Constante {
     public final static int STARTPOINTS=30;
 
     /* Nombre de points gagnés lorsque l'on atteint l'objectif */
-    public final static int OBJPOINTS=11;
+    public final static int OBJPOINTS=1;
 
     /* Nombre de points à atteindre pour remporter la partie */
     public final static int MAXPOINTS=40;

@@ -72,6 +72,7 @@ public class ClientReception extends Thread
                 case GAMEWINOBJ:
                     System.out.println("Vous avez gagné car vous avez obtenu "+ Constante.MAXPOINTS+ " points ! ");
                     gameOver = true;
+                    System.out.println(gameOver);
                     break;
                 case GAMEWINLASTPLAYER:
                     System.out.println("Vous avez gagné car vous êtes le dernier joueur en vie ! ");

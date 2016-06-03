@@ -30,7 +30,7 @@ public class Controleur implements Observer {
         int[] position = InterpreteurCarte.choisirPositionDepart(positionDispo);
         this.jeu.setPosXObjectif(position[0]);
         this.jeu.setPosYObjectif(position[1]);
-        System.out.println("x="+jeu.getPosXObjectif()+"y="+jeu.getPosYObjectif());
+        //System.out.println("x="+jeu.getPosXObjectif()+"y="+jeu.getPosYObjectif());
         carte.posXO=jeu.getPosXObjectif();
         carte.posYO=jeu.getPosYObjectif();
 
@@ -69,11 +69,14 @@ public class Controleur implements Observer {
         long tempsDebutTour = System.currentTimeMillis();
         Joueur joueurActuel;
 
-        while(!jeuFini)
+        while(!jeuFini || listJoueurs.size() >0)
         {
+
+
             // Temps du tour atteint
             if (System.currentTimeMillis() - tempsDebutTour > tempsTour)
             {
+
                 System.out.println("\n----------------------------------");
                 System.out.println("Tour " + nbTour++);
                 System.out.println("----------------------------------");
@@ -160,10 +163,18 @@ public class Controleur implements Observer {
                     // Un joueur a perdu
                     if (joueurActuel.getNbPoints() == 0)
                     {
+
                         c.setGameOver(true);
                         listJoueurs.remove(joueurActuel);
                         listeConnexionClientPerdu.add(c);
                         c.envoyerMessage(Commande.GAMEOVER.toString());
+                    }
+
+
+
+                    // Envoie message joueur
+                    if (joueurActuel.getNbPoints() != 0 && listJoueurs.size()>1) {
+                        c.envoyerMessage("action");
                     }
 
                     // Un joueur gagne par défaut
@@ -172,14 +183,11 @@ public class Controleur implements Observer {
                         jeuFini = true;
                         if (listJoueurs.size() == 1)
                         {
+                            System.out.println("oui");
+                            jeu.setGagnant(c.getJoueur());
                             c.envoyerMessage(Commande.GAMEWINLASTPLAYER.toString());
                         }
-                        AffichageCarte.fermerFenetre();
                     }
-
-                    // Envoie message joueur
-                    if (joueurActuel.getNbPoints() != 0)
-                        c.envoyerMessage("action");
                 }
 
                 // Suppression des clients déconnectés
@@ -187,8 +195,10 @@ public class Controleur implements Observer {
                     if (listeConnexionClient.contains(c))
                         listeConnexionClient.remove(c);
                 if(!jeuFini) {
-                    //AffichageCarte.affichageCarte(carte.getTableau(), (ArrayList<Joueur>) listJoueurs, jeu.getPosXObjectif(), jeu.getPosYObjectif());
+                    AffichageCarte.affichageCarte(carte.getTableau(), (ArrayList<Joueur>) listJoueurs, jeu.getPosXObjectif(), jeu.getPosYObjectif());
                     jeu.getCarte().updateFeux();
+                }else{
+                    AffichageCarte.fermerFenetre();
                 }
             }
 
@@ -229,11 +239,11 @@ public class Controleur implements Observer {
             }
             if(infra.contains(Evenement.FEU)){
                 System.out.println("feu détecté");
-                if(((Feu)jeu.getCarte().getTableau()[((Joueur) obj).getPosY()][((Joueur) obj).getPosX()]).getCouleurFeu(((Joueur) obj).getDirection())){
+                if(((Feu)jeu.getCarte().getTableau()[((Joueur) obj).getPosY()][((Joueur) obj).getPosX()]).getCouleurFeu(((Joueur) obj).getDirectionTourPrecedent())){
             		((Joueur) obj).setNbPoints(((Joueur) obj).getNbPoints()-Constante.MAJORINF);
             	}
             }else if(infra.contains(Evenement.STOP)){
-            	if(((Stop)jeu.getCarte().getTableau()[((Joueur) obj).getPosY()][((Joueur) obj).getPosX()]).isAStopDirection(((Joueur) obj).getDirection())){
+            	if(((Stop)jeu.getCarte().getTableau()[((Joueur) obj).getPosY()][((Joueur) obj).getPosX()]).isAStopDirection(((Joueur) obj).getDirectionTourPrecedent())){
             		if(((Joueur) obj).getVitesse()==0){
             			((Joueur) obj).setHasStoped(true);
             		}else{

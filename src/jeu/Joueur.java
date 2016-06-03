@@ -19,6 +19,16 @@ public class Joueur
     private int posX ;
     private int posY;
     private PointCardinal direction; // N S E W pour reprÃ©senter chaque point cardinal
+
+    public PointCardinal getDirectionTourPrecedent() {
+        return directionTourPrecedent;
+    }
+
+    public void setDirectionTourPrecedent(PointCardinal directionTourPrecedent) {
+        this.directionTourPrecedent = directionTourPrecedent;
+    }
+
+    private PointCardinal directionTourPrecedent;
     private boolean hasStoped;
 
     public Joueur()
@@ -32,6 +42,7 @@ public class Joueur
         double rand;
 
         this.direction = null;
+        directionTourPrecedent=null;
     }
 
     

@@ -48,6 +48,7 @@ public class ConnexionClient extends Thread
             derniereAction = null;
             derniereDirection=null;
             directionDernierTour = joueur.getDirection();
+            joueur.setDirectionTourPrecedent(directionDernierTour);
         }
 
         out.println(s);
@@ -84,6 +85,7 @@ public class ConnexionClient extends Thread
 
             while(!gameOver && !Thread.currentThread().isInterrupted())
             {
+
                 Thread.sleep(200);
                 lireLigneBuffer();
                 switch (Commande.getCommande(readLine))

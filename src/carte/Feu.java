@@ -102,7 +102,17 @@ public class Feu extends Route implements Observer {
 	}
 	
 	public boolean getCouleurFeu(PointCardinal direction){
-		return feux.get(direction)==2;
+		if(PointCardinal.NORD.equals(direction)){
+			return feux.get(PointCardinal.SUD)==2;
+		}else if(PointCardinal.EST.equals(direction)){
+			return feux.get(PointCardinal.OUEST)==2;
+		}else if(PointCardinal.SUD.equals(direction)){
+			return feux.get(PointCardinal.NORD)==2;
+		}else if(PointCardinal.OUEST.equals(direction)){
+			return feux.get(PointCardinal.EST)==2;
+		}else{
+			return false;
+		}
 	}
 
 
