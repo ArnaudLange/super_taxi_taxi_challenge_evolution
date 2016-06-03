@@ -1,5 +1,7 @@
 package carte;
 
+import jeu.Joueur;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
@@ -46,7 +48,11 @@ public class AffichageCarte {
                 panels.put("instance"+k, new JPanel());
                 somme=0;
                 current = map[i][j];
-                if(current instanceof Route){
+                if(current instanceof Brouillard){
+                    somme=-1;
+                }else if(current instanceof Objectif){
+                    somme = -2;
+                }else if(current instanceof Route){
                     if(((Route) current).getDirections().contains(PointCardinal.NORD)){
                         somme += 1;
                     }
@@ -62,6 +68,13 @@ public class AffichageCarte {
                 }
 
                 switch(somme){
+                    case -2:
+                        images.put("instance"+k, new JLabel(new ImageIcon("./src/images/objectif.png")));
+                        System.out.println("ajout image objectif");
+                        break;
+                    case -1:
+                        images.put("instance"+k, new JLabel(new ImageIcon("./src/images/brouillard.png")));
+                        break;
                     //0000 neutre
                     case 0:
                         images.put("instance"+k, new JLabel(new ImageIcon("./src/images/neutre.png")));
@@ -174,7 +187,11 @@ public class AffichageCarte {
                 panels.put("instance"+k, new JPanel());
                 somme=0;
                 current = map[i][j];
-                if(current instanceof Route){
+                if(current instanceof Brouillard){
+                    somme=-1;
+                }else if(current instanceof Objectif){
+                    somme = -2;
+                }else if(current instanceof Route){
                     if(((Route) current).getDirections().contains(PointCardinal.NORD)){
                         somme += 1;
                     }
@@ -190,6 +207,13 @@ public class AffichageCarte {
                 }
 
                 switch(somme){
+                    case -2:
+                        images.put("instance"+k, new JLabel(new ImageIcon("./src/images/objectif.png")));
+                        System.out.println("ajout image objectif");
+                        break;
+                    case -1:
+                        images.put("instance"+k, new JLabel(new ImageIcon("./src/images/brouillard.png")));
+                        break;
                     //0000 neutre
                     case 0:
                         images.put("instance"+k, new JLabel(new ImageIcon("./src/images/neutre.png")));
@@ -285,5 +309,14 @@ public class AffichageCarte {
             affichage.setVisible(true);
             affichage.pack();
         }
+    }
+    public void afficherCarteAutourJoueur(Carte carte, Joueur j){
+        if("test".equals(j.getNom())) {
+            AffichageCarte.affichageCarte(carte.GetVision(j.getPosY(), j.getPosX(), j), j.getPosY(), j.getPosX(), j.getDirection());
+        }
+    }
+
+    public static void fermerFenetre(){
+        getJFrame().dispose();
     }
 }

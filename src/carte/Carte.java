@@ -16,9 +16,13 @@ public class Carte extends Observable  {
     private int longueur; //nb de cases en abcisse
     private int largeur; // nb de cases en ordonnée
     private Case[][] tableau;
+    public int posXO;
+    public int posYO;
 
     public Carte (int largeur, int longueur)
     {
+        this.posXO=Constante.OBJECTIFCELL[0];
+        this.posYO=Constante.OBJECTIFCELL[1];
         this.largeur = largeur;
         this.longueur = longueur;
         this.tableau = new Case[this.largeur][this.longueur];
@@ -286,8 +290,12 @@ public class Carte extends Observable  {
     			if((posXRelative>=0) && (posYRelative>= 0) && (posXRelative< this.largeur) && (posYRelative< this.longueur)){
     				vision[i][j]=tableau[posXRelative][posYRelative];
     			}else{
-    				vision[i][j]=new CaseNeutre();
+    				vision[i][j]=new Brouillard();
     			}
+                if(posYRelative==posXO && posXRelative==posYO){
+                    vision[i][j]=new Objectif(posXO,posYO,(((Route)tableau[posXRelative][posYRelative]).getDirections()));
+                    System.out.println("objectif");
+                }
     		}
     	}
     	return vision;

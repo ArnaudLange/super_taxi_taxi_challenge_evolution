@@ -26,8 +26,9 @@ public class Controleur implements Observer {
         assert carte != null;
         this.listJoueurs = new ArrayList<>();
         this.jeu = new Jeu(listJoueurs, carte);
-        this.jeu.setPosXObjectif(Constante.OBJECTIFCELL[0]);
-        this.jeu.setPosYObjectif(Constante.OBJECTIFCELL[1]);
+        Vector positionDispo = InterpreteurCarte.trouverPositionDepart(jeu.getCarte());
+        this.jeu.setPosXObjectif(InterpreteurCarte.choisirPositionDepart(InterpreteurCarte.trouverPositionDepart(jeu.getCarte()))[0]);
+        this.jeu.setPosYObjectif(InterpreteurCarte.choisirPositionDepart(positionDispo)[1]);
         this.jeu.getCarte().initFeux();
         this.jeu.getCarte().initStops();
         this.jeu.getCarte().addObserver(this);
@@ -145,6 +146,7 @@ public class Controleur implements Observer {
                                 cC.envoyerMessage(Commande.GAMENOTWIN.toString());
                             }
                         }
+                        AffichageCarte.fermerFenetre();
                         break;
                     }
 
@@ -156,6 +158,7 @@ public class Controleur implements Observer {
                         {
                             c.envoyerMessage(Commande.GAMEWINLASTPLAYER.toString());
                         }
+                        AffichageCarte.fermerFenetre();
                     }
 
                     // Un joueur a perdu
@@ -203,6 +206,8 @@ public class Controleur implements Observer {
                 int[] newPositionObj = InterpreteurCarte.choisirPositionDepart(positionDispo);
                 jeu.setPosXObjectif(newPositionObj[0]);
                 jeu.setPosYObjectif(newPositionObj[1]);
+                carte.posXO=jeu.getPosXObjectif();
+                carte.posYO=jeu.getPosXObjectif();
 
             }
             if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
