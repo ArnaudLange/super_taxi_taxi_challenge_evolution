@@ -187,7 +187,7 @@ public class Controleur implements Observer {
                     if (listeConnexionClient.contains(c))
                         listeConnexionClient.remove(c);
                 if(!jeuFini) {
-                    //AffichageCarte.affichageCarte(carte.getTableau(), (ArrayList<Joueur>) listJoueurs, jeu.getPosXObjectif(), jeu.getPosYObjectif());
+                    AffichageCarte.affichageCarte(carte.getTableau(), (ArrayList<Joueur>) listJoueurs, jeu.getPosXObjectif(), jeu.getPosYObjectif());
                     jeu.getCarte().updateFeux();
                 }
             }
