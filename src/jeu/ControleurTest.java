@@ -13,7 +13,7 @@ import java.util.*;
 public class ControleurTest implements Observer {
 
     private Jeu jeu;
-    private final String pathFichierCarte = "src/carte/cartesTests/carte_test_vitesse.txt";
+    private final String pathFichierCarte = "src/carte/cartesTests/carte_test_infraction2.txt";
     private Carte carte;
     private List<Joueur> listJoueurs;
     private List<ConnexionClient> listeConnexionClient;
