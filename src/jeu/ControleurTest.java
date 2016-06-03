@@ -13,7 +13,7 @@ import java.util.*;
 public class ControleurTest implements Observer {
 
     private Jeu jeu;
-    private final String pathFichierCarte = "src/carte/cartesTests/carte_test_infraction2.txt";
+    private final String pathFichierCarte = "src/carte/cartesTests/carte_test_accident1.txt";
     private Carte carte;
     private List<Joueur> listJoueurs;
     private List<ConnexionClient> listeConnexionClient;
@@ -54,7 +54,7 @@ public class ControleurTest implements Observer {
                 joueur.setDirection(PointCardinal.EST);
                 i++;
             } else{
-                joueur.setPosX(10);
+                joueur.setPosX(9);
                 joueur.setPosY(2);
                 joueur.setDirection(PointCardinal.OUEST);
             }
