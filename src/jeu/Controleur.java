@@ -116,7 +116,7 @@ public class Controleur implements Observer {
                         continue;
                     }
 
-                    // Gestion colision joueur
+                    // Gestion collision joueur
                     for (Joueur k : listJoueurs)
                     {
                         if (k == joueurActuel || k.getNbPoints() == 0)
