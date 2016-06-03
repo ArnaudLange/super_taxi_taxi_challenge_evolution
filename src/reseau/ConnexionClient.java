@@ -301,7 +301,7 @@ public class ConnexionClient extends Thread
                 }
                 else if (Commande.ACCELERER.equals(derniereAction))
                 {
-                    envoyerMessage("Vous avez déjà accélerer à pendant ce tour");
+                    envoyerMessage("Vous avez déjà accéleré à pendant ce tour");
                 }
                 else
                 {
@@ -321,7 +321,7 @@ public class ConnexionClient extends Thread
                 }
                 else if (Commande.RALENTIR.equals(derniereAction))
                 {
-                    envoyerMessage("Vous avez déjà ralenti à pendant ce tour");
+                    envoyerMessage("Vous avez déjà ralenti pendant ce tour");
                 }
                 else
                 {
