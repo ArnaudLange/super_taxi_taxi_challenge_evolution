@@ -153,6 +153,7 @@ public class Controleur implements Observer {
                                 cC.envoyerMessage(Commande.GAMENOTWIN.toString());
                             }
                         }
+                        AffichageCarte.fermerFenetre();
                         break;
                     }
 
@@ -164,6 +165,7 @@ public class Controleur implements Observer {
                         {
                             c.envoyerMessage(Commande.GAMEWINLASTPLAYER.toString());
                         }
+                        AffichageCarte.fermerFenetre();
                     }
 
                     // Un joueur a perdu
@@ -211,6 +213,8 @@ public class Controleur implements Observer {
                 int[] newPositionObj = InterpreteurCarte.choisirPositionDepart(positionDispo);
                 jeu.setPosXObjectif(newPositionObj[0]);
                 jeu.setPosYObjectif(newPositionObj[1]);
+                carte.posXO=jeu.getPosXObjectif();
+                carte.posYO=jeu.getPosXObjectif();
 
             }
             if(infra.contains(Evenement.COURBE)&&((Joueur) obj).getVitesse()>2){
