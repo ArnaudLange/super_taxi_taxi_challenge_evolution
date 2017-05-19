@@ -1,28 +1,149 @@
 package jeu;
 
+import carte.PointCardinal;
+
+import java.util.List;
+
 /**
  * Created by jimmy on 02/05/16.
  */
 public class Joueur
 {
 
+    private static int next_id=1;
     private int id;
     private String nom;
-    private int nbPointsPermis;
     private int nbPoints;
     private int vitesse;
     private boolean etatMarche;
-    private char direction; // N S E W pour représenter chaque point cardinal
+    private int posX ;
+    private int posY;
+    private PointCardinal direction; // N S E W pour reprÃ©senter chaque point cardinal
 
-    public Joueur(int id, String nom,int nbPoints,int nbPointsPermis, int vitesse, boolean etatMarche, char direction){
-        this.id = id;
-        this.nom = nom;
-        this.nbPoints = nbPoints;
-        this.nbPointsPermis = nbPointsPermis;
-        this.etatMarche = etatMarche;
-        this.vitesse = vitesse;
-        this.direction = direction;
+    public PointCardinal getDirectionTourPrecedent() {
+        return directionTourPrecedent;
+    }
+
+    public void setDirectionTourPrecedent(PointCardinal directionTourPrecedent) {
+        this.directionTourPrecedent = directionTourPrecedent;
+    }
+
+    private PointCardinal directionTourPrecedent;
+    private boolean hasStoped;
+
+    public Joueur()
+    {
+    	this.hasStoped=false;
+        this.id = next_id++;
+        this.nom = null;
+        this.nbPoints = 10;
+        this.etatMarche = true;
+        this.vitesse = 0;
+        double rand;
+
+        this.direction = null;
+        directionTourPrecedent=null;
+    }
+
+    
+
+	public int getPosX() {
+        return posX;
+    }
+
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
     }
 
 
+
+    public void accelerer(){
+        if (vitesse < 3)
+        {
+            this.vitesse += 1;
+        }
+    }
+    public void ralentir(){
+        if (vitesse >0)
+        {
+            this.vitesse -= 1;
+        }
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public PointCardinal getDirection()
+    {
+        return direction;
+    }
+
+    public void setDirection(PointCardinal direction)
+    {
+        this.direction = direction;
+    }
+
+    public boolean isEtatMarche()
+    {
+        return etatMarche;
+    }
+
+    public void setEtatMarche(boolean etatMarche)
+    {
+        this.etatMarche = etatMarche;
+    }
+
+    public int getNbPoints()
+    {
+        return nbPoints;
+    }
+
+    public void setNbPoints(int nbPoints)
+    {
+        this.nbPoints = nbPoints;
+    }
+
+    public String getNom()
+    {
+        return nom;
+    }
+
+    public void setNom(String nom)
+    {
+        this.nom = nom;
+    }
+
+    public int getVitesse()
+    {
+        return vitesse;
+    }
+
+    public void setVitesse(int vitesse)
+    {
+        this.vitesse = vitesse;
+    }
+    
+    public boolean getHasStoped() {
+		return hasStoped;
+	}
+
+	public void setHasStoped(boolean hasStoped) {
+		this.hasStoped = hasStoped;
+	}
+
+    public void updatePos(List<Integer> position){
+        this.setPosX(position.get(0));
+        this.setPosY(position.get(1));
+        System.out.println("Position du joueur : " + this.nom + "updatÃ©e Ã  : "+posX+","+posY);
+    }
 }

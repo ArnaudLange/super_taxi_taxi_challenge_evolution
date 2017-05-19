@@ -15,9 +15,45 @@ public class Jeu
     private int posXObjectif;
     private int posYObjectif;
 
-    public Jeu(List<Joueur> listeJoueurs, int largeurCarte, int longueurCarte)
+    public Jeu(List<Joueur> listeJoueurs, Carte carte)
     {
         this.listeJoueurs = listeJoueurs;
-        this.carte = new Carte(longueurCarte, largeurCarte);
+        this.carte = carte;
+    }
+
+
+    public Carte getCarte() {
+        return carte;
+    }
+
+
+    public Joueur getGagnant()
+    {
+        return gagnant;
+    }
+
+    public void setGagnant(Joueur gagnant)
+    {
+        this.gagnant = gagnant;
+    }
+
+    public List<Joueur> getListeJoueurs() {
+        return listeJoueurs;
+    }
+
+    public int getPosXObjectif() {
+        return posXObjectif;
+    }
+
+    public int getPosYObjectif() {
+        return posYObjectif;
+    }
+
+    public void setPosXObjectif(int posXObjectif) {
+        this.posXObjectif = posXObjectif;
+    }
+
+    public void setPosYObjectif(int posYObjectif) {
+        this.posYObjectif = posYObjectif;
     }
 }

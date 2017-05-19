@@ -1,0 +1,21 @@
+1 . On lance le controlleur // done
+2 . Le controlleur charge la carte // done
+2 . le controlleur démarre le serveur // done 
+3 . le serveur est en attente d'un client //done
+4 . une fois que le premier joueur( ou le deuxième si on veut 2 joueurs mini ) //done
+se connecte, on lance un timeOut, les autres joueurs qui veulent se connecter pour la prochaine partie on donc un certain temps pour se connecter. Au delà le serveur n'acceptera plus d'autre clients
+5 . Quand un joueur se connecte, on lui demande son nom, les ID des joueurs seront gérés automatiquement //done
+6 . Une fois que le timeOut est expiré, le serveur annonce aux joueurs que la partie va commencer (autre timeOut)
+7 . Le controleur prépare la partie ( position des joueurs ... )// done
+8 . le controleur lance la partie et lance le timer de tour //
+8 . a chaque tour les joueurs choisissent leur direction et leur vitesse
+9 . le serveur reçoit ces informations et les met a jour dans la classe joueur
+10 .  On stocke la position du joueur dans la Classe Joueur.s
+      A chaque début de tour le contrôleur calcule met à jour la position des joueurs, il regarde ensuite les éventuelles colisions.
+      Une collision entre deux joueurs est effective si les deux joueurs sont sur la même case avec la même direction au début
+      du tour.
+11 . Si collision points de permis = 0, le serveur envoie un message au client et ferme la connection du client
+(ou alors on lui enlève le brouillard de guerre et il peut suivre la suite de la partie en voyant les autres joueurs )
+
+
+
